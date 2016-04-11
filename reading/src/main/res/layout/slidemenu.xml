@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/colorSlideMenu">
+
+    <ImageView
+        android:src="@mipmap/ic_launcher"
+        android:id="@+id/iv_menu_avatar"
+        android:layout_width="@dimen/avatar_size"
+        android:layout_height="@dimen/avatar_size"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="50dp"
+        android:contentDescription="@string/des_avatar"
+        android:scaleType="centerCrop" />
+
+    <TextView
+        android:id="@+id/tv_menu_user"
+        android:layout_toRightOf="@+id/iv_menu_avatar"
+        android:layout_alignBottom="@+id/iv_menu_avatar"
+        android:layout_alignTop="@+id/iv_menu_avatar"
+        android:gravity="center"
+        android:layout_marginLeft="5dp"
+        android:text="@string/user_name"
+        android:textColor="@color/colorPrimaryLight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <View
+        android:id="@+id/line_menu"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_below="@id/iv_menu_avatar"
+        style="@style/Separator"/>
+
+    <com.xidian.yetwish.reading.ui.weight.MenuItemView
+        android:layout_marginBottom="10dp"
+        android:id="@+id/menuNote"
+        android:layout_below="@+id/line_menu"
+        app:itemIcon="@mipmap/ic_menu_white_24dp"
+        app:itemText="@string/des_item_text"
+        app:hasArrow="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <com.xidian.yetwish.reading.ui.weight.MenuItemView
+        android:layout_below="@+id/menuNote"
+        app:itemIcon="@mipmap/ic_menu_white_36dp"
+        app:itemText="@string/des_avatar"
+        app:hasArrow="false"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
+
+
+
+</RelativeLayout>

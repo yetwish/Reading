@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">Reading</string>
+    <string name="drawer_open">open</string>
+    <string name="drawer_close">close</string>
+    <string name="user_name">Yetwish_野鬼</string>
+
+
+
+    <!--the description of images-->
+    <string name="des_avatar">avatar</string>
+    <string name="des_item_text">text of menu item</string>
+    <string name="des_item_arrow">the right arrow</string>
 </resources>
