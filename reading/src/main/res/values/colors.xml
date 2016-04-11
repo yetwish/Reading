@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#21C0C0</color>
+    <color name="colorPrimaryDark">#C3ED</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <color name="colorPrimaryLight">#C3ED</color>
+    <color name="colorReading">#92E0E0</color>
+    <color name="colorSlideMenu">#535358</color>
+    <color name="colorLine">#cccccc</color>
+
+    <color name="colorWhite">#FFFFFF</color>
+
+
+
+
+</resources>
