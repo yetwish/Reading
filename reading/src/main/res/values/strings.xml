@@ -10,4 +10,5 @@
     <string name="des_avatar">avatar</string>
     <string name="des_item_text">text of menu item</string>
     <string name="des_item_arrow">the right arrow</string>
+    <string name="des_add_fab">add book fab</string>
 </resources>
