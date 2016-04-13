@@ -21,7 +21,7 @@ public class SplashActivity extends BaseActivity {
             super.handleMessage(msg);
             switch (msg.what){
                 case MSG_SPLASH:
-                    MainActivity.startActivity(SplashActivity.this);
+                    ReadingActivity.startActivity(SplashActivity.this);
                     finish();
                     break;
             }

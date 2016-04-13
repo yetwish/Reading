@@ -12,8 +12,12 @@
 
     <dimen name="fab_margin">15dp</dimen>
 
-    <dimen name="menu_height">60dp</dimen>
+    <dimen name="slide_menu_width">260dp</dimen>
+
+    <dimen name="menu_height">50dp</dimen>
+    <dimen name="menu_setting_height">40dp</dimen>
     <dimen name="menu_margin_left">15dp</dimen>
+    <dimen name="radio_drawable_padding">15dp</dimen>
     <dimen name="menu_item_margin">8dp</dimen>
 
 </resources>

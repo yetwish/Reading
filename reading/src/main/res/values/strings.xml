@@ -1,9 +1,15 @@
 <resources>
-    <string name="app_name">Reading</string>
+    <string name="app_name">在读</string>
     <string name="drawer_open">open</string>
     <string name="drawer_close">close</string>
     <string name="user_name">Yetwish_野鬼</string>
+    <string name="user_intro">读万卷书，行万里路。</string>
 
+    <string name="note_title">读书笔记</string>
+    <string name="read_title">读过的书</string>
+    <string name="setting">设置</string>
+    <string name="check_update">检查更新</string>
+    <string name="about">关于</string>
 
 
     <!--the description of images-->

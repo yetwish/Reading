@@ -1,59 +1,107 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="@dimen/slide_menu_width"
+    android:layout_height="match_parent"
     android:background="@color/colorSlideMenu">
 
     <ImageView
-        android:src="@mipmap/ic_launcher"
         android:id="@+id/iv_menu_avatar"
         android:layout_width="@dimen/avatar_size"
         android:layout_height="@dimen/avatar_size"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginLeft="@dimen/menu_margin_left"
+        android:layout_marginTop="30dp"
         android:contentDescription="@string/des_avatar"
-        android:scaleType="centerCrop" />
+        android:scaleType="centerCrop"
+        android:src="@mipmap/ic_launcher" />
 
     <TextView
+        android:layout_marginTop="@dimen/menu_margin_left"
+        android:layout_marginLeft="@dimen/menu_margin_left"
+        android:layout_marginStart="@dimen/menu_margin_left"
         android:id="@+id/tv_menu_user"
-        android:layout_toRightOf="@+id/iv_menu_avatar"
-        android:layout_alignBottom="@+id/iv_menu_avatar"
-        android:layout_alignTop="@+id/iv_menu_avatar"
-        android:gravity="center"
-        android:layout_marginLeft="5dp"
-        android:text="@string/user_name"
-        android:textColor="@color/colorPrimaryLight"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_below="@id/iv_menu_avatar"
+        android:gravity="center"
+        android:text="@string/user_name"
+        android:textColor="@color/colorWhite" />
+
+    <TextView
+        android:id="@+id/tv_menu_intro"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_menu_user"
+        android:layout_marginTop="6dp"
+        android:layout_alignStart="@+id/tv_menu_user"
+        android:layout_alignLeft="@+id/tv_menu_user"
+        android:gravity="center"
+        android:text="@string/user_intro"
+        android:textColor="@color/colorWhite" />
+
 
     <View
         android:id="@+id/line_menu"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:layout_below="@id/iv_menu_avatar"
-        style="@style/Separator"/>
+        style="@style/Separator"
+        android:layout_below="@id/tv_menu_intro"
+        android:layout_marginTop="10dp" />
 
-    <com.xidian.yetwish.reading.ui.weight.MenuItemView
-        android:layout_marginBottom="10dp"
-        android:id="@+id/menuNote"
+
+    <RadioGroup
+        android:id="@+id/rgMenu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/line_menu"
-        app:itemIcon="@mipmap/ic_menu_white_24dp"
-        app:itemText="@string/des_item_text"
-        app:hasArrow="true"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:orientation="vertical">
 
-    <com.xidian.yetwish.reading.ui.weight.MenuItemView
-        android:layout_below="@+id/menuNote"
-        app:itemIcon="@mipmap/ic_menu_white_36dp"
-        app:itemText="@string/des_avatar"
-        app:hasArrow="false"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        <RadioButton
+            android:id="@+id/menuReading"
+            style="@style/RadioButton_Menu"
+            android:drawableLeft="@drawable/menu_reading_bg"
+            android:drawableStart="@drawable/menu_reading_bg"
+            android:text="@string/app_name" />
+
+        <RadioButton
+            android:id="@+id/menuNote"
+            style="@style/RadioButton_Menu"
+            android:drawableLeft="@drawable/menu_note_bg"
+            android:drawableStart="@drawable/menu_note_bg"
+            android:text="@string/note_title" />
+
+        <RadioButton
+            android:id="@+id/menuRead"
+            style="@style/RadioButton_Menu"
+            android:drawableLeft="@drawable/menu_read_bg"
+            android:drawableStart="@drawable/menu_read_bg"
+            android:text="@string/read_title" />
 
 
+    </RadioGroup>
 
 
+    <TextView
+        android:clickable="true"
+        android:layout_above="@+id/menuUpdate"
+        android:id="@+id/menuSetting"
+        android:text="@string/setting"
+        android:drawableLeft="@drawable/menu_setting_bg"
+        android:drawableStart="@drawable/menu_setting_bg"
+        style="@style/Button_Menu"/>
+    <TextView
+        android:clickable="true"
+        android:layout_above="@+id/menuAbout"
+        android:id="@+id/menuUpdate"
+        android:text="@string/check_update"
+        android:drawableLeft="@drawable/menu_update_bg"
+        android:drawableStart="@drawable/menu_update_bg"
+        style="@style/Button_Menu"/>
+    <TextView
+        android:clickable="true"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/menuAbout"
+        android:text="@string/about"
+        android:drawableLeft="@drawable/menu_reading_bg"
+        android:drawableStart="@drawable/menu_reading_bg"
+        style="@style/Button_Menu"/>
 
 </RelativeLayout>
