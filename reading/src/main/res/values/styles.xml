@@ -23,8 +23,24 @@
         <item name="android:layout_width">@dimen/fab_size</item>
         <item name="android:layout_height">@dimen/fab_size</item>
         <item name="android:background">@drawable/fab</item>
-        <item name="android:layout_margin">@dimen/fab_margin</item>
+        <item name="android:layout_marginRight">@dimen/fab_margin</item>
+        <item name="android:layout_marginBottom">@dimen/fab_margin</item>
 
+    </style>
+
+    <style name="FAB_Sub">
+        <item name="android:background">@drawable/fab</item>
+        <item name="android:layout_width">@dimen/fab_sub_size</item>
+        <item name="android:layout_height">@dimen/fab_sub_size</item>
+    </style>
+
+    <style name="TextView_Shadow">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:background">@drawable/text_view_shadow</item>
+        <item name="android:textSize">@dimen/menu_text_size</item>
+        <item name="android:padding">@dimen/fab_item_padding</item>
+        <item name="android:textColor">@color/fab_item_text</item>
     </style>
 
     <style name="RadioButton_Menu">

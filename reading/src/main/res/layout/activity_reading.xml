@@ -10,7 +10,7 @@
 
     <!--fab-->
     <ImageButton
-        android:id="@+id/fab_"
+        android:id="@+id/fab_reading"
         style="@style/FAB"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"

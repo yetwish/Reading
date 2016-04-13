@@ -2,7 +2,6 @@ package com.xidian.yetwish.reading.ui;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.RadioButton;
@@ -11,6 +10,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.xidian.yetwish.reading.R;
+import com.xidian.yetwish.reading.utils.LogUtils;
 
 /**
  * slide menu
@@ -21,8 +21,6 @@ public class SlideMenu extends RelativeLayout {
     public final static int MENU_READING = 0x01;
     public final static int MENU_NOTE = 0x02;
     public final static int MENU_READ = 0x03;
-
-    private final static String TAG = SlideMenu.class.getSimpleName();
 
     private Context mContext;
     private RadioGroup rgMenu;
@@ -50,7 +48,7 @@ public class SlideMenu extends RelativeLayout {
     public SlideMenu(Context context, AttributeSet attrs) {
         super(context, attrs);
         this.mContext = context;
-        LayoutInflater.from(mContext).inflate(R.layout.slide_menu, this);
+        LayoutInflater.from(mContext).inflate(R.layout.slide_menu, this, true);
         rgMenu = (RadioGroup) findViewById(R.id.rgMenu);
         menuReading = (RadioButton) rgMenu.findViewById(R.id.menuReading);
         menuNote = (RadioButton) rgMenu.findViewById(R.id.menuNote);
@@ -65,7 +63,7 @@ public class SlideMenu extends RelativeLayout {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 if (mMenuListener != null && !isInit) {
                     mMenuListener.onMenuItemChanged(checkedId);
-                    Log.w(TAG,"check changed!");
+                    LogUtils.i("check changed!");
                 }
             }
         });
@@ -87,20 +85,20 @@ public class SlideMenu extends RelativeLayout {
         public void onClick(View v) {
             if (mMenuListener != null) {
                 mMenuListener.onSelectSameItem();
-                Log.w(TAG,"same item!");
+                LogUtils.i("same item!");
             }
         }
     };
 
 
-    public void setSelectedItemIndex(int itemIndex){
-        if(itemIndex < MENU_READING || itemIndex > MENU_READ){
+    public void setSelectedItemIndex(int itemIndex) {
+        if (itemIndex < MENU_READING || itemIndex > MENU_READ) {
             throw new IllegalArgumentException(
                     "the index of menu item should between 1 to 3.");
         }
         isInit = true;
-        Log.w(TAG," itemIndex :" +itemIndex);
-        switch (itemIndex){
+        LogUtils.i("itemIndex : " + itemIndex);
+        switch (itemIndex) {
             case MENU_READING:
                 menuReading.setChecked(true);
                 break;
@@ -118,6 +116,7 @@ public class SlideMenu extends RelativeLayout {
 
         /**
          * when select a different item of current item.
+         *
          * @param menuId
          */
         void onMenuItemChanged(int menuId);

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rlPopupBg"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorTransparent">
+
+    <com.xidian.yetwish.reading.ui.fab.FABMenuItem
+        android:id="@+id/fabItemSearch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="@dimen/fab_sub_marginBottom"
+        android:layout_marginRight="@dimen/fab_sub_marginRight"
+        app:src="@mipmap/ic_folder_white_24dp"
+        app:text="@string/chose_manual" />
+
+
+    <com.xidian.yetwish.reading.ui.fab.FABMenuItem
+        android:id="@+id/fabItemFolder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/fabItemSearch"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/fab_sub_marginRight"
+        app:src="@mipmap/ic_search_white_24dp"
+        app:text="@string/auto_searching" />
+
+
+</RelativeLayout>

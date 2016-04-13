@@ -9,8 +9,12 @@
     <color name="colorSlideMenu">#535358</color>
     <color name="colorLine">#cccccc</color>
 
-    <color name="colorWhite">#FFFFFF</color>
+    <color name="colorText">#8C8C8C</color>
 
+    <color name="colorTransparent">#00FFFFFF</color>
+    <color name="colorTransparentFrame">#aaFFFFFF</color>
+    <color name="colorWhite">#FFFFFF</color>
+    <color name="colorBlack">#000000</color>
 
 
 

@@ -19,7 +19,7 @@ import com.xidian.yetwish.reading.R;
 public class SlideMenuActivity extends BaseActivity {
 
 
-    private Toolbar mToolbar;
+    protected Toolbar mToolbar;
     private DrawerLayout mDrawerLayout;
     private RelativeLayout mMainLayout;
 

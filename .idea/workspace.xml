@@ -23,11 +23,6 @@
           <theme>@style/AppTheme</theme>
         </config>
       </layout>
-      <layout url="file://$PROJECT_DIR$/reading/src/main/res/menu/menu_drawer.xml">
-        <config>
-          <theme>@android:style/Theme.Material.Light</theme>
-        </config>
-      </layout>
     </layouts>
   </component>
   <component name="AndroidLogFilters">
@@ -35,22 +30,26 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="04c57bde-2867-40be-9673-4117808c87d2" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/ui/ReadingActivity.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/reading/src/main/res/layout/activity_reading.xml" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/ui/MainActivity.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/ui/vo/MenuItem.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/ui/weight/MenuItemView.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/reading/src/main/res/layout/activity_main.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/reading/src/main/res/layout/item_menu.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/reading/src/main/res/mipmap-hdpi/ic_chevron_right_white_18dp.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/reading/src/main/res/mipmap-hdpi/ic_chevron_right_white_36dp.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/reading/src/main/res/mipmap-hdpi/ic_menu_white_36dp.png" afterPath="" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/reading/src/main/res/mipmap-hdpi/ic_folder_white_24dp.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/reading/src/main/res/mipmap-hdpi/ic_folder_white_36dp.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/reading/src/main/res/mipmap-hdpi/ic_search_white_24dp.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/reading/src/main/res/mipmap-hdpi/ic_search_white_36dp.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/ui/fab/FABMenuItem.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/ui/fab/OnFABItemClickListener.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/ui/fab/PopupMenu.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/utils/LogUtils.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/utils/ScreenUtils.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/utils/ToastUtils.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/reading/src/main/res/color/fab_item_text.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/reading/src/main/res/drawable/text_view_shadow.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/reading/src/main/res/layout/fab_menu_item.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/reading/src/main/res/layout/popup_menu.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/reading/build.gradle" afterPath="$PROJECT_DIR$/reading/build.gradle" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/reading/src/main/AndroidManifest.xml" afterPath="$PROJECT_DIR$/reading/src/main/AndroidManifest.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/ui/SplashActivity.java" afterPath="$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/ui/SplashActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/ui/ReadingActivity.java" afterPath="$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/ui/ReadingActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/ui/SlideMenu.java" afterPath="$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/ui/SlideMenu.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/ui/SlideMenuActivity.java" afterPath="$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/ui/SlideMenuActivity.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/reading/src/main/res/drawable/fab.xml" afterPath="$PROJECT_DIR$/reading/src/main/res/drawable/fab.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/reading/src/main/res/layout/slide_menu.xml" afterPath="$PROJECT_DIR$/reading/src/main/res/layout/slide_menu.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/reading/src/main/res/layout/activity_reading.xml" afterPath="$PROJECT_DIR$/reading/src/main/res/layout/activity_reading.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/reading/src/main/res/values/attrs.xml" afterPath="$PROJECT_DIR$/reading/src/main/res/values/attrs.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/reading/src/main/res/values/colors.xml" afterPath="$PROJECT_DIR$/reading/src/main/res/values/colors.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/reading/src/main/res/values/dimens.xml" afterPath="$PROJECT_DIR$/reading/src/main/res/values/dimens.xml" />
@@ -87,9 +86,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="resourceFile" />
         <option value="layoutResourceFile_vertical" />
         <option value="Class" />
-        <option value="resourceFile" />
       </list>
     </option>
   </component>
@@ -1690,33 +1689,17 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/ui/slidemenu_maddeye/SideMenu.java" />
-        <option value="$PROJECT_DIR$/reading/src/main/res/layout/sidemenurow.xml" />
-        <option value="$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/ui/slidemenu_maddeye/SideMenuActivity.java" />
-        <option value="$PROJECT_DIR$/reading/src/main/res/layout/sidemenumain.xml" />
-        <option value="$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/ui/sidemenu_maddeye/SideMenuActivity.java" />
-        <option value="$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/ui/weight/MenuItem.java" />
-        <option value="$PROJECT_DIR$/reading/src/main/res/layout/menu_item.xml" />
-        <option value="$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/ui/vo/MenuItem.java" />
-        <option value="$PROJECT_DIR$/reading/src/main/res/layout/slidemenu.xml" />
-        <option value="$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/ui/weight/FAB.java" />
-        <option value="$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/ui/CustomFAB.java" />
-        <option value="$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/ui/weight/CustomFAB.java" />
         <option value="$PROJECT_DIR$/reading/src/main/res/layout/activity_main.xml" />
         <option value="$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/ui/MainActivity.java" />
         <option value="$PROJECT_DIR$/reading/src/main/res/layout/activity_note.xml" />
         <option value="$PROJECT_DIR$/reading/src/main/res/layout/activity_read.xml" />
-        <option value="$PROJECT_DIR$/reading/src/main/res/values/colors.xml" />
-        <option value="$PROJECT_DIR$/reading/src/main/res/drawable/fab.xml" />
         <option value="$PROJECT_DIR$/reading/src/main/res/layout/activity_slide_menu.xml" />
         <option value="$PROJECT_DIR$/reading/src/main/res/layout/item_menu.xml" />
-        <option value="$PROJECT_DIR$/reading/src/main/res/layout/activity_reading.xml" />
         <option value="$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/ui/slide_menu/SlideMenu.java" />
         <option value="$PROJECT_DIR$/reading/src/main/res/menu/menu_main.xml" />
         <option value="$PROJECT_DIR$/reading/src/main/res/menu/menu_nav.xml" />
         <option value="$PROJECT_DIR$/reading/src/main/res/layout/menu_activity.xml" />
         <option value="$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/ui/BaseActivity.java" />
-        <option value="$PROJECT_DIR$/reading/src/main/res/values/strings.xml" />
         <option value="$PROJECT_DIR$/reading/src/main/res/layout/menu_header.xml" />
         <option value="$PROJECT_DIR$/reading/src/main/res/menu/menu_drawer.xml" />
         <option value="$PROJECT_DIR$/reading/src/main/res/drawable/menu_item_text_color.xml" />
@@ -1724,23 +1707,39 @@
         <option value="$PROJECT_DIR$/reading/src/main/res/drawable/menu_reading_bg.xml" />
         <option value="$PROJECT_DIR$/reading/src/main/res/drawable/menu_note_bg.xml" />
         <option value="$PROJECT_DIR$/reading/src/main/res/drawable/menu_read_bg.xml" />
-        <option value="$PROJECT_DIR$/reading/src/main/res/values/dimens.xml" />
         <option value="$PROJECT_DIR$/reading/src/main/res/drawable/menu_update_bg.xml" />
         <option value="$PROJECT_DIR$/reading/src/main/res/drawable/menu_arrow_bg.xml" />
         <option value="$PROJECT_DIR$/reading/src/main/res/color/menu_item_text.xml" />
         <option value="$PROJECT_DIR$/reading/src/main/res/drawable/menu_item_bg.xml" />
         <option value="$PROJECT_DIR$/reading/src/main/res/layout/slide_menu.xml" />
-        <option value="$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/ui/SlideMenu.java" />
-        <option value="$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/ui/ReadingActivity.java" />
         <option value="$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/ui/ReadActivity.java" />
         <option value="$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/ui/NoteActivity.java" />
         <option value="$PROJECT_DIR$/reading/src/main/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/reading/src/main/res/drawable/menu_setting_bg.xml" />
         <option value="$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/ui/weight/MenuItemView.java" />
         <option value="$PROJECT_DIR$/reading/src/main/res/layout/activity_menu.xml" />
-        <option value="$PROJECT_DIR$/reading/src/main/res/values/attrs.xml" />
-        <option value="$PROJECT_DIR$/reading/src/main/res/values/styles.xml" />
+        <option value="$PROJECT_DIR$/reading/src/main/res/drawable/fab.xml" />
+        <option value="$PROJECT_DIR$/reading/src/main/res/drawable/text_view_shadow.xml" />
+        <option value="$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/utils/ScreenUtils.java" />
+        <option value="$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/utils/ToastUtils.java" />
+        <option value="$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/utils/LogUtils.java" />
         <option value="$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/ui/SlideMenuActivity.java" />
+        <option value="$PROJECT_DIR$/reading/src/main/res/layout/activity_reading.xml" />
+        <option value="$PROJECT_DIR$/reading/src/main/res/values/dimens.xml" />
+        <option value="$PROJECT_DIR$/reading/src/main/res/values/strings.xml" />
+        <option value="$PROJECT_DIR$/reading/src/main/res/values/attrs.xml" />
+        <option value="$PROJECT_DIR$/reading/src/main/res/layout/popup_menu.xml" />
+        <option value="$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/ui/SlideMenu.java" />
+        <option value="$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/ui/widget/FABMenuItem.java" />
+        <option value="$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/ui/widget/PopupMenu.java" />
+        <option value="$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/ui/fab/OnFABItemClickListener.java" />
+        <option value="$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/ui/ReadingActivity.java" />
+        <option value="$PROJECT_DIR$/reading/src/main/res/layout/fab_menu_item.xml" />
+        <option value="$PROJECT_DIR$/reading/src/main/res/values/styles.xml" />
+        <option value="$PROJECT_DIR$/reading/src/main/res/values/colors.xml" />
+        <option value="$PROJECT_DIR$/reading/src/main/res/color/fab_item_text.xml" />
+        <option value="$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/ui/fab/FABMenuItem.java" />
+        <option value="$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/ui/fab/PopupMenu.java" />
       </list>
     </option>
   </component>
@@ -1781,16 +1780,6 @@
             <PATH_ELEMENT>
               <option name="myItemId" value="Reading" />
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
-      <pane id="Scope">
-        <subPane subId="Project Files">
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
@@ -2068,6 +2057,10 @@
               <option name="myItemId" value="reading" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="utils" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -2103,6 +2096,84 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Reading" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Reading" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="reading" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="reading" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ui" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="fab" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Reading" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Reading" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="reading" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="reading" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+      <pane id="Scope">
+        <subPane subId="Project Files">
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
     </panes>
@@ -2123,11 +2194,11 @@
       <recent name="com.xidian.yetwish.reading.ui" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="F:\Workspace\Reading\reading\src\main\res\mipmap-hdpi" />
+      <recent name="F:\Workspace\Reading\reading\src\main\res\color" />
       <recent name="F:\Workspace\Reading\reading\src\main\res\drawable" />
+      <recent name="F:\Workspace\Reading\reading\src\main\res\mipmap-hdpi" />
       <recent name="F:\Workspace\Reading\reading\src\main\res\layout" />
       <recent name="F:\Workspace\Reading\reading\src\main\java\com\xidian\yetwish\reading\ui" />
-      <recent name="F:\Workspace\Reading\reading\src\main\java\com\xidian\yetwish\reading\ui\slidemenu_maddeye\utils" />
     </key>
   </component>
   <component name="RunManager" selected="Android Application.reading">
@@ -2416,7 +2487,7 @@
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Android Monitor" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20065252" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20880914" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.26349208" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3296" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32952693" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -2425,8 +2496,7 @@
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26666668" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" x="510" y="40" width="346" height="624" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32952693" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2547619" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" x="510" y="40" width="346" height="624" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Android Model" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
@@ -2438,6 +2508,7 @@
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32952693" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -2456,22 +2527,14 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/reading/src/main/res/layout/activity_splash.xml">
-      <provider editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-      <provider selected="true" editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/ui/ReadingActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="e#994#1450#0" expanded="true" />
+            <element signature="e#1449#1450#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -2479,7 +2542,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="e#994#1450#0" expanded="true" />
+            <element signature="e#1449#1450#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -2487,7 +2553,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="10" column="41" selection-start-line="10" selection-start-column="41" selection-end-line="10" selection-end-column="41" />
-          <folding />
+          <folding>
+            <element signature="e#994#1450#0" expanded="true" />
+            <element signature="e#1449#1450#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -2584,56 +2653,10 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/reading/src/main/res/drawable/fab.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.05370844">
-          <caret line="51" column="26" selection-start-line="51" selection-start-column="26" selection-end-line="51" selection-end-column="26" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/reading/src/main/res/values/colors.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-7.0">
-          <caret line="9" column="43" selection-start-line="9" selection-start-column="43" selection-end-line="9" selection-end-column="43" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/reading/src/main/res/layout/activity_reading.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.29085872">
-          <caret line="12" column="30" selection-start-line="12" selection-start-column="30" selection-end-line="12" selection-end-column="30" />
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/reading/src/main/res/layout/activity_read.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-2.2105262">
-          <caret line="6" column="26" selection-start-line="6" selection-start-column="26" selection-end-line="6" selection-end-column="26" />
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
     <entry file="jar://$PROJECT_DIR$/../android-sdk/extras/android/m2repository/com/android/support/appcompat-v7/22.2.1/appcompat-v7-22.2.1-sources.jar!/android/support/v7/app/ActionBarActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.14383562">
           <caret line="18" column="3" selection-start-line="18" selection-start-column="3" selection-end-line="18" selection-end-column="3" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/reading/src/main/res/values/strings.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.17355372">
-          <caret line="3" column="46" selection-start-line="3" selection-start-column="46" selection-end-line="3" selection-end-column="46" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2673,14 +2696,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.22580644">
           <caret line="5" column="11" selection-start-line="5" selection-start-column="11" selection-end-line="5" selection-end-column="11" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/reading/src/main/res/values/dimens.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-11.666667">
-          <caret line="15" column="0" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -2738,17 +2753,7 @@
         <state vertical-scroll-proportion="0.61130136">
           <caret line="17" column="5" selection-start-line="17" selection-start-column="5" selection-end-line="17" selection-end-column="5" />
           <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/ui/SlideMenu.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5010846">
-          <caret line="50" column="30" selection-start-line="50" selection-start-column="30" selection-end-line="50" selection-end-column="30" />
-          <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -2757,14 +2762,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.11310592">
           <caret line="3" column="69" selection-start-line="3" selection-start-column="69" selection-end-line="3" selection-end-column="69" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/ui/ReadingActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.24486302">
-          <caret line="17" column="5" selection-start-line="17" selection-start-column="5" selection-end-line="17" selection-end-column="5" />
           <folding />
         </state>
       </provider>
@@ -2793,30 +2790,206 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/reading/src/main/res/values/styles.xml">
+    <entry file="file://$PROJECT_DIR$/reading/src/main/res/layout/activity_read.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.39697543">
-          <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.259901">
+          <caret line="13" column="23" selection-start-line="13" selection-start-column="23" selection-end-line="13" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/reading/src/main/res/drawable/fab.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-175.77777">
+          <caret line="226" column="32" selection-start-line="0" selection-start-column="0" selection-end-line="237" selection-end-column="11" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/reading/src/main/res/values/attrs.xml">
+    <entry file="file://$PROJECT_DIR$/reading/src/main/res/drawable/text_view_shadow.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.11310592">
-          <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="230" column="59" selection-start-line="230" selection-start-column="59" selection-end-line="230" selection-end-column="59" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/utils/ScreenUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="69" column="0" selection-start-line="69" selection-start-column="0" selection-end-line="69" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/utils/ToastUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="81" column="19" selection-start-line="81" selection-start-column="19" selection-end-line="81" selection-end-column="19" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/utils/LogUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="56" column="0" selection-start-line="56" selection-start-column="0" selection-end-line="56" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/ui/SlideMenuActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.318872">
-          <caret line="49" column="21" selection-start-line="49" selection-start-column="21" selection-end-line="49" selection-end-column="21" />
+        <state vertical-scroll-proportion="0.48536587">
+          <caret line="21" column="14" selection-start-line="21" selection-start-column="14" selection-end-line="21" selection-end-column="14" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#1670#1671#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/reading/src/main/res/values/attrs.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-5.4444447">
+          <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/reading/src/main/res/values/dimens.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-8.592592">
+          <caret line="29" column="28" selection-start-line="29" selection-start-column="28" selection-end-line="29" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/reading/src/main/res/values/strings.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-2.2545455">
+          <caret line="15" column="36" selection-start-line="15" selection-start-column="36" selection-end-line="15" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/ui/SlideMenu.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.23766816">
+          <caret line="49" column="32" selection-start-line="49" selection-start-column="32" selection-end-line="49" selection-end-column="32" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/reading/src/main/res/layout/popup_menu.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.26992288">
+          <caret line="8" column="47" selection-start-line="8" selection-start-column="47" selection-end-line="8" selection-end-column="47" />
+          <folding>
+            <element signature="e#645#674#0" expanded="true" />
+            <element signature="e#710#738#0" expanded="true" />
+            <element signature="e#803#825#0" expanded="true" />
+            <element signature="e#1143#1171#0" expanded="true" />
+            <element signature="e#1236#1260#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/reading/src/main/res/color/fab_item_text.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.24475524">
+          <caret line="5" column="44" selection-start-line="5" selection-start-column="44" selection-end-line="5" selection-end-column="44" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/reading/src/main/res/values/styles.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.38902742">
+          <caret line="42" column="49" selection-start-line="42" selection-start-column="49" selection-end-line="42" selection-end-column="49" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/reading/src/main/res/layout/fab_menu_item.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.31578946">
+          <caret line="8" column="27" selection-start-line="8" selection-start-column="27" selection-end-line="8" selection-end-column="27" />
+          <folding>
+            <element signature="e#178#199#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/ui/fab/FABMenuItem.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.24122807">
+          <caret line="10" column="36" selection-start-line="10" selection-start-column="36" selection-end-line="10" selection-end-column="36" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/ui/ReadingActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.18421052">
+          <caret line="12" column="3" selection-start-line="12" selection-start-column="3" selection-end-line="12" selection-end-column="3" />
+          <folding>
+            <element signature="e#994#1450#0" expanded="true" />
+            <element signature="e#1449#1450#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/reading/src/main/res/layout/activity_reading.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.2631579">
+          <caret line="5" column="40" selection-start-line="5" selection-start-column="40" selection-end-line="5" selection-end-column="40" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/reading/src/main/res/values/colors.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.53846157">
+          <caret line="11" column="38" selection-start-line="11" selection-start-column="38" selection-end-line="11" selection-end-column="38" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/ui/fab/PopupMenu.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.4473684">
+          <caret line="67" column="30" selection-start-line="67" selection-start-column="30" selection-end-line="67" selection-end-column="30" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/ui/fab/OnFABItemClickListener.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.27631578">
+          <caret line="6" column="19" selection-start-line="6" selection-start-column="19" selection-end-line="6" selection-end-column="19" />
+          <folding />
         </state>
       </provider>
     </entry>

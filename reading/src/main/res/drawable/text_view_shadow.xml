@@ -6,7 +6,7 @@
             <item android:top="1dp" android:right="1dp">
                 <layer-list>
                     <item>
-                        <shape android:shape="oval">
+                        <shape android:shape="rectangle">
                             <solid android:color="#08000000"/>
                             <padding
                                 android:bottom="3px"
@@ -17,7 +17,7 @@
                         </shape>
                     </item>
                     <item>
-                        <shape android:shape="oval">
+                        <shape android:shape="rectangle">
                             <solid android:color="#09000000"/>
                             <padding
                                 android:bottom="2px"
@@ -28,7 +28,7 @@
                         </shape>
                     </item>
                     <item>
-                        <shape android:shape="oval">
+                        <shape android:shape="rectangle">
                             <solid android:color="#10000000"/>
                             <padding
                                 android:bottom="2px"
@@ -39,7 +39,7 @@
                         </shape>
                     </item>
                     <item>
-                        <shape android:shape="oval">
+                        <shape android:shape="rectangle">
                             <solid android:color="#11000000"/>
                             <padding
                                 android:bottom="1px"
@@ -50,7 +50,7 @@
                         </shape>
                     </item>
                     <item>
-                        <shape android:shape="oval">
+                        <shape android:shape="rectangle">
                             <solid android:color="#12000000"/>
                             <padding
                                 android:bottom="1px"
@@ -61,7 +61,7 @@
                         </shape>
                     </item>
                     <item>
-                        <shape android:shape="oval">
+                        <shape android:shape="rectangle">
                             <solid android:color="#13000000"/>
                             <padding
                                 android:bottom="1px"
@@ -72,7 +72,7 @@
                         </shape>
                     </item>
                     <item>
-                        <shape android:shape="oval">
+                        <shape android:shape="rectangle">
                             <solid android:color="#14000000"/>
                             <padding
                                 android:bottom="1px"
@@ -83,7 +83,7 @@
                         </shape>
                     </item>
                     <item>
-                        <shape android:shape="oval">
+                        <shape android:shape="rectangle">
                             <solid android:color="#15000000"/>
                             <padding
                                 android:bottom="1px"
@@ -94,7 +94,7 @@
                         </shape>
                     </item>
                     <item>
-                        <shape android:shape="oval">
+                        <shape android:shape="rectangle">
                             <solid android:color="#16000000"/>
                             <padding
                                 android:bottom="1px"
@@ -109,7 +109,7 @@
 
             <!-- Blue button pressed -->
             <item>
-                <shape android:shape="oval">
+                <shape android:shape="rectangle">
                     <solid android:color="#90CAF9"/>
                 </shape>
             </item>
@@ -123,7 +123,7 @@
             <item android:top="2dp" android:right="1dp">
                 <layer-list>
                     <item>
-                        <shape android:shape="oval">
+                        <shape android:shape="rectangle">
                             <solid android:color="#08000000"/>
                             <padding
                                 android:bottom="4px"
@@ -134,7 +134,7 @@
                         </shape>
                     </item>
                     <item>
-                        <shape android:shape="oval">
+                        <shape android:shape="rectangle">
                             <solid android:color="#09000000"/>
                             <padding
                                 android:bottom="2px"
@@ -145,7 +145,7 @@
                         </shape>
                     </item>
                     <item>
-                        <shape android:shape="oval">
+                        <shape android:shape="rectangle">
                             <solid android:color="#10000000"/>
                             <padding
                                 android:bottom="2px"
@@ -156,7 +156,7 @@
                         </shape>
                     </item>
                     <item>
-                        <shape android:shape="oval">
+                        <shape android:shape="rectangle">
                             <solid android:color="#11000000"/>
                             <padding
                                 android:bottom="1px"
@@ -167,7 +167,7 @@
                         </shape>
                     </item>
                     <item>
-                        <shape android:shape="oval">
+                        <shape android:shape="rectangle">
                             <solid android:color="#12000000"/>
                             <padding
                                 android:bottom="1px"
@@ -178,7 +178,7 @@
                         </shape>
                     </item>
                     <item>
-                        <shape android:shape="oval">
+                        <shape android:shape="rectangle">
                             <solid android:color="#13000000"/>
                             <padding
                                 android:bottom="1px"
@@ -189,7 +189,7 @@
                         </shape>
                     </item>
                     <item>
-                        <shape android:shape="oval">
+                        <shape android:shape="rectangle">
                             <solid android:color="#14000000"/>
                             <padding
                                 android:bottom="1px"
@@ -200,7 +200,7 @@
                         </shape>
                     </item>
                     <item>
-                        <shape android:shape="oval">
+                        <shape android:shape="rectangle">
                             <solid android:color="#15000000"/>
                             <padding
                                 android:bottom="1px"
@@ -211,7 +211,7 @@
                         </shape>
                     </item>
                     <item>
-                        <shape android:shape="oval">
+                        <shape android:shape="rectangle">
                             <solid android:color="#16000000"/>
                             <padding
                                 android:bottom="1px"
@@ -227,8 +227,8 @@
             <!-- Blue button -->
 
             <item>
-                <shape android:shape="oval">
-                    <solid android:color="@color/colorPrimary"/>
+                <shape android:shape="rectangle">
+                    <solid android:color="@color/colorWhite"/>
                 </shape>
             </item>
         </layer-list>

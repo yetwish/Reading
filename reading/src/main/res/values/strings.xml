@@ -12,6 +12,10 @@
     <string name="about">关于</string>
 
 
+    <string name="auto_searching">自动扫描</string>
+    <string name="chose_manual">手动选择</string>
+
+
     <!--the description of images-->
     <string name="des_avatar">avatar</string>
     <string name="des_item_text">text of menu item</string>
