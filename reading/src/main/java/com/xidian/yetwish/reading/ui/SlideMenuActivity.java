@@ -31,10 +31,10 @@ public class SlideMenuActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         mContext = this;
         setContentView(R.layout.activity_slide_menu);
-        initViews();
+        initSlideMenu();
     }
 
-    private void initViews() {
+    private void initSlideMenu() {
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);

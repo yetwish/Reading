@@ -43,6 +43,16 @@
         <item name="android:textColor">@color/fab_item_text</item>
     </style>
 
+
+    <style name="Add_Btn_Shadow">
+        <item name="android:background">@drawable/text_view_shadow</item>
+        <item name="android:textColor">@color/menu_item_text</item>
+        <item name="android:textSize">@dimen/add_btn_text_size</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">?attr/actionBarSize</item>
+    </style>
+
     <style name="RadioButton_Menu">
         <item name="android:drawablePadding">@dimen/radio_drawable_padding</item>
         <item name="android:paddingLeft">@dimen/menu_margin_left</item>
@@ -65,5 +75,6 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:textColor">@color/menu_item_text</item>
     </style>
+
 
 </resources>

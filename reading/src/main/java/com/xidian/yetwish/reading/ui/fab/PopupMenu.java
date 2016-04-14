@@ -33,7 +33,7 @@ public class PopupMenu extends PopupWindow implements View.OnClickListener {
         this.setWidth(ScreenUtils.getScreenWidth(mContext));
         this.setHeight(ScreenUtils.getScreenHeight(mContext) -
                 mContext.getSupportActionBar().getHeight() - ScreenUtils.getStatusHeight(mContext));
-        //todo bug touch outside should be interrupted
+        //TODO bug touch outside should be interrupted
         this.setOutsideTouchable(true);
         this.update();
         root.findViewById(R.id.rlPopupBg).setOnClickListener(this);

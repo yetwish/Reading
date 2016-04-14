@@ -9,6 +9,8 @@ import android.widget.ImageButton;
 import com.xidian.yetwish.reading.R;
 import com.xidian.yetwish.reading.ui.fab.OnFABItemClickListener;
 import com.xidian.yetwish.reading.ui.fab.PopupMenu;
+import com.xidian.yetwish.reading.ui.file_explorer.AutoSearchActivity;
+import com.xidian.yetwish.reading.ui.file_explorer.FileExplorerActivity;
 
 /**
  * main activity , use toolbar and drawerLayout to implement slideMenu
@@ -54,11 +56,13 @@ public class ReadingActivity extends SlideMenuActivity {
         @Override
         public void onAutoSearching() {
             //TODO auto search
+            AutoSearchActivity.startActivity(ReadingActivity.this);
         }
 
         @Override
         public void onChoseManually() {
             //TODO chose manually
+            FileExplorerActivity.startActivity(ReadingActivity.this);
         }
     };
 

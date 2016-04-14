@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <HorizontalScrollView
+        android:id="@+id/dirContainer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tvDir"
+            android:layout_width="wrap_content"
+            android:layout_height="?attr/actionBarSize"
+            android:gravity="center_vertical"
+            android:padding="5dp"
+            android:text="@string/dir_example"
+            android:textSize="@dimen/add_btn_text_size" />
+    </HorizontalScrollView>
+
+    <View
+        style="@style/Separator"
+        android:layout_below="@+id/dirContainer" />
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/lvFileList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/tvAdd"
+        android:layout_below="@+id/dirContainer" />
+
+    <TextView
+        android:id="@+id/tvAdd"
+        style="@style/Add_Btn_Shadow"
+        android:layout_alignParentBottom="true"
+        android:text="@string/add_book" />
+</RelativeLayout>

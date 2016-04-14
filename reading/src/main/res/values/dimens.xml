@@ -18,16 +18,24 @@
 
     <dimen name="fab_sub_text_marginBottom">82dp</dimen>
 
-    <dimen name="slide_menu_width">260dp</dimen>
+    <dimen name="slide_menu_width">300dp</dimen>
 
     <dimen name="menu_height">50dp</dimen>
     <dimen name="menu_setting_height">40dp</dimen>
     <dimen name="menu_margin_left">15dp</dimen>
     <dimen name="radio_drawable_padding">15dp</dimen>
     <dimen name="menu_item_margin">8dp</dimen>
+    <dimen name="item_margin_top">3dp</dimen>
 
+    <dimen name="file_list_item_height">60dp</dimen>
+    <dimen name="list_item_margin_left">15dp</dimen>
+
+
+    <dimen name="item_primary_text_size">20sp</dimen>
+    <dimen name="item_secondary_text_size">15sp</dimen>
 
     <dimen name="menu_text_size">12sp</dimen>
+    <dimen name="add_btn_text_size">18sp</dimen>
     <dimen name="fab_item_padding">10dp</dimen>
 
 </resources>
