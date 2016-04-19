@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
+import android.widget.CheckBox;
 import android.widget.Checkable;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -141,6 +142,15 @@ public class ViewHolder extends RecyclerView.ViewHolder {
         View view = getView(viewId);
         view.setVisibility(visible ? View.VISIBLE : View.GONE);
         return this;
+    }
+
+
+    public boolean isCheck(int viewId) {
+        View view = getView(viewId);
+        if (!(view instanceof CheckBox)) {
+            throw new IllegalArgumentException("this view is not a checkbox.");
+        }
+        return ((CheckBox) view).isChecked();
     }
 
     public ViewHolder linkify(int viewId) {

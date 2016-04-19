@@ -1,4 +1,4 @@
-package com.xidian.yetwish.reading.utils.common_adapter;
+package com.xidian.yetwish.reading.utils.common_adapter.support;
 
 /**
  *

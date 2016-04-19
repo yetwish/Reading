@@ -4,6 +4,9 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.common.base.Function;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Ordering;
 import com.xidian.yetwish.reading.R;
 import com.xidian.yetwish.reading.ui.file_explorer.FileInfo;
 import com.xidian.yetwish.reading.utils.ToastUtils;
@@ -19,8 +22,10 @@ import java.util.List;
  */
 public class FileExplorerAdapter extends CommonAdapter<FileInfo> {
 
+
     public FileExplorerAdapter(Context context, List<FileInfo> data) {
         super(context, R.layout.item_file_list, data);
+
         setItemClickListener(new OnItemClickListener<FileInfo>() {
             @Override
             public void onItemClick(ViewGroup parent, View view, FileInfo data, int position) {
@@ -40,10 +45,12 @@ public class FileExplorerAdapter extends CommonAdapter<FileInfo> {
 
         if (fileInfo.isDir()) {
             holder.setImageResource(R.id.ivItemFileIcon, R.mipmap.ic_folder_gray_48dp)
-                    .setText(R.id.tvItemFileSize, "Folder");
+                    .setText(R.id.tvItemFileSize, "Folder")
+                    .setVisible(R.id.cbItemFileChose,false);
         } else {
             holder.setImageResource(R.id.ivItemFileIcon, R.mipmap.ic_insert_drive_file_gray_48dp)
-                    .setText(R.id.tvItemFileSize, fileInfo.getSize() + "");
+                    .setText(R.id.tvItemFileSize, fileInfo.getSize() + "")
+                    .setVisible(R.id.cbItemFileChose, true);
         }
     }
 }

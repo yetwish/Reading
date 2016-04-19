@@ -3,6 +3,8 @@ package com.xidian.yetwish.reading.utils.common_adapter;
 import android.content.Context;
 import android.view.ViewGroup;
 
+import com.xidian.yetwish.reading.utils.common_adapter.support.MultiTypeItemSupport;
+
 import java.util.List;
 
 /**
@@ -16,9 +18,6 @@ public abstract class MultiTypeItemCommonAdapter<T> extends CommonAdapter<T> {
     public MultiTypeItemCommonAdapter(Context context, List<T> data, MultiTypeItemSupport<T> support) {
         super(context, -1, data);
         mMultiTypeItemSupport = support;
-
-        if (mMultiTypeItemSupport == null)
-            throw new IllegalArgumentException("the mMultiTypeItemSupport can not be null");
     }
 
     @Override
