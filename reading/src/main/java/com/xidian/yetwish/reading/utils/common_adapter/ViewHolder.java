@@ -144,15 +144,6 @@ public class ViewHolder extends RecyclerView.ViewHolder {
         return this;
     }
 
-
-    public boolean isCheck(int viewId) {
-        View view = getView(viewId);
-        if (!(view instanceof CheckBox)) {
-            throw new IllegalArgumentException("this view is not a checkbox.");
-        }
-        return ((CheckBox) view).isChecked();
-    }
-
     public ViewHolder linkify(int viewId) {
         TextView view = getView(viewId);
         Linkify.addLinks(view, Linkify.ALL);

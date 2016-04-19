@@ -4,9 +4,6 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.common.base.Function;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Ordering;
 import com.xidian.yetwish.reading.R;
 import com.xidian.yetwish.reading.ui.file_explorer.FileInfo;
 import com.xidian.yetwish.reading.utils.ToastUtils;

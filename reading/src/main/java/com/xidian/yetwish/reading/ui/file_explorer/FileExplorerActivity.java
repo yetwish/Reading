@@ -6,7 +6,9 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.common.base.Function;
@@ -43,6 +45,10 @@ public class FileExplorerActivity extends ToolbarActivity {
 
     private List<FileInfo> mData;
 
+    private View mHeaderView;
+
+    private FileExplorerAdapter2 mFileAdapter;
+
     Ordering<FileInfo> ordering;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,15 +63,7 @@ public class FileExplorerActivity extends ToolbarActivity {
         files = Environment.getRootDirectory().listFiles();
         mFileList = new ArrayList<File>();
         Collections.addAll(mFileList,files);
-        mData = new ArrayList<FileInfo>();
 
-        for (int i = 0; i < 10; i++) {
-            mData.add(new FileInfo("Android\\", "ab" + i + ".txt", 1000 + i * 2));
-            if (i % 2 == 0)
-                mData.get(i).setDir(true);
-        }
-        mData.add(new FileInfo("Android\\", "aaaa"  + ".txt", 908));
-        mData.get(mData.size()-1).setDir(false);
         //放在FileInfo中
         ordering = Ordering.natural().onResultOf(new Function<FileInfo, Integer>() {
             @Override
@@ -91,6 +89,16 @@ public class FileExplorerActivity extends ToolbarActivity {
         final LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         lvFileList.setLayoutManager(layoutManager);
-        lvFileList.setAdapter(new FileExplorerAdapter2(this,mFileList));
+
+        mFileAdapter = new FileExplorerAdapter2(this,Environment.getExternalStorageDirectory());
+
+        tvDir.setText(Environment.getExternalStorageDirectory().getParent()+File.separator);
+        mFileAdapter.setFilePathChangedListener(new FileExplorerAdapter2.OnFilePathChangedListener() {
+            @Override
+            public void onFilePathChanged(String path) {
+                tvDir.setText(path);
+            }
+        });
+        lvFileList.setAdapter(mFileAdapter);
     }
 }
