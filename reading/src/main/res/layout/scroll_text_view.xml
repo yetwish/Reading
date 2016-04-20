@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="?attr/actionBarSize">
+
+    <HorizontalScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:scrollbars="none">
+
+        <TextView
+            android:id="@+id/tvDir"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:padding="5dp"
+            android:text="@string/dir_example"
+            android:textSize="@dimen/add_btn_text_size" />
+    </HorizontalScrollView>
+
+    <View
+        style="@style/Separator"
+        android:layout_alignParentBottom="true" />
+</RelativeLayout>

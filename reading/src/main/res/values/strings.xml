@@ -20,6 +20,11 @@
     <string name="add_book">加入读书计划</string>
     <string name="dir_example">\\ Android \\ app \\ demo \\ E.txt </string>
 
+    <string name="empty_no_txt">没有找到任何.TXT文件</string>
+    <string name="empty_no_file">没有TXT文件</string>
+
+    <string name="loading">正在加载</string>
+
     <!--the description of images-->
     <string name="des_avatar">avatar</string>
     <string name="des_item_text">text of menu item</string>

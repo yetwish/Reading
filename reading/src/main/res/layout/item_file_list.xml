@@ -16,8 +16,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/menu_item_margin"
-        android:layout_marginTop="@dimen/menu_item_margin"
+        android:layout_marginTop="@dimen/item_margin_primary"
         android:layout_toRightOf="@+id/ivItemFileIcon"
+        android:layout_toLeftOf="@+id/cbItemFileChose"
+        android:singleLine="true"
         android:text="Android"
         android:textColor="@color/colorSlideMenu"
         android:textSize="@dimen/item_primary_text_size" />

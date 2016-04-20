@@ -9,7 +9,9 @@ import com.google.common.util.concurrent.ListenableFuture;
 import com.google.common.util.concurrent.MoreExecutors;
 import com.xidian.yetwish.reading.utils.AppUtils;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
@@ -53,15 +55,77 @@ public class ThreadRunner {
                 Executors.newFixedThreadPool(AppUtils.getNumCores()));
     }
 
-    public synchronized <V> void start(Callable<V> callable, FutureCallback<? super V> callback) {
+    public synchronized <V> void start(List<? extends Callable<V>> calls, FutureCallback<List<V>> callback) {
+        if (calls == null) return;
+        List<ListenableFuture<V>> futureList = new ArrayList<>();
+        for (int i = 0; i < calls.size(); i++) {
+            Task<V> task = new Task<V>();
+            task.mCallable = calls.get(i);
+            task.mListenableFuture = (ListenableFuture) mThreadPool.submit(task.mCallable);
+            task.mListenerWrapper = new ThreadListenerWrapper(null, task.mCallable);
+            task.mListenableFuture.addListener(task.mListenerWrapper, mThreadPool);
+            futureList.add(task.mListenableFuture);
+            mTasks.put(task.mCallable, task);
+        }
+        ListenableFuture<List<V>> futures = Futures.successfulAsList(futureList);
+        FutureCallbackWrapper futureCallbackWrapper = new FutureCallbackWrapper(null,callback);
+        Futures.addCallback(futures, futureCallbackWrapper, mThreadPool);
+    }
+
+    /**
+     * 启动一个无监听器的callable
+     *
+     * @param callable
+     * @param <V>
+     */
+    public synchronized <V> void start(Callable<V> callable) {
+        start(null, callable);
+    }
+
+    /**
+     * 启动一个具有监听器的callable
+     *
+     * @param listener
+     * @param callable
+     * @param <V>
+     */
+    public synchronized <V> void start(Runnable listener, Callable<V> callable) {
         if (callable == null) return;
         Task<V> task = new Task<V>();
         task.mCallable = callable;
-        task.mFutureCallbackWrapper = new FutureCallbackWrapper<V>(callable, callback);
         task.mListenableFuture = (ListenableFuture) mThreadPool.submit(task.mCallable);
+        task.mListenerWrapper = new ThreadListenerWrapper(listener, callable);
+        task.mListenableFuture.addListener(task.mListenerWrapper, mThreadPool);
+        mTasks.put(callable, task);
+    }
+
+    /**
+     * 启动一个有回调的callable
+     *
+     * @param callable
+     * @param callback
+     * @param <V>
+     */
+    public synchronized <V> void start(Callable<V> callable, FutureCallback<? super V> callback) {
+        if (callable == null) return;
+        if (callback == null) {
+            start(null, callable);
+            return;
+        }
+        Task<V> task = new Task<V>();
+        task.mCallable = callable;
+        task.mListenableFuture = (ListenableFuture) mThreadPool.submit(task.mCallable);
+        task.mFutureCallbackWrapper = new FutureCallbackWrapper<V>(callable, callback);
         Futures.addCallback(task.mListenableFuture, task.mFutureCallbackWrapper, mThreadPool);
         mTasks.put(callable, task);
     }
+
+    /**
+     * 取消某一任务
+     *
+     * @param callable
+     * @param isForce
+     */
 
     public synchronized void cancel(Callable<?> callable, boolean isForce) {
         Task task = mTasks.get(callable);
@@ -74,11 +138,40 @@ public class ThreadRunner {
         mTasks.remove(callable);
     }
 
+    /**
+     * 取消所有任务
+     *
+     * @param isForce
+     */
+    public synchronized void cancelAll(boolean isForce) {
+        for (Callable callable : mTasks.keySet()) {
+            cancel(callable, isForce);
+        }
+    }
 
     class Task<V> {
         private ListenableFuture<V> mListenableFuture;
         private Callable<V> mCallable;
         private FutureCallbackWrapper<? super V> mFutureCallbackWrapper;
+        private ThreadListenerWrapper mListenerWrapper;
+    }
+
+    class ThreadListenerWrapper implements Runnable {
+
+        private Runnable mRealListener;
+        private Callable<?> mCallable;
+
+        public ThreadListenerWrapper(Runnable runnable, Callable<?> callable) {
+            this.mRealListener = runnable;
+            this.mCallable = callable;
+        }
+
+        @Override
+        public void run() {
+            if (mRealListener != null)
+                mMainHandler.post(mRealListener);
+            mTasks.remove(mCallable);
+        }
     }
 
 

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
@@ -14,6 +15,7 @@ import com.google.common.collect.Ordering;
 import com.xidian.yetwish.reading.R;
 import com.xidian.yetwish.reading.ui.ToolbarActivity;
 import com.xidian.yetwish.reading.ui.file_explorer.adapter.FileExplorerAdapter;
+import com.xidian.yetwish.reading.ui.widget.EmptyRecyclerView;
 
 import java.io.File;
 
@@ -31,11 +33,14 @@ public class FileExplorerActivity extends ToolbarActivity {
 
     private TextView tvDir;
     private TextView tvAdd;
-    private RecyclerView lvFileList;
+    private TextView tvEmptyView;
+
+    private EmptyRecyclerView lvFileList;
 
     private FileExplorerAdapter mFileAdapter;
 
     Ordering<File> ordering;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,8 +62,10 @@ public class FileExplorerActivity extends ToolbarActivity {
     private void initView() {
         tvDir = (TextView) findViewById(R.id.tvDir);
         tvAdd = (TextView) findViewById(R.id.tvAdd);
-        lvFileList = (RecyclerView) findViewById(R.id.lvFileList);
+        tvEmptyView = (TextView) findViewById(R.id.tvEmptyView);
+        lvFileList = (EmptyRecyclerView) findViewById(R.id.lvFileList);
 
+        lvFileList.setEmptyView(tvEmptyView);
         tvAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -70,9 +77,8 @@ public class FileExplorerActivity extends ToolbarActivity {
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         lvFileList.setLayoutManager(layoutManager);
 
-        mFileAdapter = new FileExplorerAdapter(this,Environment.getExternalStorageDirectory());
+        mFileAdapter = new FileExplorerAdapter(this, Environment.getExternalStorageDirectory());
 
-        tvDir.setText(Environment.getExternalStorageDirectory().getParent()+File.separator);
         mFileAdapter.setFilePathChangedListener(new FileExplorerAdapter.OnFilePathChangedListener() {
             @Override
             public void onFilePathChanged(String path) {

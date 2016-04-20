@@ -7,6 +7,8 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 
 import com.xidian.yetwish.reading.R;
+import com.xidian.yetwish.reading.ui.file_explorer.TXTFileFilter;
+import com.xidian.yetwish.reading.utils.LogUtils;
 import com.xidian.yetwish.reading.utils.ToastUtils;
 import com.xidian.yetwish.reading.utils.common_adapter.CommonAdapter;
 import com.xidian.yetwish.reading.utils.common_adapter.OnItemClickListener;
@@ -31,48 +33,36 @@ public class FileExplorerAdapter extends CommonAdapter<File> {
     private static final String UPPER_DIR_NAME = "...";
     private static final String ROOT_DIR = "/";
 
-    private String mCurrentPath;
+    private String mCurrentPath = ROOT_DIR;
+
+    private TXTFileFilter mFileFilter;
 
     private OnFilePathChangedListener mFilePathListener;
 
 
     public void setFilePathChangedListener(OnFilePathChangedListener listener) {
         this.mFilePathListener = listener;
+        mFilePathListener.onFilePathChanged(mCurrentPath);
     }
 
     public FileExplorerAdapter(Context context, File rootFile) {
         super(context, R.layout.item_file_list, null);
-        mData = getFileListFromRoot(rootFile);
-        mCurrentPath = rootFile.getParent()+File.separator;
+        mData = new ArrayList<>();
         mCheckMap = new HashMap<>();
-        addUpFolder();
+        mFileFilter = new TXTFileFilter();
+        updateFileList(rootFile);
         setItemClickListener(new OnItemClickListener<File>() {
             @Override
             public void onItemClick(ViewGroup parent, View view, File data, int position) {
-                if (data != null && data.getName().equals(UPPER_DIR_NAME)) {
+                if (data == null) return;
+                if (data.getName().equals(UPPER_DIR_NAME)) {
+                    //get parent File
                     File file = new File(mCurrentPath);
                     file = file.getParentFile();
-//                    LogUtils.w(file.getAbsolutePath());
-                    mData.clear();
-                    Collections.addAll(mData, file.listFiles());
-                    if (!file.getPath().equals(ROOT_DIR))
-                        mCurrentPath = file.getPath() + File.separator;
-                    else mCurrentPath = file.getPath();
-                    addUpFolder();
-                    notifyDataSetChanged();
+                    updateFileList(file);
                 } else if (data.isDirectory()) {
-//                    LogUtils.w(data.getAbsolutePath() + ","  + data.getParent());
-                    mData.clear();
-                    if (data.listFiles() != null)
-                        Collections.addAll(mData, data.listFiles());
-                    mCurrentPath = data.getAbsolutePath() + File.separator;
-                    addUpFolder();
-                    notifyDataSetChanged();
+                    updateFileList(data);
                 }
-                if (mFilePathListener != null) {
-                    mFilePathListener.onFilePathChanged(mCurrentPath);
-                }
-                ToastUtils.showShort(mContext, data.getName() + ", " + position);
             }
 
             @Override
@@ -82,14 +72,24 @@ public class FileExplorerAdapter extends CommonAdapter<File> {
         });
     }
 
-    private List<File> getFileListFromRoot(File rootFile) {
-        List<File> files = new ArrayList<>();
-        Collections.addAll(files, rootFile);
-        return files;
+
+    private void updateFileList(File rootFile) {
+        mData.clear();
+        //get file list
+        if (rootFile.listFiles(mFileFilter) != null)
+            Collections.addAll(mData, rootFile.listFiles(mFileFilter));
+        //update mCurrentPath
+        mCurrentPath = rootFile.getPath().equals(ROOT_DIR) ?
+                rootFile.getPath() : rootFile.getPath() + File.separator;
+        //add upper item
+        addUpperFolder();
+        notifyDataSetChanged();
+        if (mFilePathListener != null) {
+            mFilePathListener.onFilePathChanged(mCurrentPath);
+        }
     }
 
-
-    private void addUpFolder() {
+    private void addUpperFolder() {
         if (mCurrentPath.equals(ROOT_DIR))
             return;
         File file = new File(mCurrentPath, UPPER_DIR_NAME);
@@ -124,6 +124,14 @@ public class FileExplorerAdapter extends CommonAdapter<File> {
                 mCheckMap.put(mData.get(holder.getLayoutPosition()).getAbsolutePath(), isChecked);
             }
         });
+    }
+
+    public List<File> getCheckFiles() {
+        List<File> files = new ArrayList<File>();
+        for(String path: mCheckMap.keySet()){
+            files.add(new File(path));
+        }
+        return files;
     }
 
 

@@ -1,5 +1,6 @@
 package com.xidian.yetwish.reading.ui.file_explorer;
 
+import com.xidian.yetwish.reading.R;
 import com.xidian.yetwish.reading.utils.common_adapter.support.SectionSupport;
 
 import java.io.File;
@@ -15,16 +16,16 @@ public class SearchResultItemSupport implements SectionSupport<File> {
 
     @Override
     public int sectionHeaderLayoutId() {
-        return android.R.layout.simple_list_item_1;
+        return R.layout.scroll_text_view;
     }
 
     @Override
     public int sectionTitleTextViewId() {
-        return android.R.id.text1;
+        return R.id.tvDir;
     }
 
     @Override
     public String getTitle(File file) {
-        return file.getPath();
+        return file.getParent();
     }
 }
