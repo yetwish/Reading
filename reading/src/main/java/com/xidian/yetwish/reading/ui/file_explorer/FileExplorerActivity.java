@@ -6,23 +6,16 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.common.base.Function;
-import com.google.common.collect.Collections2;
 import com.google.common.collect.Ordering;
 import com.xidian.yetwish.reading.R;
 import com.xidian.yetwish.reading.ui.ToolbarActivity;
 import com.xidian.yetwish.reading.ui.file_explorer.adapter.FileExplorerAdapter;
-import com.xidian.yetwish.reading.ui.file_explorer.adapter.FileExplorerAdapter2;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 /**
  * todo data  todo checkbox position ,order
@@ -40,16 +33,9 @@ public class FileExplorerActivity extends ToolbarActivity {
     private TextView tvAdd;
     private RecyclerView lvFileList;
 
-    private File[] files;
-    private List<File> mFileList;
+    private FileExplorerAdapter mFileAdapter;
 
-    private List<FileInfo> mData;
-
-    private View mHeaderView;
-
-    private FileExplorerAdapter2 mFileAdapter;
-
-    Ordering<FileInfo> ordering;
+    Ordering<File> ordering;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,19 +45,13 @@ public class FileExplorerActivity extends ToolbarActivity {
     }
 
     private void initData() {
-
-        files = Environment.getRootDirectory().listFiles();
-        mFileList = new ArrayList<File>();
-        Collections.addAll(mFileList,files);
-
         //放在FileInfo中
-        ordering = Ordering.natural().onResultOf(new Function<FileInfo, Integer>() {
+        ordering = Ordering.natural().onResultOf(new Function<File, Integer>() {
             @Override
-            public Integer apply(FileInfo input) {
-                return input.isDir() ? 0 : 1;
+            public Integer apply(File input) {
+                return input.isDirectory() ? 0 : 1;
             }
         });
-
     }
 
     private void initView() {
@@ -90,10 +70,10 @@ public class FileExplorerActivity extends ToolbarActivity {
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         lvFileList.setLayoutManager(layoutManager);
 
-        mFileAdapter = new FileExplorerAdapter2(this,Environment.getExternalStorageDirectory());
+        mFileAdapter = new FileExplorerAdapter(this,Environment.getExternalStorageDirectory());
 
         tvDir.setText(Environment.getExternalStorageDirectory().getParent()+File.separator);
-        mFileAdapter.setFilePathChangedListener(new FileExplorerAdapter2.OnFilePathChangedListener() {
+        mFileAdapter.setFilePathChangedListener(new FileExplorerAdapter.OnFilePathChangedListener() {
             @Override
             public void onFilePathChanged(String path) {
                 tvDir.setText(path);
