@@ -5,8 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.ReadingActivity">
+    tools:context=".ui.main.ReadingActivity">
 
+    <com.xidian.yetwish.reading.ui.widget.EmptyRecyclerView
+        android:id="@+id/lvReading"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
     <!--fab-->
     <ImageButton

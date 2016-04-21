@@ -1,14 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <include
+    <HorizontalScrollView
         android:id="@+id/dirContainer"
-        layout="@layout/scroll_text_view"
         android:layout_width="wrap_content"
-        android:layout_height="?attr/actionBarSize" />
+        android:layout_height="?attr/actionBarSize"
+        android:scrollbars="none">
+
+        <TextView
+            android:id="@+id/tvDir"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:padding="5dp"
+            android:text="@string/dir_example"
+            android:textSize="@dimen/add_btn_text_size" />
+    </HorizontalScrollView>
+
+    <View
+        style="@style/Separator"
+        android:layout_below="@+id/dirContainer"/>
 
 
     <com.xidian.yetwish.reading.ui.widget.EmptyRecyclerView

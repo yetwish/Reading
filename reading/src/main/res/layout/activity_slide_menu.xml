@@ -6,7 +6,9 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
 
-    <RelativeLayout
+    <LinearLayout
+        android:id="@+id/rlMainContainer"
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -17,15 +19,10 @@
             android:background="?attr/colorPrimary"
             app:layout_scrollFlags="scroll|enterAlways"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
-        <!--main-->
-        <RelativeLayout
-            android:id="@+id/rlMainFrame"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
 
-    </RelativeLayout>
+    </LinearLayout>
 
-    <com.xidian.yetwish.reading.ui.SlideMenu
+    <com.xidian.yetwish.reading.ui.widget.SlideMenu
         android:id="@+id/slide_menu"
         android:layout_width="@dimen/slide_menu_width"
         android:layout_height="match_parent"

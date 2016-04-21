@@ -15,6 +15,11 @@ import java.util.regex.Pattern;
  */
 public class AppUtils {
 
+    private AppUtils(){
+         /* can not be instantiated */
+        throw new UnsupportedOperationException("can not be instantiated");
+    }
+
     /**
      * Checks if the application is in the background (i.e behind another application's Activity).
      *

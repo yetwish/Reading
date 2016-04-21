@@ -28,12 +28,15 @@
     <dimen name="item_margin_primary">5dp</dimen>
     <dimen name="item_margin_top">3dp</dimen>
 
+    <dimen name="dir_item_height">40dp</dimen>
+
     <dimen name="file_list_item_height">60dp</dimen>
     <dimen name="list_item_margin_left">15dp</dimen>
 
 
     <dimen name="item_primary_text_size">20sp</dimen>
-    <dimen name="item_secondary_text_size">15sp</dimen>
+    <dimen name="item_secondary_text_size">14sp</dimen>
+    <dimen name="book_secondary_text_size">14sp</dimen>
 
     <dimen name="menu_text_size">12sp</dimen>
     <dimen name="add_btn_text_size">18sp</dimen>

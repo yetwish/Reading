@@ -20,6 +20,8 @@ import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.daimajia.numberprogressbar.NumberProgressBar;
+
 /**
  * common view holder
  * Created by Yetwish on 2016/4/14 0014.
@@ -155,6 +157,12 @@ public class ViewHolder extends RecyclerView.ViewHolder {
             view.setTypeface(typeface);
             view.setPaintFlags(view.getPaintFlags() | Paint.SUBPIXEL_TEXT_FLAG);
         }
+        return this;
+    }
+
+    public ViewHolder setNumberProgress(int viewId, int progress) {
+        NumberProgressBar view = getView(viewId);
+        view.setProgress(progress);
         return this;
     }
 

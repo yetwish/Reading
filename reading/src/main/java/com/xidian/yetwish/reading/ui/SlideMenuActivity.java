@@ -2,15 +2,21 @@ package com.xidian.yetwish.reading.ui;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.xidian.yetwish.reading.R;
+import com.xidian.yetwish.reading.ui.main.NoteActivity;
+import com.xidian.yetwish.reading.ui.main.ReadActivity;
+import com.xidian.yetwish.reading.ui.main.ReadingActivity;
+import com.xidian.yetwish.reading.ui.widget.SlideMenu;
 
 /**
  * activity with a slide menu and a toolbar
@@ -21,7 +27,7 @@ public class SlideMenuActivity extends BaseActivity {
 
     protected Toolbar mToolbar;
     private DrawerLayout mDrawerLayout;
-    private RelativeLayout mMainLayout;
+    private LinearLayout mMainContainer;
 
     protected SlideMenu mSlideMenu;
     private Context mContext;
@@ -36,9 +42,10 @@ public class SlideMenuActivity extends BaseActivity {
 
     private void initSlideMenu() {
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
+        mMainContainer = (LinearLayout) findViewById(R.id.rlMainContainer);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
-        mToolbar.setTitleTextColor(getResources().getColor(R.color.colorWhite));
+        mToolbar.setTitleTextColor(ContextCompat.getColor(this, R.color.colorWhite));
 
         final ActionBar ab = getSupportActionBar();
         if (ab != null) {
@@ -86,15 +93,12 @@ public class SlideMenuActivity extends BaseActivity {
 
         });
 
-        mMainLayout = (RelativeLayout) findViewById(R.id.rlMainFrame);
     }
 
 
     protected void setMainLayout(int layoutResId) {
-        View view = LayoutInflater.from(this).inflate(layoutResId, null, false);
-        if (view != null)
-            mMainLayout.addView(view);
+        View view = LayoutInflater.from(this).inflate(layoutResId, null);
+        mMainContainer.addView(view);
     }
-
 
 }

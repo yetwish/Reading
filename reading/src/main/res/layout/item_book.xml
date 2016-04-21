@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/text_view_shadow"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="3dp">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_margin="5dp"
+        android:padding="5dp">
+
+        <ImageView
+            android:id="@+id/ivBookIcon"
+            android:layout_width="80dp"
+            android:layout_height="100dp"
+            android:scaleType="fitCenter"
+            android:src="@mipmap/book_icon" />
+
+        <TextView
+            android:id="@+id/tvBookName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_toRightOf="@+id/ivBookIcon"
+            android:text="@string/book_name_exam"
+            android:textColor="@color/colorPrimaryText"
+            android:textSize="@dimen/item_primary_text_size" />
+
+        <TextView
+            android:id="@+id/tvBookAuthor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@id/tvBookName"
+            android:layout_below="@id/tvBookName"
+            android:layout_marginTop="10dp"
+            android:text="@string/book_author_exam"
+            android:textColor="@color/colorSecondaryText"
+            android:textSize="@dimen/item_secondary_text_size" />
+
+        <com.daimajia.numberprogressbar.NumberProgressBar
+            android:id="@+id/pbBookProgress"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="5dp"
+            android:layout_marginRight="10dp"
+            app:progress="50"
+            app:max="100"
+            android:layout_alignLeft="@+id/tvBookName"
+            style="@style/NumberProgressBar_Default"/>
+
+        <ImageButton
+            android:layout_alignParentRight="true"
+            android:src="@mipmap/ic_event_note_blue_24dp"
+            android:layout_above="@id/pbBookProgress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/ivBookDelete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:background="@color/colorHighLight"
+        android:src="@mipmap/ic_clear_white_24dp"
+        android:visibility="gone" />
+
+
+</RelativeLayout>

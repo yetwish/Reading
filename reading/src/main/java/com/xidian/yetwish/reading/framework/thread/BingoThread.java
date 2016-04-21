@@ -1,4 +1,4 @@
-package com.xidian.yetwish.reading.thread;
+package com.xidian.yetwish.reading.framework.thread;
 
 import com.google.common.util.concurrent.FutureCallback;
 

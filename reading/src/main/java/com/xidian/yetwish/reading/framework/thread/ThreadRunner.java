@@ -1,4 +1,4 @@
-package com.xidian.yetwish.reading.thread;
+package com.xidian.yetwish.reading.framework.thread;
 
 import android.os.Handler;
 import android.os.Looper;
@@ -10,10 +10,10 @@ import com.google.common.util.concurrent.MoreExecutors;
 import com.xidian.yetwish.reading.utils.AppUtils;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -47,7 +47,7 @@ public class ThreadRunner {
 
     private void initThreadPool() {
 
-        mTasks = new HashMap<>();
+        mTasks = new ConcurrentHashMap<>();
 
         mMainHandler = new Handler(Looper.getMainLooper());
 
@@ -68,7 +68,7 @@ public class ThreadRunner {
             mTasks.put(task.mCallable, task);
         }
         ListenableFuture<List<V>> futures = Futures.successfulAsList(futureList);
-        FutureCallbackWrapper futureCallbackWrapper = new FutureCallbackWrapper(null,callback);
+        FutureCallbackWrapper futureCallbackWrapper = new FutureCallbackWrapper(null, callback);
         Futures.addCallback(futures, futureCallbackWrapper, mThreadPool);
     }
 
@@ -168,7 +168,7 @@ public class ThreadRunner {
 
         @Override
         public void run() {
-            if (mRealListener != null)
+            if (mRealListener != null)//线程执行完成
                 mMainHandler.post(mRealListener);
             mTasks.remove(mCallable);
         }
@@ -192,7 +192,8 @@ public class ThreadRunner {
                 public void run() {
                     if (mRealFutureCallback == null) return;
                     mRealFutureCallback.onSuccess(result);
-                    mTasks.remove(mCallable);
+                    if (mCallable != null)
+                        mTasks.remove(mCallable);
                 }
             });
         }

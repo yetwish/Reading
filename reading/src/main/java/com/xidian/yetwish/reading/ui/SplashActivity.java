@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.os.Message;
 
 import com.xidian.yetwish.reading.R;
+import com.xidian.yetwish.reading.ui.main.ReadingActivity;
 
 /**
  * splash activity

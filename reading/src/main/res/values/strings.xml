@@ -20,6 +20,9 @@
     <string name="add_book">加入读书计划</string>
     <string name="dir_example">\\ Android \\ app \\ demo \\ E.txt </string>
 
+    <string name="book_name_exam">Le Petit Prince</string>
+    <string name="book_author_exam">[法] 圣埃克苏佩里 </string>
+
     <string name="empty_no_txt">没有找到任何.TXT文件</string>
     <string name="empty_no_file">没有TXT文件</string>
 

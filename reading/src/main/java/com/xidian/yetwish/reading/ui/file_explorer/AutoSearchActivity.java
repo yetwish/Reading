@@ -1,8 +1,10 @@
 package com.xidian.yetwish.reading.ui.file_explorer;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,12 +13,16 @@ import android.widget.TextView;
 
 import com.google.common.util.concurrent.FutureCallback;
 import com.xidian.yetwish.reading.R;
-import com.xidian.yetwish.reading.thread.ThreadFactory;
-import com.xidian.yetwish.reading.thread.ThreadRunner;
+import com.xidian.yetwish.reading.database.bean.Book;
+import com.xidian.yetwish.reading.framework.eventbus.EventBusWrapper;
+import com.xidian.yetwish.reading.framework.eventbus.event.EventAddBooks;
+import com.xidian.yetwish.reading.framework.thread.ThreadFactory;
+import com.xidian.yetwish.reading.framework.thread.ThreadRunner;
 import com.xidian.yetwish.reading.ui.ToolbarActivity;
 import com.xidian.yetwish.reading.ui.file_explorer.adapter.SearchResultAdapter;
 import com.xidian.yetwish.reading.ui.widget.EmptyRecyclerView;
 import com.xidian.yetwish.reading.utils.LogUtils;
+
 
 import java.io.File;
 import java.io.IOException;
@@ -30,7 +36,8 @@ import java.util.concurrent.Callable;
  */
 public class AutoSearchActivity extends ToolbarActivity {
 
-    private static final String ROOT_DIR = "/";
+    //    private static final String SCAN_ROOT_DIR = "/";
+    private static final String SCAN_ROOT_DIR = Environment.getExternalStorageDirectory().getPath();
 
     private TXTFileFilter mFileFilter;
 
@@ -63,6 +70,7 @@ public class AutoSearchActivity extends ToolbarActivity {
         setMainLayout(R.layout.activity_search);
         fileList = new ArrayList<>();
         mFileFilter = new TXTFileFilter();
+//        EventBusWrapper.getDefault().register(new ReadingActivity());
         initView();
     }
 
@@ -101,6 +109,12 @@ public class AutoSearchActivity extends ToolbarActivity {
             @Override
             public void onClick(View v) {
                 //TODO show dialog,confirm to add books
+//                List<File> files = mAdapter.getCheckFiles();
+                List<Book> books = new ArrayList<Book>();
+                books.add(new Book(1, "Thinking in Java", "Bruce Eckel", 30, R.mipmap.thinking_in_java));
+                books.add(new Book(2, "Le Petit Prince", "[法] 圣埃克苏佩里", 96, R.mipmap.book_icon));
+                EventBusWrapper.getDefault().post(new EventAddBooks(books));
+                finish();
             }
         });
     }
@@ -109,8 +123,13 @@ public class AutoSearchActivity extends ToolbarActivity {
      * 多个线程同时遍历文件，从根文件夹开始遍历
      */
     private void concurrentScanFiles() {
-        showProgressDialog();
-        File rootFile = new File(ROOT_DIR);
+        showProgressDialog(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                cancelScanFiles();
+            }
+        });
+        File rootFile = new File(SCAN_ROOT_DIR);
         mMatchFiles = new ArrayList<>();
         File files[] = rootFile.listFiles(mFileFilter);
         if (files == null) return;
@@ -131,18 +150,18 @@ public class AutoSearchActivity extends ToolbarActivity {
             @Override
             public void onSuccess(List<File> result) {
                 LogUtils.w("success!");
-                hideDialog();
                 fileList.addAll(mMatchFiles);
                 mAdapter.notifyDataSetChanged();
+                hideProgressDialog();
 
             }
 
             @Override
             public void onFailure(Throwable t) {
                 LogUtils.w("failure!");
-                hideDialog();
                 fileList.addAll(mMatchFiles);
                 mAdapter.notifyDataSetChanged();
+                hideProgressDialog();
 
             }
         });
@@ -150,8 +169,11 @@ public class AutoSearchActivity extends ToolbarActivity {
     }
 
 
+    /**
+     * 单线程遍历
+     */
     private void startScanFiles() {
-        final File rootFile = new File(ROOT_DIR);
+        final File rootFile = new File(SCAN_ROOT_DIR);
         mMatchFiles = new ArrayList<>();
         ThreadFactory.createThread().start(new Runnable() {
             @Override
@@ -175,5 +197,31 @@ public class AutoSearchActivity extends ToolbarActivity {
         });
     }
 
+    /**
+     * 如果是在后台，内存不足给清理了，在onPause是否需要处理？
+     */
+    @Override
+    protected void onPause() {
+        super.onPause();
+        LogUtils.w("send pause");
+    }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        LogUtils.w("send stop");
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        cancelScanFiles();
+        LogUtils.w("send destroy");
+    }
+
+
+    private void cancelScanFiles() {
+        ThreadRunner.getInstance().cancelAll(true);
+    }
 }

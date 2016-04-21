@@ -1,4 +1,4 @@
-package com.xidian.yetwish.reading.thread;
+package com.xidian.yetwish.reading.framework.thread;
 
 /**
  * thread factory

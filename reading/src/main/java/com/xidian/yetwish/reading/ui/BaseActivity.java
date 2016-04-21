@@ -1,15 +1,15 @@
 package com.xidian.yetwish.reading.ui;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.xidian.yetwish.reading.R;
-import com.xidian.yetwish.reading.ui.dialog.DialogManager;
 
 /**
  * base activity,dialog and something
@@ -17,7 +17,7 @@ import com.xidian.yetwish.reading.ui.dialog.DialogManager;
  */
 public class BaseActivity extends AppCompatActivity {
 
-    private ProgressDialog mProgressDialog;
+    private MaterialDialog mProgressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,37 +43,52 @@ public class BaseActivity extends AppCompatActivity {
         showProgressDialog(getString(R.string.loading));
     }
 
-    protected void showProgressDialog(String info) {
-        DialogManager.getInstance().showProgressDialog(this, info);
-//        showProgressDialog(info, true);
+    protected void showProgressDialog(DialogInterface.OnDismissListener listener) {
+        showProgressDialog(getString(R.string.loading), listener);
     }
 
-    protected void showProgressDialog(String info, boolean cancelable) {
-        showProgressDialog("", info, cancelable);
+    protected void showProgressDialog(String msg) {
+        showProgressDialog(msg, false, null);
     }
 
-    protected void showProgressDialog(String title, String info,
-                                      boolean cancelable) {
-        if (!isFinishing()) {
-            if (mProgressDialog == null) {
-                mProgressDialog = ProgressDialog.show(this, title, info, true,
-                        cancelable, new DialogInterface.OnCancelListener() {
-                            @Override
-                            public void onCancel(DialogInterface dialogInterface) {
-                                mProgressDialog.dismiss();
-                            }
-                        });
-            } else {
-                if (!mProgressDialog.isShowing()) {
-                    mProgressDialog.show();
-                }
-            }
+    protected void showProgressDialog(String msg, DialogInterface.OnDismissListener listener) {
+        showProgressDialog(msg, false, listener);
+    }
 
+    protected void showProgressDialog(String msg, boolean cancelable, DialogInterface.OnDismissListener listener) {
+        if (mProgressDialog == null) {
+            mProgressDialog = new MaterialDialog.Builder(this)
+                    .content(msg)
+                    .progress(true, 0)
+                    .backgroundColor(ContextCompat.getColor(this, R.color.colorWhite))
+                    .contentColor(ContextCompat.getColor(this, R.color.colorAccent))
+                    .canceledOnTouchOutside(cancelable)
+                    .dismissListener(listener)
+                    .show();
+        } else if (!mProgressDialog.isShowing()) {
+            mProgressDialog.show();
         }
     }
 
-    protected void hideDialog(){
-        DialogManager.getInstance().hideDialog();
+    protected void hideProgressDialog() {
+        if (mProgressDialog != null && mProgressDialog.isShowing()) {
+            mProgressDialog.dismiss();
+        }
     }
 
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        destroyDialog();
+    }
+
+    private void hideDialog() {
+        hideProgressDialog();
+    }
+
+    private void destroyDialog() {
+        hideDialog();
+        mProgressDialog = null;
+    }
 }
