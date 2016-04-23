@@ -34,11 +34,11 @@
             android:launchMode="singleTask" />
 
         <activity
-            android:name=".ui.file_explorer.AutoSearchActivity"
+            android:name=".ui.file_browser.AutoSearchActivity"
             android:label="@string/search_title" />
 
         <activity
-            android:name=".ui.file_explorer.FileExplorerActivity"
+            android:name=".ui.file_browser.FileBrowserActivity"
             android:label="@string/explorer_title" />
 
     </application>

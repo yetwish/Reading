@@ -6,7 +6,7 @@ import android.widget.PopupWindow;
 
 import com.xidian.yetwish.reading.R;
 import com.xidian.yetwish.reading.ui.SlideMenuActivity;
-import com.xidian.yetwish.reading.utils.ScreenUtils;
+import com.xidian.yetwish.reading.framework.utils.ScreenUtils;
 
 /**
  * Popup window for FAB's menu  TODO refactoring + animation + frameBg

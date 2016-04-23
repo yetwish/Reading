@@ -5,7 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.View;
 
-import com.xidian.yetwish.reading.utils.LogUtils;
+import com.xidian.yetwish.reading.framework.utils.LogUtils;
 
 /**
  * Created by Yetwish on 2016/4/20 0020.

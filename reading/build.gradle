@@ -30,4 +30,5 @@ dependencies {
     compile('com.github.afollestad.material-dialogs:core:0.8.5.8@aar') {
         transitive = true
     }
+    compile 'org.greenrobot:greendao:2.2.0'
 }

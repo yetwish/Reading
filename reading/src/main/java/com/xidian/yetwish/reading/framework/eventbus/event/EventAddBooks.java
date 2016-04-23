@@ -1,7 +1,7 @@
 package com.xidian.yetwish.reading.framework.eventbus.event;
 
 
-import com.xidian.yetwish.reading.database.bean.Book;
+import com.xidian.yetwish.reading.framework.vo.Book;
 
 import java.util.List;
 

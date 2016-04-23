@@ -8,12 +8,11 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.view.animation.Animation;
 import android.widget.ImageButton;
 
 import com.google.common.eventbus.Subscribe;
 import com.xidian.yetwish.reading.R;
-import com.xidian.yetwish.reading.database.bean.Book;
+import com.xidian.yetwish.reading.framework.vo.Book;
 import com.xidian.yetwish.reading.framework.eventbus.EventBusWrapper;
 import com.xidian.yetwish.reading.framework.eventbus.event.EventAddBooks;
 import com.xidian.yetwish.reading.ui.main.adapter.BookListAdapter;
@@ -22,10 +21,10 @@ import com.xidian.yetwish.reading.ui.widget.SlideMenu;
 import com.xidian.yetwish.reading.ui.SlideMenuActivity;
 import com.xidian.yetwish.reading.ui.fab.OnFABItemClickListener;
 import com.xidian.yetwish.reading.ui.fab.PopupMenu;
-import com.xidian.yetwish.reading.ui.file_explorer.AutoSearchActivity;
-import com.xidian.yetwish.reading.ui.file_explorer.FileExplorerActivity;
-import com.xidian.yetwish.reading.utils.LogUtils;
-import com.xidian.yetwish.reading.utils.ScreenUtils;
+import com.xidian.yetwish.reading.ui.file_browser.AutoSearchActivity;
+import com.xidian.yetwish.reading.ui.file_browser.FileBrowserActivity;
+import com.xidian.yetwish.reading.framework.utils.LogUtils;
+import com.xidian.yetwish.reading.framework.utils.ScreenUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -179,7 +178,7 @@ public class ReadingActivity extends SlideMenuActivity {
 
         @Override
         public void onChoseManually() {
-            FileExplorerActivity.startActivity(ReadingActivity.this);
+            FileBrowserActivity.startActivity(ReadingActivity.this);
         }
     };
 

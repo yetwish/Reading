@@ -10,7 +10,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.xidian.yetwish.reading.R;
-import com.xidian.yetwish.reading.utils.LogUtils;
+import com.xidian.yetwish.reading.framework.utils.LogUtils;
 
 /**
  * slide menu

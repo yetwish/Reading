@@ -7,7 +7,7 @@ import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.google.common.util.concurrent.MoreExecutors;
-import com.xidian.yetwish.reading.utils.AppUtils;
+import com.xidian.yetwish.reading.framework.utils.AppUtils;
 
 import java.util.ArrayList;
 import java.util.List;

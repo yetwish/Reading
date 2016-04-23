@@ -6,11 +6,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.xidian.yetwish.reading.R;
-import com.xidian.yetwish.reading.database.bean.Book;
-import com.xidian.yetwish.reading.utils.LogUtils;
-import com.xidian.yetwish.reading.utils.common_adapter.CommonAdapter;
-import com.xidian.yetwish.reading.utils.common_adapter.OnItemClickListener;
-import com.xidian.yetwish.reading.utils.common_adapter.ViewHolder;
+import com.xidian.yetwish.reading.framework.vo.Book;
+import com.xidian.yetwish.reading.framework.utils.LogUtils;
+import com.xidian.yetwish.reading.framework.common_adapter.CommonAdapter;
+import com.xidian.yetwish.reading.framework.common_adapter.OnItemClickListener;
+import com.xidian.yetwish.reading.framework.common_adapter.ViewHolder;
 
 import java.util.List;
 
