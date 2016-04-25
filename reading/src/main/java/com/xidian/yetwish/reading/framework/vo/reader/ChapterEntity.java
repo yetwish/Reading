@@ -1,4 +1,4 @@
-package com.xidian.yetwish.reading.framework.reader.entity;
+package com.xidian.yetwish.reading.framework.vo.reader;
 
 /**
  * 章节entity

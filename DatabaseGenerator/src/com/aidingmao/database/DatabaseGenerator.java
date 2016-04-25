@@ -13,135 +13,104 @@ public class DatabaseGenerator {
 	public static void main(String[] args) throws Exception {
 		Schema schema = new Schema(DATABASE_VERSION,
 				"com.xidian.yetwish.reading.framework.database.generator");
-
-		addDepartment(schema);
-		addUser(schema);
-		addGroupMember(schema);
-		addSchedule(schema);
+		addBook(schema);
+		addNoteBook(schema);
+		addNote(schema);
+		addChapter(schema);
+		addPage(schema);
 		new DaoGenerator().generateAll(schema, "../reading/src/main/java");
 	}
-
-	private static void addSchedule(Schema schema) {
-		Entity schedule = schema.addEntity("Schedule");
-		schedule.addLongProperty("sid").primaryKey();
-		schedule.addLongProperty("uid");
-		schedule.addIntProperty("type");
-		schedule.addStringProperty("content");
-		schedule.addLongProperty("scheduleTime");
-		schedule.addStringProperty("createTime");
-		schedule.addStringProperty("hostName");
-		schedule.addIntProperty("alertTime");
-		schedule.addIntProperty("alertType");
-		schedule.addIntProperty("priority");
-		schedule.addStringProperty("mediaLocalPath");
-		schedule.addStringProperty("attachmentDigest");
+	
+	private static void addBook(Schema schema){
+		Entity book = schema.addEntity("Book");
+		book.addIdProperty().autoincrement();
+		Property bookId = book.addLongProperty("bookId").getProperty();
+		book.addStringProperty("name");
+		book.addStringProperty("author");
+		book.addStringProperty("language");
+		book.addFloatProperty("progress");
+		book.addStringProperty("iconPath");
+		book.addStringProperty("path");
+		
+		Index index = new Index();
+		index.addProperty(bookId);
+		index.makeUnique();
+		
+		book.addIndex(index);
+	}
+	
+	private static void addNoteBook(Schema schema){
+		Entity noteBook = schema.addEntity("NoteBook");
+		noteBook.addIdProperty().autoincrement();
+		Property noteBookId = noteBook.addLongProperty("NoteBookId").getProperty();
+		Property bookId = noteBook.addLongProperty("bookId").getProperty();
+		noteBook.addStringProperty("name");
+		noteBook.addStringProperty("iconPath");
+		noteBook.addIntProperty("size");
+		noteBook.addStringProperty("intro");
+		
+		Index index = new Index();
+		index.addProperty(noteBookId);
+		index.addProperty(bookId);
+		index.makeUnique();
+		
+		noteBook.addIndex(index);
 	}
 
-	private static void addGroupMember(Schema schema) {
-		Entity conver = schema.addEntity("GroupMember");
-		conver.addIdProperty().autoincrement();
-		Property cid = conver.addLongProperty("cid").getProperty();
-		Property uid = conver.addStringProperty("uid").getProperty();
-		conver.addStringProperty("userName");
+	private static void addNote(Schema schema){
+		Entity note = schema.addEntity("NoteBook");
+		note.addIdProperty().autoincrement();
+		Property noteBookId = note.addLongProperty("NoteBookId").getProperty();
+		Property noteId = note.addLongProperty("noteId").getProperty();
+		note.addStringProperty("name");
+		note.addStringProperty("path");
+		
+		Index index = new Index();
+		index.addProperty(noteBookId);
+		index.addProperty(noteId);
+		index.makeUnique();
+		
+		note.addIndex(index);
+	}
+	
+	
+	private static void addChapter(Schema schema) {
+		Entity chapter = schema.addEntity("Chapter");
+		chapter.addIdProperty().autoincrement();
+		Property chapterId = chapter.addLongProperty("chapterId").getProperty();
+		Property bookId = chapter.addLongProperty("bookId").getProperty();
+		chapter.addStringProperty("path");
+		chapter.addStringProperty("name");
+		chapter.addIntProperty("firstCharPosition");
+		chapter.addIntProperty("lastCharPosition");
+		chapter.addIntProperty("pageNumber");
+		
+		Index index = new Index();
+		index.addProperty(chapterId);
+		index.addProperty(bookId);
+		index.makeUnique();
+		
+		chapter.addIndex(index);
+
+	}
+
+	private static void addPage(Schema schema) {
+		Entity page = schema.addEntity("Page");
+		page.addIdProperty().autoincrement();
+		Property pageId = page.addLongProperty("pageId").getProperty();
+		Property chapterId = page.addLongProperty("chapterId").getProperty();
+		page.addLongProperty("firstCharPosition");
+		page.addLongProperty("lastCharPosition");
+		page.addStringProperty("path");
+		page.addStringProperty("content");
 
 		Index index = new Index();
-		index.addProperty(uid);
-		index.addProperty(cid);
+		index.addProperty(pageId);
+		index.addProperty(chapterId);
 		index.makeUnique();
-		conver.addIndex(index);
+
+		page.addIndex(index);
 	}
 
-	private static void addDepartment(Schema schema) {
-		Entity depart = schema.addEntity("Department");
-		depart.addIdProperty().autoincrement();
-		Property orgId = depart.addLongProperty("orgId").getProperty();
-		Property departId = depart.addLongProperty("departmentId")
-				.getProperty();
-		Property parentId = depart.addLongProperty("parentId").getProperty();
-		depart.addLongProperty("userCounts");
-		depart.addIntProperty("sequence");
-		depart.addStringProperty("name");
-		depart.addStringProperty("description");
-		depart.addStringProperty("parentIds");
-		depart.addStringProperty("orgName");
-
-		Index index = new Index();
-		index.addProperty(departId);
-		index.addProperty(orgId);
-		index.makeUnique();
-		depart.addIndex(index);
-
-		Index orgIdIndex = new Index();
-		orgIdIndex.addProperty(orgId);
-		depart.addIndex(orgIdIndex);
-
-		Index parentIdIndex = new Index();
-		parentIdIndex.addProperty(parentId);
-		parentIdIndex.addProperty(orgId);
-		depart.addIndex(parentIdIndex);
-	}
-
-	private static void addUser(Schema schema) {
-		Entity user = schema.addEntity("User");
-		user.addIdProperty().autoincrement();
-		Property uid = user.addLongProperty("uid").getProperty();
-		Property orgId = user.addLongProperty("orgId").getProperty();
-		Property departId = user.addLongProperty("departmentId").getProperty();
-		user.addIntProperty("sequence");
-		Property mobile = user.addStringProperty("mobile").getProperty();
-		user.addStringProperty("title");
-		Property name = user.addStringProperty("name").getProperty();
-		user.addStringProperty("pinyin");
-		user.addIntProperty("sex");
-		user.addStringProperty("email");
-		user.addStringProperty("homePhone");
-		user.addStringProperty("personalCellPhone");
-		user.addStringProperty("shortNum");
-		user.addStringProperty("shortNum2");
-		user.addStringProperty("workPhone");
-		user.addStringProperty("workPhone2");
-		user.addStringProperty("virtualCellPhone");
-		user.addStringProperty("remark");
-		user.addBooleanProperty("isAllowLogin");
-		user.addStringProperty("virtualCode");
-		user.addStringProperty("fax");
-		user.addStringProperty("shortPinyin");
-		user.addStringProperty("customField");
-		user.addStringProperty("privilege");
-		user.addStringProperty("orgName");
-
-		Index index = new Index();
-		index.addProperty(uid);
-		index.addProperty(departId);
-		index.addProperty(orgId);
-		index.makeUnique();
-		user.addIndex(index);
-
-		Index orgIdIndex = new Index();
-		orgIdIndex.addProperty(orgId);
-		user.addIndex(orgIdIndex);
-
-		Index nameIndex = new Index();
-		nameIndex.addProperty(name);
-		user.addIndex(nameIndex);
-
-		Index mobileIndex = new Index();
-		mobileIndex.addProperty(mobile);
-		user.addIndex(mobileIndex);
-
-		Index uidIndex = new Index();
-		uidIndex.addProperty(uid);
-		user.addIndex(uidIndex);
-
-		Index departIndex = new Index();
-		departIndex.addProperty(departId);
-		departIndex.addProperty(orgId);
-		user.addIndex(departIndex);
-
-		Index groupIndex = new Index();
-		groupIndex.addProperty(uid);
-		groupIndex.addProperty(orgId);
-		user.addIndex(groupIndex);
-	}
 
 }

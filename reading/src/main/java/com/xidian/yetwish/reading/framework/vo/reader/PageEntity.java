@@ -1,4 +1,4 @@
-package com.xidian.yetwish.reading.framework.reader.entity;
+package com.xidian.yetwish.reading.framework.vo.reader;
 
 /**
  * 页面实体类，position 包含头不包含尾

@@ -9,9 +9,8 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import com.xidian.yetwish.reading.R;
-import com.xidian.yetwish.reading.framework.reader.entity.PageEntity;
+import com.xidian.yetwish.reading.framework.vo.reader.PageEntity;
 import com.xidian.yetwish.reading.framework.utils.Constant;
-import com.xidian.yetwish.reading.framework.utils.LogUtils;
 import com.xidian.yetwish.reading.framework.utils.ScreenUtils;
 
 /**
