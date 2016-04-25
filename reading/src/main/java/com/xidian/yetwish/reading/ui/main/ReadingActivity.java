@@ -108,6 +108,7 @@ public class ReadingActivity extends SlideMenuActivity {
                         }
                     }
                 });
+
     }
 
 

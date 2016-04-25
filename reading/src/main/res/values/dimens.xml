@@ -19,6 +19,7 @@
     <dimen name="fab_sub_text_marginBottom">82dp</dimen>
 
     <dimen name="slide_menu_width">300dp</dimen>
+    <dimen name="reader_chapter_list_width">260dp</dimen>
 
     <dimen name="menu_height">50dp</dimen>
     <dimen name="menu_setting_height">40dp</dimen>
@@ -44,5 +45,11 @@
 
 
     <dimen name="empty_text_size">26sp</dimen>
+
+
+    <dimen name="reader_content_size">16sp</dimen>
+    <dimen name="reader_info_size">14sp</dimen>
+
+    <dimen name="reader_view_margin_outside">10dp</dimen>
 
 </resources>

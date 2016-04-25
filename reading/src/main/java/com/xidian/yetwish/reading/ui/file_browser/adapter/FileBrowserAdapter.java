@@ -24,7 +24,7 @@ import java.util.Map;
  * todo ui
  * Created by Yetwish on 2016/4/14 0014.
  */
-public class FileExplorerAdapter extends CommonAdapter<File> {
+public class FileBrowserAdapter extends CommonAdapter<File> {
 
     //filePath -> isCheck
     private Map<String, Boolean> mCheckMap;
@@ -44,7 +44,7 @@ public class FileExplorerAdapter extends CommonAdapter<File> {
         mFilePathListener.onFilePathChanged(mCurrentPath);
     }
 
-    public FileExplorerAdapter(Context context, File rootFile) {
+    public FileBrowserAdapter(Context context, File rootFile) {
         super(context, R.layout.item_file_list, null);
         mData = new ArrayList<>();
         mCheckMap = new HashMap<>();

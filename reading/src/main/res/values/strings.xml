@@ -15,6 +15,8 @@
     <string name="auto_searching">自动扫描</string>
     <string name="chose_manual">手动选择</string>
 
+    <string name="reader_title">Reading</string>
+
     <string name="search_title">扫描结果</string>
     <string name="explorer_title">导入书籍</string>
     <string name="add_book">加入读书计划</string>

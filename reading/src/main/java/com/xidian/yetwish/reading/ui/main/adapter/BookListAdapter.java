@@ -11,6 +11,7 @@ import com.xidian.yetwish.reading.framework.utils.LogUtils;
 import com.xidian.yetwish.reading.framework.common_adapter.CommonAdapter;
 import com.xidian.yetwish.reading.framework.common_adapter.OnItemClickListener;
 import com.xidian.yetwish.reading.framework.common_adapter.ViewHolder;
+import com.xidian.yetwish.reading.ui.main.ReaderActivity;
 
 import java.util.List;
 
@@ -20,16 +21,16 @@ import java.util.List;
 public class BookListAdapter extends CommonAdapter<Book> {
 
 
-    public BookListAdapter(Context context, List<Book> data) {
+    public BookListAdapter(final Context context, List<Book> data) {
         super(context, R.layout.item_book, data);
-        setItemClickListener(new OnItemClickListener() {
+        setItemClickListener(new OnItemClickListener<Book>() {
             @Override
-            public void onItemClick(ViewGroup parent, View view, Object data, int position) {
-
+            public void onItemClick(ViewGroup parent, View view, Book data, int position) {
+                ReaderActivity.startActivity(context,data.getFilePath());
             }
 
             @Override
-            public void onItemLongClick(ViewGroup parent, View view, Object data, int position) {
+            public void onItemLongClick(ViewGroup parent, View view, Book data, int position) {
                 ImageView ivDelete = (ImageView) view.findViewById(R.id.ivBookDelete);
                 ivDelete.setVisibility(View.VISIBLE);
             }

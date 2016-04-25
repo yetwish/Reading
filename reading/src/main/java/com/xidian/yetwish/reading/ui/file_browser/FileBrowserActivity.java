@@ -12,7 +12,7 @@ import com.google.common.base.Function;
 import com.google.common.collect.Ordering;
 import com.xidian.yetwish.reading.R;
 import com.xidian.yetwish.reading.ui.ToolbarActivity;
-import com.xidian.yetwish.reading.ui.file_browser.adapter.FileExplorerAdapter;
+import com.xidian.yetwish.reading.ui.file_browser.adapter.FileBrowserAdapter;
 import com.xidian.yetwish.reading.ui.widget.EmptyRecyclerView;
 
 import java.io.File;
@@ -35,7 +35,7 @@ public class FileBrowserActivity extends ToolbarActivity {
 
     private EmptyRecyclerView lvFileList;
 
-    private FileExplorerAdapter mFileAdapter;
+    private FileBrowserAdapter mFileAdapter;
 
     Ordering<File> ordering;
 
@@ -75,9 +75,9 @@ public class FileBrowserActivity extends ToolbarActivity {
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         lvFileList.setLayoutManager(layoutManager);
 
-        mFileAdapter = new FileExplorerAdapter(this, Environment.getExternalStorageDirectory());
+        mFileAdapter = new FileBrowserAdapter(this, Environment.getExternalStorageDirectory());
 
-        mFileAdapter.setFilePathChangedListener(new FileExplorerAdapter.OnFilePathChangedListener() {
+        mFileAdapter.setFilePathChangedListener(new FileBrowserAdapter.OnFilePathChangedListener() {
             @Override
             public void onFilePathChanged(String path) {
                 tvDir.setText(path);

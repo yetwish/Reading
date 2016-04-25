@@ -74,7 +74,7 @@ public class AutoSearchActivity extends ToolbarActivity {
         initView();
     }
 
-    private void scanAllFiles(File rootFile) throws IOException {
+    private synchronized void scanAllFiles(File rootFile) throws IOException {
         File[] files = rootFile.listFiles(mFileFilter);
         if (files == null) return;
         for (File file : files) {

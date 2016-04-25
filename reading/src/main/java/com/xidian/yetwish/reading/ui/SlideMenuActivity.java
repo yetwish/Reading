@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.xidian.yetwish.reading.R;
+import com.xidian.yetwish.reading.framework.utils.LogUtils;
 import com.xidian.yetwish.reading.ui.main.NoteActivity;
 import com.xidian.yetwish.reading.ui.main.ReadActivity;
 import com.xidian.yetwish.reading.ui.main.ReadingActivity;
@@ -93,6 +94,17 @@ public class SlideMenuActivity extends BaseActivity {
 
         });
 
+    }
+
+    //close drawer when press the back key while drawer is open.
+    @Override
+    public void onBackPressed() {
+        LogUtils.w(mDrawerLayout.isDrawerOpen(mSlideMenu)+"");
+        if(mDrawerLayout.isDrawerOpen(mSlideMenu)){
+            mDrawerLayout.closeDrawers();
+        }else {
+            super.onBackPressed();
+        }
     }
 
 

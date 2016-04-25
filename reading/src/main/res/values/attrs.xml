@@ -1,9 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    
+
     <declare-styleable name="FABMenuItem">
-        <attr name="text" format="string"/>
-        <attr name="src" format="reference"/>
+        <attr name="text" format="string" />
+        <attr name="src" format="reference" />
+    </declare-styleable>
+
+    <declare-styleable name="ReaderView">
+        <attr name="Theme">
+            <flag name="day" value="0" />
+            <flag name="night" value="0x01" />
+        </attr>
+        <attr name="textSize" format="dimension" />
+        <attr name="flipMode">
+            <flag name="slide" value="0" />
+            <flag name="flip" value="0x01" />
+        </attr>
     </declare-styleable>
 
 </resources>
