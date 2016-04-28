@@ -3,7 +3,7 @@ package com.xidian.yetwish.reading.framework.database.manager;
 import android.os.Handler;
 
 import com.xidian.yetwish.reading.framework.database.DatabaseManager;
-import com.xidian.yetwish.reading.framework.vo.reader.ChapterEntity;
+import com.xidian.yetwish.reading.framework.vo.reader.ChapterVo;
 
 import java.util.List;
 
@@ -23,7 +23,7 @@ public class DbChapterManager {
 
     }
 
-    public List<ChapterEntity> query(){
+    public List<ChapterVo> query(){
 
         return null;
     }

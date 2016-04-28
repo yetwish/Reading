@@ -7,7 +7,7 @@ package com.xidian.yetwish.reading.framework.database.generator;
 public class Book {
 
     private Long id;
-    private Long bookId;
+    private String bookId;
     private String name;
     private String author;
     private String language;
@@ -22,7 +22,7 @@ public class Book {
         this.id = id;
     }
 
-    public Book(Long id, Long bookId, String name, String author, String language, Float progress, String iconPath, String path) {
+    public Book(Long id, String bookId, String name, String author, String language, Float progress, String iconPath, String path) {
         this.id = id;
         this.bookId = bookId;
         this.name = name;
@@ -41,11 +41,11 @@ public class Book {
         this.id = id;
     }
 
-    public Long getBookId() {
+    public String getBookId() {
         return bookId;
     }
 
-    public void setBookId(Long bookId) {
+    public void setBookId(String bookId) {
         this.bookId = bookId;
     }
 

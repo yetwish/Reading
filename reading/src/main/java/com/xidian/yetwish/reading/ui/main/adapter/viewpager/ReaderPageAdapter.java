@@ -7,20 +7,32 @@ import android.view.ViewGroup;
 
 import com.xidian.yetwish.reading.ui.widget.ReaderView;
 
+import java.util.List;
+
 /**
  * view pager adapter
  * Created by Yetwish on 2016/4/25 0025.
  */
-public class ReaderPageAdapter extends PagerAdapter {
+public class ReaderPageAdapter extends PagerAdapter implements View.OnClickListener {
 
     private Context mContext;
-    public ReaderPageAdapter(Context context){
-        mContext = context;
+    private List<ReaderView> mViews;
+
+    public ReaderPageAdapter(Context context, List<ReaderView> views, OnClickListener listener) {
+        this.mContext = context;
+        this.mViews = views;
+        this.mClickListener = listener;
+    }
+
+    private OnClickListener mClickListener;
+
+    public void setOnClickListener(OnClickListener listener) {
+        mClickListener = listener;
     }
 
     @Override
     public int getCount() {
-        return 10;
+        return mViews.size();
     }
 
     @Override
@@ -30,13 +42,26 @@ public class ReaderPageAdapter extends PagerAdapter {
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
-        View view = new ReaderView(mContext);
+        View view = mViews.get(position);
+        view.setOnClickListener(this);
         container.addView(view);
         return view;
     }
 
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
-        super.destroyItem(container, position, object);
+        container.removeView(mViews.get(position));
     }
+
+    @Override
+    public void onClick(View v) {
+        if (mClickListener != null)
+            mClickListener.onClick();
+    }
+
+    public interface OnClickListener {
+        void onClick();
+    }
+
+
 }

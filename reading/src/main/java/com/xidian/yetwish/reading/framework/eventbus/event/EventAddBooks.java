@@ -1,7 +1,7 @@
 package com.xidian.yetwish.reading.framework.eventbus.event;
 
 
-import com.xidian.yetwish.reading.framework.vo.Book;
+import com.xidian.yetwish.reading.framework.vo.BookVo;
 
 import java.util.List;
 
@@ -10,13 +10,13 @@ import java.util.List;
  */
 public class EventAddBooks {
 
-    private List<Book> bookList;
+    private List<BookVo> bookVoList;
 
-    public EventAddBooks(List<Book> books) {
-        this.bookList = books;
+    public EventAddBooks(List<BookVo> bookEntities) {
+        this.bookVoList = bookEntities;
     }
 
-    public List<Book> getBookList(){
-        return bookList;
+    public List<BookVo> getBookList(){
+        return bookVoList;
     }
 }

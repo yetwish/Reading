@@ -7,10 +7,12 @@ package com.xidian.yetwish.reading.framework.database.generator;
 public class NoteBook {
 
     private Long id;
-    private Long NoteBookId;
-    private Long noteId;
+    private String NoteBookId;
+    private String bookId;
     private String name;
-    private String path;
+    private String iconPath;
+    private Integer noteNumber;
+    private String intro;
 
     public NoteBook() {
     }
@@ -19,12 +21,14 @@ public class NoteBook {
         this.id = id;
     }
 
-    public NoteBook(Long id, Long NoteBookId, Long noteId, String name, String path) {
+    public NoteBook(Long id, String NoteBookId, String bookId, String name, String iconPath, Integer noteNumber, String intro) {
         this.id = id;
         this.NoteBookId = NoteBookId;
-        this.noteId = noteId;
+        this.bookId = bookId;
         this.name = name;
-        this.path = path;
+        this.iconPath = iconPath;
+        this.noteNumber = noteNumber;
+        this.intro = intro;
     }
 
     public Long getId() {
@@ -35,20 +39,20 @@ public class NoteBook {
         this.id = id;
     }
 
-    public Long getNoteBookId() {
+    public String getNoteBookId() {
         return NoteBookId;
     }
 
-    public void setNoteBookId(Long NoteBookId) {
+    public void setNoteBookId(String NoteBookId) {
         this.NoteBookId = NoteBookId;
     }
 
-    public Long getNoteId() {
-        return noteId;
+    public String getBookId() {
+        return bookId;
     }
 
-    public void setNoteId(Long noteId) {
-        this.noteId = noteId;
+    public void setBookId(String bookId) {
+        this.bookId = bookId;
     }
 
     public String getName() {
@@ -59,12 +63,28 @@ public class NoteBook {
         this.name = name;
     }
 
-    public String getPath() {
-        return path;
+    public String getIconPath() {
+        return iconPath;
     }
 
-    public void setPath(String path) {
-        this.path = path;
+    public void setIconPath(String iconPath) {
+        this.iconPath = iconPath;
+    }
+
+    public Integer getNoteNumber() {
+        return noteNumber;
+    }
+
+    public void setNoteNumber(Integer noteNumber) {
+        this.noteNumber = noteNumber;
+    }
+
+    public String getIntro() {
+        return intro;
+    }
+
+    public void setIntro(String intro) {
+        this.intro = intro;
     }
 
 }

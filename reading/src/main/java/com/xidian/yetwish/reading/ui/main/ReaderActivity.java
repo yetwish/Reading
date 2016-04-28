@@ -7,12 +7,10 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.view.GravityCompat;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 
 import com.google.common.collect.ImmutableList;
@@ -45,6 +43,8 @@ public class ReaderActivity extends Activity {
     private DrawerLayout mDrawerLayout;
     private EmptyRecyclerView lvChapter;
 
+    private List<ReaderView> readerList = new ArrayList<>();
+
 //    private ReaderView mReaderView;
 
     private ViewPager mViewPager;
@@ -58,6 +58,9 @@ public class ReaderActivity extends Activity {
         super.onCreate(savedInstanceState);
 //        hideStatusBar();
         setContentView(R.layout.activity_reader);
+        for (int i = 0; i < 10; i++) {
+            readerList.add(new ReaderView(ReaderActivity.this));
+        }
         initView();
         initData();
     }
@@ -77,6 +80,8 @@ public class ReaderActivity extends Activity {
                 mChapterAdapter.notifyDataSetChanged();
             }
         });
+
+
     }
 
     private void initView() {
@@ -90,20 +95,26 @@ public class ReaderActivity extends Activity {
         lvChapter.setAdapter(mChapterAdapter);
 
         mViewPager = (ViewPager) findViewById(R.id.vpReaderContainer);
-        mViewPager.setPageTransformer(true,new DepthPageTransformer());
-        mViewPager.setAdapter(new ReaderPageAdapter(ReaderActivity.this));
+        mViewPager.setPageTransformer(true, new DepthPageTransformer());
+        mViewPager.setAdapter(new ReaderPageAdapter(ReaderActivity.this, readerList,
+                new ReaderPageAdapter.OnClickListener() {
+                    @Override
+                    public void onClick() {
+                        mDrawerLayout.openDrawer(GravityCompat.START);
+                    }
+                }));
 
 //        mReaderView = (ReaderView) findViewById(R.id.mReaderView);
 
 //        关闭滑动手势
         mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
 
-        mViewPager.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mDrawerLayout.openDrawer(GravityCompat.START);
-            }
-        });
+//        mViewPager.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//            }
+//        });
 
         mDrawerLayout.addDrawerListener(new DrawerLayout.DrawerListener() {
             @Override

@@ -13,16 +13,16 @@
         android:layout_marginTop="30dp"
         android:contentDescription="@string/des_avatar"
         android:scaleType="centerCrop"
-        android:src="@mipmap/ic_launcher" />
+        android:src="@mipmap/ic_account_circle_white_48dp" />
 
     <TextView
-        android:layout_marginTop="@dimen/menu_margin_left"
-        android:layout_marginLeft="@dimen/menu_margin_left"
-        android:layout_marginStart="@dimen/menu_margin_left"
         android:id="@+id/tv_menu_user"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/iv_menu_avatar"
+        android:layout_marginLeft="@dimen/menu_margin_left"
+        android:layout_marginStart="@dimen/menu_margin_left"
+        android:layout_marginTop="@dimen/menu_margin_left"
         android:gravity="center"
         android:text="@string/user_name"
         android:textColor="@color/colorWhite" />
@@ -31,10 +31,10 @@
         android:id="@+id/tv_menu_intro"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/tv_menu_user"
+        android:layout_alignStart="@+id/tv_menu_user"
         android:layout_below="@+id/tv_menu_user"
         android:layout_marginTop="6dp"
-        android:layout_alignStart="@+id/tv_menu_user"
-        android:layout_alignLeft="@+id/tv_menu_user"
         android:gravity="center"
         android:text="@string/user_intro"
         android:textColor="@color/colorWhite" />
@@ -80,28 +80,30 @@
 
 
     <TextView
-        android:clickable="true"
-        android:layout_above="@+id/menuUpdate"
         android:id="@+id/menuSetting"
-        android:text="@string/setting"
+        style="@style/Button_Menu"
+        android:layout_above="@+id/menuUpdate"
+        android:clickable="true"
         android:drawableLeft="@drawable/menu_setting_bg"
         android:drawableStart="@drawable/menu_setting_bg"
-        style="@style/Button_Menu"/>
+        android:text="@string/setting" />
+
     <TextView
-        android:clickable="true"
-        android:layout_above="@+id/menuAbout"
         android:id="@+id/menuUpdate"
-        android:text="@string/check_update"
+        style="@style/Button_Menu"
+        android:layout_above="@+id/menuAbout"
+        android:clickable="true"
         android:drawableLeft="@drawable/menu_update_bg"
         android:drawableStart="@drawable/menu_update_bg"
-        style="@style/Button_Menu"/>
+        android:text="@string/check_update" />
+
     <TextView
-        android:clickable="true"
-        android:layout_alignParentBottom="true"
         android:id="@+id/menuAbout"
-        android:text="@string/about"
+        style="@style/Button_Menu"
+        android:layout_alignParentBottom="true"
+        android:clickable="true"
         android:drawableLeft="@drawable/menu_reading_bg"
         android:drawableStart="@drawable/menu_reading_bg"
-        style="@style/Button_Menu"/>
+        android:text="@string/about" />
 
 </RelativeLayout>

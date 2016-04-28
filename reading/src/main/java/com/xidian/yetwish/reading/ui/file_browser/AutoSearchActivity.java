@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import com.google.common.util.concurrent.FutureCallback;
 import com.xidian.yetwish.reading.R;
-import com.xidian.yetwish.reading.framework.vo.Book;
+import com.xidian.yetwish.reading.framework.vo.BookVo;
 import com.xidian.yetwish.reading.framework.eventbus.EventBusWrapper;
 import com.xidian.yetwish.reading.framework.eventbus.event.EventAddBooks;
 import com.xidian.yetwish.reading.framework.thread.ThreadFactory;
@@ -110,9 +110,9 @@ public class AutoSearchActivity extends ToolbarActivity {
             public void onClick(View v) {
                 //TODO show dialog,confirm to add books
 //                List<File> files = mAdapter.getCheckFiles();
-                List<Book> books = new ArrayList<Book>();
-                books.add(new Book(1, "Thinking in Java", "Bruce Eckel", 30, R.mipmap.thinking_in_java));
-                books.add(new Book(2, "Le Petit Prince", "[法] 圣埃克苏佩里", 96, R.mipmap.book_icon));
+                List<BookVo> books = new ArrayList<BookVo>();
+                books.add(new BookVo("1", "Thinking in Java", "Bruce Eckel", 30, R.mipmap.thinking_in_java));
+                books.add(new BookVo("2", "Le Petit Prince", "[法] 圣埃克苏佩里", 96, R.mipmap.book_icon));
                 EventBusWrapper.getDefault().post(new EventAddBooks(books));
                 finish();
             }

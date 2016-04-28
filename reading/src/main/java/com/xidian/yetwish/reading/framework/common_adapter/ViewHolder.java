@@ -160,9 +160,9 @@ public class ViewHolder extends RecyclerView.ViewHolder {
         return this;
     }
 
-    public ViewHolder setNumberProgress(int viewId, int progress) {
+    public ViewHolder setNumberProgress(int viewId, float progress) {
         NumberProgressBar view = getView(viewId);
-        view.setProgress(progress);
+        view.setProgress((int)progress);
         return this;
     }
 

@@ -5,17 +5,17 @@ import android.graphics.Bitmap;
 /**
  * Created by Yetwish on 2016/4/21 0021.
  */
-public class Book {
-    private int bookId;
+public class BookVo {
+    private String bookId;
     private String name;
     private String author;
     private String language;
-    private int progress;
-    private Bitmap icon;
+    private float progress;
+    private String iconPath;
     private int iconResId;
     private String filePath;
 
-    public Book(int bookId,String name,String author,int progress,int resId){
+    public BookVo(String bookId, String name, String author, float progress, int resId){
         this.bookId = bookId;
         this.name = name;
         this.author = author;
@@ -23,11 +23,11 @@ public class Book {
         this.iconResId = resId;
     }
 
-    public int getBookId() {
+    public String getBookId() {
         return bookId;
     }
 
-    public void setBookId(int bookId) {
+    public void setBookId(String bookId) {
         this.bookId = bookId;
     }
 
@@ -55,20 +55,20 @@ public class Book {
         this.language = language;
     }
 
-    public int getProgress() {
+    public float getProgress() {
         return progress;
     }
 
-    public void setProgress(int progress) {
+    public void setProgress(float progress) {
         this.progress = progress;
     }
 
-    public Bitmap getIcon() {
-        return icon;
+    public String getIconPath() {
+        return iconPath;
     }
 
-    public void setIcon(Bitmap icon) {
-        this.icon = icon;
+    public void setIconPath(String iconPath) {
+        this.iconPath = iconPath;
     }
 
     public int getIconResId() {

@@ -9,7 +9,7 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import com.xidian.yetwish.reading.R;
-import com.xidian.yetwish.reading.framework.vo.reader.PageEntity;
+import com.xidian.yetwish.reading.framework.vo.reader.PageVo;
 import com.xidian.yetwish.reading.framework.utils.Constant;
 import com.xidian.yetwish.reading.framework.utils.ScreenUtils;
 
@@ -50,7 +50,7 @@ public class ReaderView extends View {
     private int mTheme;
     private int mFlagMode;
 
-    private PageEntity mPageEntity;
+    private PageVo mPageVo;
 
     public ReaderView(Context context) {
         this(context, null);
@@ -111,8 +111,8 @@ public class ReaderView extends View {
         mBgPaint.setStyle(Paint.Style.FILL);
     }
 
-    public void setData(PageEntity pageEntity) {
-        this.mPageEntity = pageEntity;
+    public void setData(PageVo pageVo) {
+        this.mPageVo = pageVo;
     }
 
 
@@ -127,7 +127,7 @@ public class ReaderView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-//        if(mPageEntity == null)
+//        if(mPageVo == null)
 //            return;
 
         int lineCount = 21;

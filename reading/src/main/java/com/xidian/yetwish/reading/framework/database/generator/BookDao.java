@@ -24,7 +24,7 @@ public class BookDao extends AbstractDao<Book, Long> {
     */
     public static class Properties {
         public final static Property Id = new Property(0, Long.class, "id", true, "_id");
-        public final static Property BookId = new Property(1, Long.class, "bookId", false, "BOOK_ID");
+        public final static Property BookId = new Property(1, String.class, "bookId", false, "BOOK_ID");
         public final static Property Name = new Property(2, String.class, "name", false, "NAME");
         public final static Property Author = new Property(3, String.class, "author", false, "AUTHOR");
         public final static Property Language = new Property(4, String.class, "language", false, "LANGUAGE");
@@ -47,7 +47,7 @@ public class BookDao extends AbstractDao<Book, Long> {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "'BOOK' (" + //
                 "'_id' INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: id
-                "'BOOK_ID' INTEGER," + // 1: bookId
+                "'BOOK_ID' TEXT," + // 1: bookId
                 "'NAME' TEXT," + // 2: name
                 "'AUTHOR' TEXT," + // 3: author
                 "'LANGUAGE' TEXT," + // 4: language
@@ -75,9 +75,9 @@ public class BookDao extends AbstractDao<Book, Long> {
             stmt.bindLong(1, id);
         }
  
-        Long bookId = entity.getBookId();
+        String bookId = entity.getBookId();
         if (bookId != null) {
-            stmt.bindLong(2, bookId);
+            stmt.bindString(2, bookId);
         }
  
         String name = entity.getName();
@@ -122,7 +122,7 @@ public class BookDao extends AbstractDao<Book, Long> {
     public Book readEntity(Cursor cursor, int offset) {
         Book entity = new Book( //
             cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
-            cursor.isNull(offset + 1) ? null : cursor.getLong(offset + 1), // bookId
+            cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // bookId
             cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // name
             cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // author
             cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // language
@@ -137,7 +137,7 @@ public class BookDao extends AbstractDao<Book, Long> {
     @Override
     public void readEntity(Cursor cursor, Book entity, int offset) {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
-        entity.setBookId(cursor.isNull(offset + 1) ? null : cursor.getLong(offset + 1));
+        entity.setBookId(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
         entity.setName(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
         entity.setAuthor(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
         entity.setLanguage(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));

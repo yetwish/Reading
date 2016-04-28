@@ -10,7 +10,7 @@ import de.greenrobot.dao.identityscope.IdentityScopeType;
 
 import com.xidian.yetwish.reading.framework.database.generator.BookDao;
 import com.xidian.yetwish.reading.framework.database.generator.NoteBookDao;
-import com.xidian.yetwish.reading.framework.database.generator.NoteBookDao;
+import com.xidian.yetwish.reading.framework.database.generator.NoteDao;
 import com.xidian.yetwish.reading.framework.database.generator.ChapterDao;
 import com.xidian.yetwish.reading.framework.database.generator.PageDao;
 
@@ -25,7 +25,7 @@ public class DaoMaster extends AbstractDaoMaster {
     public static void createAllTables(SQLiteDatabase db, boolean ifNotExists) {
         BookDao.createTable(db, ifNotExists);
         NoteBookDao.createTable(db, ifNotExists);
-        NoteBookDao.createTable(db, ifNotExists);
+        NoteDao.createTable(db, ifNotExists);
         ChapterDao.createTable(db, ifNotExists);
         PageDao.createTable(db, ifNotExists);
     }
@@ -34,7 +34,7 @@ public class DaoMaster extends AbstractDaoMaster {
     public static void dropAllTables(SQLiteDatabase db, boolean ifExists) {
         BookDao.dropTable(db, ifExists);
         NoteBookDao.dropTable(db, ifExists);
-        NoteBookDao.dropTable(db, ifExists);
+        NoteDao.dropTable(db, ifExists);
         ChapterDao.dropTable(db, ifExists);
         PageDao.dropTable(db, ifExists);
     }
@@ -70,7 +70,7 @@ public class DaoMaster extends AbstractDaoMaster {
         super(db, SCHEMA_VERSION);
         registerDaoClass(BookDao.class);
         registerDaoClass(NoteBookDao.class);
-        registerDaoClass(NoteBookDao.class);
+        registerDaoClass(NoteDao.class);
         registerDaoClass(ChapterDao.class);
         registerDaoClass(PageDao.class);
     }

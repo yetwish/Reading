@@ -11,13 +11,13 @@ import de.greenrobot.dao.internal.DaoConfig;
 
 import com.xidian.yetwish.reading.framework.database.generator.Book;
 import com.xidian.yetwish.reading.framework.database.generator.NoteBook;
-import com.xidian.yetwish.reading.framework.database.generator.NoteBook;
+import com.xidian.yetwish.reading.framework.database.generator.Note;
 import com.xidian.yetwish.reading.framework.database.generator.Chapter;
 import com.xidian.yetwish.reading.framework.database.generator.Page;
 
 import com.xidian.yetwish.reading.framework.database.generator.BookDao;
 import com.xidian.yetwish.reading.framework.database.generator.NoteBookDao;
-import com.xidian.yetwish.reading.framework.database.generator.NoteBookDao;
+import com.xidian.yetwish.reading.framework.database.generator.NoteDao;
 import com.xidian.yetwish.reading.framework.database.generator.ChapterDao;
 import com.xidian.yetwish.reading.framework.database.generator.PageDao;
 
@@ -32,13 +32,13 @@ public class DaoSession extends AbstractDaoSession {
 
     private final DaoConfig bookDaoConfig;
     private final DaoConfig noteBookDaoConfig;
-    private final DaoConfig noteBookDaoConfig;
+    private final DaoConfig noteDaoConfig;
     private final DaoConfig chapterDaoConfig;
     private final DaoConfig pageDaoConfig;
 
     private final BookDao bookDao;
     private final NoteBookDao noteBookDao;
-    private final NoteBookDao noteBookDao;
+    private final NoteDao noteDao;
     private final ChapterDao chapterDao;
     private final PageDao pageDao;
 
@@ -52,8 +52,8 @@ public class DaoSession extends AbstractDaoSession {
         noteBookDaoConfig = daoConfigMap.get(NoteBookDao.class).clone();
         noteBookDaoConfig.initIdentityScope(type);
 
-        noteBookDaoConfig = daoConfigMap.get(NoteBookDao.class).clone();
-        noteBookDaoConfig.initIdentityScope(type);
+        noteDaoConfig = daoConfigMap.get(NoteDao.class).clone();
+        noteDaoConfig.initIdentityScope(type);
 
         chapterDaoConfig = daoConfigMap.get(ChapterDao.class).clone();
         chapterDaoConfig.initIdentityScope(type);
@@ -63,13 +63,13 @@ public class DaoSession extends AbstractDaoSession {
 
         bookDao = new BookDao(bookDaoConfig, this);
         noteBookDao = new NoteBookDao(noteBookDaoConfig, this);
-        noteBookDao = new NoteBookDao(noteBookDaoConfig, this);
+        noteDao = new NoteDao(noteDaoConfig, this);
         chapterDao = new ChapterDao(chapterDaoConfig, this);
         pageDao = new PageDao(pageDaoConfig, this);
 
         registerDao(Book.class, bookDao);
         registerDao(NoteBook.class, noteBookDao);
-        registerDao(NoteBook.class, noteBookDao);
+        registerDao(Note.class, noteDao);
         registerDao(Chapter.class, chapterDao);
         registerDao(Page.class, pageDao);
     }
@@ -77,7 +77,7 @@ public class DaoSession extends AbstractDaoSession {
     public void clear() {
         bookDaoConfig.getIdentityScope().clear();
         noteBookDaoConfig.getIdentityScope().clear();
-        noteBookDaoConfig.getIdentityScope().clear();
+        noteDaoConfig.getIdentityScope().clear();
         chapterDaoConfig.getIdentityScope().clear();
         pageDaoConfig.getIdentityScope().clear();
     }
@@ -90,8 +90,8 @@ public class DaoSession extends AbstractDaoSession {
         return noteBookDao;
     }
 
-    public NoteBookDao getNoteBookDao() {
-        return noteBookDao;
+    public NoteDao getNoteDao() {
+        return noteDao;
     }
 
     public ChapterDao getChapterDao() {

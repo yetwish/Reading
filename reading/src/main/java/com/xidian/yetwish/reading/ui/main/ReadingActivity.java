@@ -12,7 +12,7 @@ import android.widget.ImageButton;
 
 import com.google.common.eventbus.Subscribe;
 import com.xidian.yetwish.reading.R;
-import com.xidian.yetwish.reading.framework.vo.Book;
+import com.xidian.yetwish.reading.framework.vo.BookVo;
 import com.xidian.yetwish.reading.framework.eventbus.EventBusWrapper;
 import com.xidian.yetwish.reading.framework.eventbus.event.EventAddBooks;
 import com.xidian.yetwish.reading.ui.main.adapter.BookListAdapter;
@@ -37,7 +37,7 @@ public class ReadingActivity extends SlideMenuActivity {
     private PopupMenu mPopupMenu;
     private ImageButton FabReading;
 
-    private List<Book> mBookList;
+    private List<BookVo> mBookList;
     private BookListAdapter mAdapter;
 
     private EmptyRecyclerView lvReading;
@@ -78,12 +78,8 @@ public class ReadingActivity extends SlideMenuActivity {
 
     private void initReadingList() {
         mBookList = new ArrayList<>();
-        mBookList.add(new Book(1, "Thinking in Java", "Bruce Eckel", 30, R.mipmap.thinking_in_java));
-        mBookList.add(new Book(2, "Le Petit Prince", "[法] 圣埃克苏佩里", 96, R.mipmap.book_icon));
-        mBookList.add(new Book(1, "Thinking in Java", "Bruce Eckel", 30, R.mipmap.thinking_in_java));
-        mBookList.add(new Book(2, "Le Petit Prince", "[法] 圣埃克苏佩里", 96, R.mipmap.book_icon));
-        mBookList.add(new Book(2, "Le Petit Prince", "[法] 圣埃克苏佩里", 96, R.mipmap.book_icon));
-        mBookList.add(new Book(2, "Le Petit Prince", "[法] 圣埃克苏佩里", 96, R.mipmap.book_icon));
+        mBookList.add(new BookVo("1", "Thinking in Java", "Bruce Eckel", 30, R.mipmap.thinking_in_java));
+        mBookList.add(new BookVo("2", "Le Petit Prince", "[法] 圣埃克苏佩里", 96, R.mipmap.book_icon));
         mAdapter = new BookListAdapter(ReadingActivity.this, mBookList);
         lvReading = (EmptyRecyclerView) findViewById(R.id.lvReading);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
@@ -186,10 +182,10 @@ public class ReadingActivity extends SlideMenuActivity {
 
     @Subscribe
     public void onBookAdded(EventAddBooks event) {
-        List<Book> books = event.getBookList();
-        LogUtils.w("add books" + ", " + books);
-        if (books != null) {
-            mBookList.addAll(books);
+        List<BookVo> bookEntities = event.getBookList();
+        LogUtils.w("add bookEntities" + ", " + bookEntities);
+        if (bookEntities != null) {
+            mBookList.addAll(bookEntities);
             if (mAdapter != null)
                 mAdapter.notifyDataSetChanged();
         }

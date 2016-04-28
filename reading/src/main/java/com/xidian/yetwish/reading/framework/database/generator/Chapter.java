@@ -7,12 +7,12 @@ package com.xidian.yetwish.reading.framework.database.generator;
 public class Chapter {
 
     private Long id;
-    private Long chapterId;
-    private Long bookId;
+    private String chapterId;
+    private String bookId;
     private String path;
     private String name;
-    private Integer firstCharPosition;
-    private Integer lastCharPosition;
+    private Long firstCharPosition;
+    private Long lastCharPosition;
     private Integer pageNumber;
 
     public Chapter() {
@@ -22,7 +22,7 @@ public class Chapter {
         this.id = id;
     }
 
-    public Chapter(Long id, Long chapterId, Long bookId, String path, String name, Integer firstCharPosition, Integer lastCharPosition, Integer pageNumber) {
+    public Chapter(Long id, String chapterId, String bookId, String path, String name, Long firstCharPosition, Long lastCharPosition, Integer pageNumber) {
         this.id = id;
         this.chapterId = chapterId;
         this.bookId = bookId;
@@ -41,19 +41,19 @@ public class Chapter {
         this.id = id;
     }
 
-    public Long getChapterId() {
+    public String getChapterId() {
         return chapterId;
     }
 
-    public void setChapterId(Long chapterId) {
+    public void setChapterId(String chapterId) {
         this.chapterId = chapterId;
     }
 
-    public Long getBookId() {
+    public String getBookId() {
         return bookId;
     }
 
-    public void setBookId(Long bookId) {
+    public void setBookId(String bookId) {
         this.bookId = bookId;
     }
 
@@ -73,19 +73,19 @@ public class Chapter {
         this.name = name;
     }
 
-    public Integer getFirstCharPosition() {
+    public Long getFirstCharPosition() {
         return firstCharPosition;
     }
 
-    public void setFirstCharPosition(Integer firstCharPosition) {
+    public void setFirstCharPosition(Long firstCharPosition) {
         this.firstCharPosition = firstCharPosition;
     }
 
-    public Integer getLastCharPosition() {
+    public Long getLastCharPosition() {
         return lastCharPosition;
     }
 
-    public void setLastCharPosition(Integer lastCharPosition) {
+    public void setLastCharPosition(Long lastCharPosition) {
         this.lastCharPosition = lastCharPosition;
     }
 

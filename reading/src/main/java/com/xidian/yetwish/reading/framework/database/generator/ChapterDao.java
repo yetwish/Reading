@@ -24,12 +24,12 @@ public class ChapterDao extends AbstractDao<Chapter, Long> {
     */
     public static class Properties {
         public final static Property Id = new Property(0, Long.class, "id", true, "_id");
-        public final static Property ChapterId = new Property(1, Long.class, "chapterId", false, "CHAPTER_ID");
-        public final static Property BookId = new Property(2, Long.class, "bookId", false, "BOOK_ID");
+        public final static Property ChapterId = new Property(1, String.class, "chapterId", false, "CHAPTER_ID");
+        public final static Property BookId = new Property(2, String.class, "bookId", false, "BOOK_ID");
         public final static Property Path = new Property(3, String.class, "path", false, "PATH");
         public final static Property Name = new Property(4, String.class, "name", false, "NAME");
-        public final static Property FirstCharPosition = new Property(5, Integer.class, "firstCharPosition", false, "FIRST_CHAR_POSITION");
-        public final static Property LastCharPosition = new Property(6, Integer.class, "lastCharPosition", false, "LAST_CHAR_POSITION");
+        public final static Property FirstCharPosition = new Property(5, Long.class, "firstCharPosition", false, "FIRST_CHAR_POSITION");
+        public final static Property LastCharPosition = new Property(6, Long.class, "lastCharPosition", false, "LAST_CHAR_POSITION");
         public final static Property PageNumber = new Property(7, Integer.class, "pageNumber", false, "PAGE_NUMBER");
     };
 
@@ -47,8 +47,8 @@ public class ChapterDao extends AbstractDao<Chapter, Long> {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "'CHAPTER' (" + //
                 "'_id' INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: id
-                "'CHAPTER_ID' INTEGER," + // 1: chapterId
-                "'BOOK_ID' INTEGER," + // 2: bookId
+                "'CHAPTER_ID' TEXT," + // 1: chapterId
+                "'BOOK_ID' TEXT," + // 2: bookId
                 "'PATH' TEXT," + // 3: path
                 "'NAME' TEXT," + // 4: name
                 "'FIRST_CHAR_POSITION' INTEGER," + // 5: firstCharPosition
@@ -75,14 +75,14 @@ public class ChapterDao extends AbstractDao<Chapter, Long> {
             stmt.bindLong(1, id);
         }
  
-        Long chapterId = entity.getChapterId();
+        String chapterId = entity.getChapterId();
         if (chapterId != null) {
-            stmt.bindLong(2, chapterId);
+            stmt.bindString(2, chapterId);
         }
  
-        Long bookId = entity.getBookId();
+        String bookId = entity.getBookId();
         if (bookId != null) {
-            stmt.bindLong(3, bookId);
+            stmt.bindString(3, bookId);
         }
  
         String path = entity.getPath();
@@ -95,12 +95,12 @@ public class ChapterDao extends AbstractDao<Chapter, Long> {
             stmt.bindString(5, name);
         }
  
-        Integer firstCharPosition = entity.getFirstCharPosition();
+        Long firstCharPosition = entity.getFirstCharPosition();
         if (firstCharPosition != null) {
             stmt.bindLong(6, firstCharPosition);
         }
  
-        Integer lastCharPosition = entity.getLastCharPosition();
+        Long lastCharPosition = entity.getLastCharPosition();
         if (lastCharPosition != null) {
             stmt.bindLong(7, lastCharPosition);
         }
@@ -122,12 +122,12 @@ public class ChapterDao extends AbstractDao<Chapter, Long> {
     public Chapter readEntity(Cursor cursor, int offset) {
         Chapter entity = new Chapter( //
             cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
-            cursor.isNull(offset + 1) ? null : cursor.getLong(offset + 1), // chapterId
-            cursor.isNull(offset + 2) ? null : cursor.getLong(offset + 2), // bookId
+            cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // chapterId
+            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // bookId
             cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // path
             cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // name
-            cursor.isNull(offset + 5) ? null : cursor.getInt(offset + 5), // firstCharPosition
-            cursor.isNull(offset + 6) ? null : cursor.getInt(offset + 6), // lastCharPosition
+            cursor.isNull(offset + 5) ? null : cursor.getLong(offset + 5), // firstCharPosition
+            cursor.isNull(offset + 6) ? null : cursor.getLong(offset + 6), // lastCharPosition
             cursor.isNull(offset + 7) ? null : cursor.getInt(offset + 7) // pageNumber
         );
         return entity;
@@ -137,12 +137,12 @@ public class ChapterDao extends AbstractDao<Chapter, Long> {
     @Override
     public void readEntity(Cursor cursor, Chapter entity, int offset) {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
-        entity.setChapterId(cursor.isNull(offset + 1) ? null : cursor.getLong(offset + 1));
-        entity.setBookId(cursor.isNull(offset + 2) ? null : cursor.getLong(offset + 2));
+        entity.setChapterId(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
+        entity.setBookId(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
         entity.setPath(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
         entity.setName(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
-        entity.setFirstCharPosition(cursor.isNull(offset + 5) ? null : cursor.getInt(offset + 5));
-        entity.setLastCharPosition(cursor.isNull(offset + 6) ? null : cursor.getInt(offset + 6));
+        entity.setFirstCharPosition(cursor.isNull(offset + 5) ? null : cursor.getLong(offset + 5));
+        entity.setLastCharPosition(cursor.isNull(offset + 6) ? null : cursor.getLong(offset + 6));
         entity.setPageNumber(cursor.isNull(offset + 7) ? null : cursor.getInt(offset + 7));
      }
     

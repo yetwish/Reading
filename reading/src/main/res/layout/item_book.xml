@@ -51,12 +51,12 @@
             android:layout_alignLeft="@+id/tvBookName"
             style="@style/NumberProgressBar_Default"/>
 
-        <ImageButton
-            android:layout_alignParentRight="true"
-            android:src="@mipmap/ic_event_note_blue_24dp"
-            android:layout_above="@id/pbBookProgress"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+        <!--<ImageButton-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:src="@mipmap/ic_event_note_blue_24dp"-->
+            <!--android:layout_above="@id/pbBookProgress"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content" />-->
 
     </RelativeLayout>
 

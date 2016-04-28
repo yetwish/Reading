@@ -6,7 +6,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.xidian.yetwish.reading.R;
-import com.xidian.yetwish.reading.framework.vo.Book;
+import com.xidian.yetwish.reading.framework.vo.BookVo;
 import com.xidian.yetwish.reading.framework.utils.LogUtils;
 import com.xidian.yetwish.reading.framework.common_adapter.CommonAdapter;
 import com.xidian.yetwish.reading.framework.common_adapter.OnItemClickListener;
@@ -18,19 +18,19 @@ import java.util.List;
 /**
  * Created by Yetwish on 2016/4/21 0021.
  */
-public class BookListAdapter extends CommonAdapter<Book> {
+public class BookListAdapter extends CommonAdapter<BookVo> {
 
 
-    public BookListAdapter(final Context context, List<Book> data) {
+    public BookListAdapter(final Context context, List<BookVo> data) {
         super(context, R.layout.item_book, data);
-        setItemClickListener(new OnItemClickListener<Book>() {
+        setItemClickListener(new OnItemClickListener<BookVo>() {
             @Override
-            public void onItemClick(ViewGroup parent, View view, Book data, int position) {
+            public void onItemClick(ViewGroup parent, View view, BookVo data, int position) {
                 ReaderActivity.startActivity(context,data.getFilePath());
             }
 
             @Override
-            public void onItemLongClick(ViewGroup parent, View view, Book data, int position) {
+            public void onItemLongClick(ViewGroup parent, View view, BookVo data, int position) {
                 ImageView ivDelete = (ImageView) view.findViewById(R.id.ivBookDelete);
                 ivDelete.setVisibility(View.VISIBLE);
             }
@@ -38,11 +38,11 @@ public class BookListAdapter extends CommonAdapter<Book> {
     }
 
     @Override
-    public void convert(ViewHolder holder, Book book) {
-        holder.setImageResource(R.id.ivBookIcon,book.getIconResId())
-                .setText(R.id.tvBookName,book.getName())
-                .setText(R.id.tvBookAuthor,book.getAuthor())
-                .setNumberProgress(R.id.pbBookProgress,book.getProgress())
+    public void convert(ViewHolder holder, BookVo bookVo) {
+        holder.setImageResource(R.id.ivBookIcon, bookVo.getIconResId())
+                .setText(R.id.tvBookName, bookVo.getName())
+                .setText(R.id.tvBookAuthor, bookVo.getAuthor())
+                .setNumberProgress(R.id.pbBookProgress, bookVo.getProgress())
                 .setOnClickListener(R.id.ivBookDelete, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

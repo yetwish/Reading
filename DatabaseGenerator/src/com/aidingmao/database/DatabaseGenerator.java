@@ -24,7 +24,7 @@ public class DatabaseGenerator {
 	private static void addBook(Schema schema){
 		Entity book = schema.addEntity("Book");
 		book.addIdProperty().autoincrement();
-		Property bookId = book.addLongProperty("bookId").getProperty();
+		Property bookId = book.addStringProperty("bookId").getProperty();
 		book.addStringProperty("name");
 		book.addStringProperty("author");
 		book.addStringProperty("language");
@@ -42,11 +42,11 @@ public class DatabaseGenerator {
 	private static void addNoteBook(Schema schema){
 		Entity noteBook = schema.addEntity("NoteBook");
 		noteBook.addIdProperty().autoincrement();
-		Property noteBookId = noteBook.addLongProperty("NoteBookId").getProperty();
-		Property bookId = noteBook.addLongProperty("bookId").getProperty();
+		Property noteBookId = noteBook.addStringProperty("NoteBookId").getProperty();
+		Property bookId = noteBook.addStringProperty("bookId").getProperty();
 		noteBook.addStringProperty("name");
 		noteBook.addStringProperty("iconPath");
-		noteBook.addIntProperty("size");
+		noteBook.addIntProperty("noteNumber");
 		noteBook.addStringProperty("intro");
 		
 		Index index = new Index();
@@ -58,10 +58,10 @@ public class DatabaseGenerator {
 	}
 
 	private static void addNote(Schema schema){
-		Entity note = schema.addEntity("NoteBook");
+		Entity note = schema.addEntity("Note");
 		note.addIdProperty().autoincrement();
-		Property noteBookId = note.addLongProperty("NoteBookId").getProperty();
-		Property noteId = note.addLongProperty("noteId").getProperty();
+		Property noteBookId = note.addStringProperty("NoteBookId").getProperty();
+		Property noteId = note.addStringProperty("noteId").getProperty();
 		note.addStringProperty("name");
 		note.addStringProperty("path");
 		
@@ -77,12 +77,12 @@ public class DatabaseGenerator {
 	private static void addChapter(Schema schema) {
 		Entity chapter = schema.addEntity("Chapter");
 		chapter.addIdProperty().autoincrement();
-		Property chapterId = chapter.addLongProperty("chapterId").getProperty();
-		Property bookId = chapter.addLongProperty("bookId").getProperty();
+		Property chapterId = chapter.addStringProperty("chapterId").getProperty();
+		Property bookId = chapter.addStringProperty("bookId").getProperty();
 		chapter.addStringProperty("path");
 		chapter.addStringProperty("name");
-		chapter.addIntProperty("firstCharPosition");
-		chapter.addIntProperty("lastCharPosition");
+		chapter.addLongProperty("firstCharPosition");
+		chapter.addLongProperty("lastCharPosition");
 		chapter.addIntProperty("pageNumber");
 		
 		Index index = new Index();
