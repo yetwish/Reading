@@ -20,7 +20,7 @@ public class DatabaseManager {
 
     public static final String DATABASE_NAME = "Reading";
 
-    private static DatabaseManager instance;
+    private static DatabaseManager sInstance;
 
     private DbBookManager mDbBookManager;
     private DbNoteManager mDbNoteManager;
@@ -38,14 +38,14 @@ public class DatabaseManager {
 
     }
 
-    public static DatabaseManager getInstance() {
-        if (instance == null) {
+    public static DatabaseManager getsInstance() {
+        if (sInstance == null) {
             synchronized (DatabaseManager.class) {
-                if (instance == null)
-                    instance = new DatabaseManager();
+                if (sInstance == null)
+                    sInstance = new DatabaseManager();
             }
         }
-        return instance;
+        return sInstance;
     }
 
     public DbBookManager getBookManager() {

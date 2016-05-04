@@ -97,8 +97,9 @@ public class DatabaseGenerator {
 	private static void addPage(Schema schema) {
 		Entity page = schema.addEntity("Page");
 		page.addIdProperty().autoincrement();
-		Property pageId = page.addLongProperty("pageId").getProperty();
-		Property chapterId = page.addLongProperty("chapterId").getProperty();
+		Property pageId = page.addStringProperty("pageId").getProperty();
+		Property chapterId = page.addStringProperty("chapterId").getProperty();
+		Property bookId = page.addStringProperty("bookId").getProperty();
 		page.addLongProperty("firstCharPosition");
 		page.addLongProperty("lastCharPosition");
 		page.addStringProperty("path");
@@ -107,6 +108,7 @@ public class DatabaseGenerator {
 		Index index = new Index();
 		index.addProperty(pageId);
 		index.addProperty(chapterId);
+		index.addProperty(bookId);	
 		index.makeUnique();
 
 		page.addIndex(index);

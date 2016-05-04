@@ -9,6 +9,7 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import com.xidian.yetwish.reading.R;
+import com.xidian.yetwish.reading.framework.utils.LogUtils;
 import com.xidian.yetwish.reading.framework.vo.reader.PageVo;
 import com.xidian.yetwish.reading.framework.utils.Constant;
 import com.xidian.yetwish.reading.framework.utils.ScreenUtils;
@@ -28,6 +29,7 @@ public class ReaderView extends View {
     private Context mContext;
 
     private Paint mContentPaint;
+    private Paint mChapterPaint;
     private Paint mInfoPaint;
     private Paint mBgPaint;
 
@@ -39,7 +41,8 @@ public class ReaderView extends View {
     private int mInfoTextSize;
     private int mContentTextSize;
 
-    private int mMarginOutside;
+    private int mMarginTop;
+    private int mMarginLeft;
 
     private int mWidth;
     private int mHeight;
@@ -50,7 +53,7 @@ public class ReaderView extends View {
     private int mTheme;
     private int mFlagMode;
 
-    private PageVo mPageVo;
+    private PageVo mPage;
 
     public ReaderView(Context context) {
         this(context, null);
@@ -78,8 +81,9 @@ public class ReaderView extends View {
             mContentTextSize = mContext.getResources().getDimensionPixelSize(R.dimen.reader_content_size);
         }
         setColorByTheme();
-        mMarginOutside = mContext.getResources().getDimensionPixelSize(R.dimen.reader_content_size);
-
+        mMarginTop = mContext.getResources().getDimensionPixelOffset(R.dimen.reader_margin_top);
+        mMarginLeft = mContext.getResources().getDimensionPixelOffset(R.dimen.reader_margin_left);
+//        LogUtils.w(mMarginTop+","+mMarginLeft);
     }
 
 
@@ -100,6 +104,10 @@ public class ReaderView extends View {
         mContentPaint.setTextSize(mContentTextSize);
         mContentPaint.setColor(mContentColor);
 
+        mChapterPaint = new Paint();
+        mChapterPaint.setTextSize(mContext.getResources().getDimensionPixelSize(R.dimen.reader_chapter_size));
+        mChapterPaint.setColor(ContextCompat.getColor(mContext, R.color.colorChapterText));
+
         mInfoPaint = new Paint();
         mInfoPaint.setTextSize(mInfoTextSize);
         mInfoPaint.setColor(mInfoColor);
@@ -111,8 +119,8 @@ public class ReaderView extends View {
         mBgPaint.setStyle(Paint.Style.FILL);
     }
 
-    public void setData(PageVo pageVo) {
-        this.mPageVo = pageVo;
+    public void setData(PageVo page) {
+        this.mPage = page;
     }
 
 
@@ -124,17 +132,20 @@ public class ReaderView extends View {
     }
 
 
+    //todo draw text
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-//        if(mPageVo == null)
-//            return;
+        if (mPage == null)
+            return;
 
-        int lineCount = 21;
+        int lineCount = 20;
         int textHeight = 60;
         int rows = ScreenUtils.getScreenHeight(mContext) / textHeight;
-        for (int i = 0, j = 0; j < rows && i < Constant.TXT_EXAMPLE.length(); i += lineCount, j++) {
-            canvas.drawText(Constant.TXT_EXAMPLE, i, i + lineCount <= Constant.TXT_EXAMPLE.length() ? i + lineCount : Constant.TXT_EXAMPLE.length(), mMarginOutside, mMarginOutside + j * textHeight, mContentPaint);
+        int length = mPage.getContent().length();
+        for (int i = 0, j = 0; j < rows && i < length; i += lineCount, j++) {
+            canvas.drawText(mPage.getContent(), i, i + lineCount <= length ? i + lineCount : length,
+                    mMarginLeft, mMarginTop + j * textHeight, mContentPaint);
         }
     }
 

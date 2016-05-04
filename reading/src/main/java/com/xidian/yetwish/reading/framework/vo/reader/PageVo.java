@@ -1,6 +1,7 @@
 package com.xidian.yetwish.reading.framework.vo.reader;
 
 import com.xidian.yetwish.reading.framework.database.generator.Page;
+import com.xidian.yetwish.reading.framework.utils.BookUtils;
 
 /**
  * 页面实体类，position 包含头不包含尾
@@ -11,15 +12,26 @@ public class PageVo {
     private String filePath;
     private String pageId;
     private String chapterId;
+    private String bookId;
     private long firstCharPosition;
     private long lastCharPosition;
     private String content;
 
-    public PageVo(Page page){
+    public PageVo(String bookId,String chapterId,String filePath,long firstCharPosition,long lastCharPosition,String content){
+        this.pageId = BookUtils.generateSequenceId();
+        this.filePath = filePath;
+        this.bookId = bookId;
+        this.chapterId = chapterId;
+        this.firstCharPosition = firstCharPosition;
+        this.lastCharPosition = lastCharPosition;
+        this.content = content;
+    }
+
+    public PageVo(Page page) {
 
     }
 
-    public Page asPage(){
+    public Page convertToDb() {
         Page page = new Page();
 
         return page;
@@ -50,6 +62,14 @@ public class PageVo {
         this.chapterId = chapterId;
     }
 
+    public String getBookId() {
+        return bookId;
+    }
+
+    public void setBookId(String bookId) {
+        this.bookId = bookId;
+    }
+
     public long getFirstCharPosition() {
         return firstCharPosition;
     }
@@ -72,5 +92,19 @@ public class PageVo {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Page [")
+//                .append(" cid ").append(chapterId)
+//                .append(" bid ").append(bookId)
+//                .append(" pid ").append(pageId)
+//                .append(" firstPosition ").append(firstCharPosition)
+//                .append(" lastPosition ").append(lastCharPosition)
+                .append(" content ").append(content)
+                .append(" ]");
+        return sb.toString();
     }
 }

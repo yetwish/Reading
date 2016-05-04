@@ -3,25 +3,29 @@ package com.xidian.yetwish.reading.ui.main;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
-import android.view.WindowManager;
 
-import com.google.common.collect.ImmutableList;
+import com.google.common.eventbus.Subscribe;
 import com.xidian.yetwish.reading.R;
 import com.xidian.yetwish.reading.framework.common_adapter.CommonAdapter;
+import com.xidian.yetwish.reading.framework.eventbus.EventBusWrapper;
+import com.xidian.yetwish.reading.framework.eventbus.event.EventGeneratedChapter;
+import com.xidian.yetwish.reading.framework.eventbus.event.EventGeneratedPage;
 import com.xidian.yetwish.reading.framework.reader.ChapterFactory;
+import com.xidian.yetwish.reading.framework.reader.PageFactory;
+import com.xidian.yetwish.reading.framework.utils.BookUtils;
 import com.xidian.yetwish.reading.framework.utils.Constant;
+import com.xidian.yetwish.reading.framework.vo.BookVo;
+import com.xidian.yetwish.reading.framework.vo.reader.ChapterVo;
+import com.xidian.yetwish.reading.framework.vo.reader.PageVo;
 import com.xidian.yetwish.reading.ui.main.adapter.ChapterAdapter;
 import com.xidian.yetwish.reading.ui.main.adapter.viewpager.ReaderPageAdapter;
 import com.xidian.yetwish.reading.ui.widget.EmptyRecyclerView;
-import com.xidian.yetwish.reading.ui.widget.ReaderView;
 import com.xidian.yetwish.reading.ui.main.adapter.viewpager.DepthPageTransformer;
 
 import java.io.IOException;
@@ -43,44 +47,37 @@ public class ReaderActivity extends Activity {
     private DrawerLayout mDrawerLayout;
     private EmptyRecyclerView lvChapter;
 
-    private List<ReaderView> readerList = new ArrayList<>();
-
-//    private ReaderView mReaderView;
+    private List<PageVo> mPageList = new ArrayList<>();
 
     private ViewPager mViewPager;
 
-    private List<String> mChapters = new ArrayList<>();
+    private List<ChapterVo> mChapters = new ArrayList<>();
 
-    private CommonAdapter<String> mChapterAdapter;
+    private CommonAdapter<ChapterVo> mChapterAdapter;
+
+    private ReaderPageAdapter mPageAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        hideStatusBar();
+        EventBusWrapper.getDefault().register(this);
         setContentView(R.layout.activity_reader);
-        for (int i = 0; i < 10; i++) {
-            readerList.add(new ReaderView(ReaderActivity.this));
-        }
+//        for (int i = 0; i < 10; i++) {
+//            mPageList.add(new ReaderView(ReaderActivity.this));
+//        }
         initView();
         initData();
     }
 
     private void initData() {
         try {
-            ChapterFactory.getInstance().concurrentReadFile(
-                    Environment.getExternalStorageDirectory().getAbsolutePath() + "/tencent/QQfile_recv/大荒蛮神.txt");
+            BookVo book = new BookVo("大荒蛮神", "更俗", 0.1f, 0);
+            book.setFilePath(Environment.getExternalStorageDirectory().getAbsolutePath() + "/tencent/QQfile_recv/大荒蛮神.txt");
+            book.setBookId(BookUtils.generateSequenceId());
+            ChapterFactory.getsInstance().concurrentReadFile(book);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        ChapterFactory.getInstance().setChapterGeneratorListener(new ChapterFactory.OnChapterGeneratorListener() {
-            @Override
-            public void onChapterGenerated(ImmutableList<String> chapterList) {
-                mChapters.clear();
-                mChapters.addAll(chapterList);
-                mChapterAdapter.notifyDataSetChanged();
-            }
-        });
-
 
     }
 
@@ -96,25 +93,20 @@ public class ReaderActivity extends Activity {
 
         mViewPager = (ViewPager) findViewById(R.id.vpReaderContainer);
         mViewPager.setPageTransformer(true, new DepthPageTransformer());
-        mViewPager.setAdapter(new ReaderPageAdapter(ReaderActivity.this, readerList,
-                new ReaderPageAdapter.OnClickListener() {
-                    @Override
-                    public void onClick() {
-                        mDrawerLayout.openDrawer(GravityCompat.START);
-                    }
-                }));
+
+        mPageAdapter = new ReaderPageAdapter(ReaderActivity.this, mPageList, new ReaderPageAdapter.OnClickListener() {
+            @Override
+            public void onClick() {
+                //todo
+            }
+        });
+        mViewPager.setAdapter(mPageAdapter);
+        mViewPager.addOnPageChangeListener(mPageChangedListener);
 
 //        mReaderView = (ReaderView) findViewById(R.id.mReaderView);
 
 //        关闭滑动手势
         mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
-
-//        mViewPager.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//            }
-//        });
 
         mDrawerLayout.addDrawerListener(new DrawerLayout.DrawerListener() {
             @Override
@@ -138,17 +130,25 @@ public class ReaderActivity extends Activity {
         });
     }
 
+    private ViewPager.OnPageChangeListener mPageChangedListener = new ViewPager.OnPageChangeListener() {
+        @Override
+        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
-    private void hideStatusBar() {
-        if (Build.VERSION.SDK_INT < 16) {
-            getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                    WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        } else {
-            View decorView = getWindow().getDecorView();
-            int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
-            decorView.setSystemUiVisibility(uiOptions);
         }
-    }
+
+        @Override
+        public void onPageSelected(int position) {
+
+        }
+
+        @Override
+        public void onPageScrollStateChanged(int state) {
+
+        }
+    };
+
+
+
 
 
     @Override
@@ -159,4 +159,23 @@ public class ReaderActivity extends Activity {
             super.onBackPressed();
         }
     }
+
+    @Subscribe
+    public void onChapterGenerated(EventGeneratedChapter event) {
+        mChapters.clear();
+        mChapters.addAll(event.getChapterList());
+        mChapterAdapter.notifyDataSetChanged();
+        //设置初始 page 数据
+        PageFactory.getInstance().paging(mChapters.get(0));
+
+    }
+
+
+    @Subscribe
+    public void onPageGenerator(EventGeneratedPage event) {
+        //todo  存在一个问题， 选择某一章时，获取到的分页列表 、 判断是否已经存在数据 应该放在哪个地方？
+        mPageList.addAll(event.getPageList());
+        mPageAdapter.notifyDataSetChanged();
+    }
+
 }

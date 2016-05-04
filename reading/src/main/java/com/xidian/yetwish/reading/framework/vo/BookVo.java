@@ -2,10 +2,15 @@ package com.xidian.yetwish.reading.framework.vo;
 
 import android.graphics.Bitmap;
 
+import com.xidian.yetwish.reading.framework.utils.BookUtils;
+
 /**
  * Created by Yetwish on 2016/4/21 0021.
  */
 public class BookVo {
+
+    public static final long INIT_CHAR_NUMBER = -1;
+
     private String bookId;
     private String name;
     private String author;
@@ -14,14 +19,17 @@ public class BookVo {
     private String iconPath;
     private int iconResId;
     private String filePath;
+    private long charNumber;
 
-    public BookVo(String bookId, String name, String author, float progress, int resId){
-        this.bookId = bookId;
+    public BookVo(String name, String author, float progress, int resId){
+        this.bookId = BookUtils.generateSequenceId();
         this.name = name;
         this.author = author;
         this.progress = progress;
         this.iconResId = resId;
+        this.charNumber = INIT_CHAR_NUMBER;
     }
+
 
     public String getBookId() {
         return bookId;
@@ -85,5 +93,13 @@ public class BookVo {
 
     public void setFilePath(String filePath) {
         this.filePath = filePath;
+    }
+
+    public long getCharNumber() {
+        return charNumber;
+    }
+
+    public void setCharNumber(long charNumber) {
+        this.charNumber = charNumber;
     }
 }

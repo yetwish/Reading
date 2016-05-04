@@ -7,7 +7,7 @@ import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.google.common.util.concurrent.MoreExecutors;
-import com.xidian.yetwish.reading.framework.utils.AppUtils;
+import com.xidian.yetwish.reading.framework.utils.SystemUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,11 +38,11 @@ public class ThreadRunner {
      * singleton
      */
     private static class ThreadServiceHolder {
-        private static final ThreadRunner instance = new ThreadRunner();
+        private static final ThreadRunner sInstance = new ThreadRunner();
     }
 
     public static ThreadRunner getInstance() {
-        return ThreadServiceHolder.instance;
+        return ThreadServiceHolder.sInstance;
     }
 
     private void initThreadPool() {
@@ -52,7 +52,7 @@ public class ThreadRunner {
         mMainHandler = new Handler(Looper.getMainLooper());
 
         mThreadPool = MoreExecutors.listeningDecorator(
-                Executors.newFixedThreadPool(AppUtils.getNumCores()));
+                Executors.newFixedThreadPool(SystemUtils.getNumCores()));
     }
 
     public synchronized <V> void start(List<? extends Callable<V>> calls, FutureCallback<List<V>> callback) {

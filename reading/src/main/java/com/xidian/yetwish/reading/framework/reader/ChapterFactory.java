@@ -1,12 +1,15 @@
 package com.xidian.yetwish.reading.framework.reader;
 
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Ordering;
 import com.google.common.io.CharStreams;
 import com.google.common.util.concurrent.FutureCallback;
+import com.xidian.yetwish.reading.framework.eventbus.EventBusWrapper;
+import com.xidian.yetwish.reading.framework.eventbus.event.EventGeneratedChapter;
 import com.xidian.yetwish.reading.framework.thread.ThreadRunner;
-import com.xidian.yetwish.reading.framework.utils.AppUtils;
+import com.xidian.yetwish.reading.framework.utils.SystemUtils;
 import com.xidian.yetwish.reading.framework.utils.LogUtils;
+import com.xidian.yetwish.reading.framework.vo.BookVo;
+import com.xidian.yetwish.reading.framework.vo.reader.ChapterVo;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -27,25 +30,26 @@ import java.util.regex.Pattern;
  */
 public class ChapterFactory {
 
-    public static ChapterFactory instance;
+    private static ChapterFactory sInstance;
 
-    public static final ChapterFactory getInstance() {
-        if (instance == null) {
+    public static ChapterFactory getsInstance() {
+        if (sInstance == null) {
             synchronized (ChapterFactory.class) {
-                if (instance == null) {
-                    instance = new ChapterFactory();
+                if (sInstance == null) {
+                    sInstance = new ChapterFactory();
                 }
 
             }
         }
-        return instance;
+        return sInstance;
     }
 
     private static final String CHAPTER_FLAG_1 = "第.*回";
     private static final String CHAPTER_FLAG_2 = "第.*章";
     private static final String CHAPTER_MATCHER = "第";
 
-    private static final String CHARSET_GBK = "GBK";
+    public static final String CHARSET_GBK = "GBK";
+    public static final String CHARSET_UTF_8 = "UTF-8";
 
     private String mCharsetName = CHARSET_GBK;
 
@@ -54,37 +58,36 @@ public class ChapterFactory {
 
 
     private long mBookLen;
-    private String mCurrentFilePath;
+    private BookVo mCurrentBook;
+
+    private List<ChapterVo> mChapterList;
 
     /**
      * int : the position(index of char) of String in the file.
      */
     private Map<Integer, String> mChapterMap;
 
-    private List<String> mChapterList;
-
-    private BufferedReader mBufferedReader;
-
     private ChapterFactory() {
         mChapterPattern = Pattern.compile(CHAPTER_FLAG_1);
         mChapterPattern2 = Pattern.compile(CHAPTER_FLAG_2);
+        mChapterList = new ArrayList<>();
     }
 
-    public void concurrentReadFile(String filePath) throws IOException {
-        mCurrentFilePath = filePath;
-        File bookFile = new File(mCurrentFilePath);
+    public void concurrentReadFile(BookVo book) throws IOException {
+        //todo 判断该book是否生成过章节目录，如果生成过，则从数据库中获取
+        mCurrentBook = book;
+        File bookFile = new File(book.getFilePath());
         mBookLen = bookFile.length();
         mChapterMap = new TreeMap<>();
-        mChapterList = new ArrayList<>();
         List<Callable<String>> calls = new ArrayList<>();
 
         long eachThreadScanLength = 0;
         if (mCharsetName.equals(CHARSET_GBK)) {
             //每个线程(至少)遍历的char个数
-            eachThreadScanLength = mBookLen / 2 / AppUtils.getNumCores();
+            eachThreadScanLength = mBookLen / 2 / SystemUtils.getNumCores();
         }
         LogUtils.w("start!");
-        for (int i = 0; i < AppUtils.getNumCores(); i++) {
+        for (int i = 0; i < SystemUtils.getNumCores(); i++) {
             final long from = i * eachThreadScanLength;
             final long to = (i + 1) * eachThreadScanLength;
             Callable<String> call = new Callable<String>() {
@@ -115,8 +118,9 @@ public class ChapterFactory {
      * @throws IOException
      */
     private void scanFileForChapters(long from, long to) throws IOException {
+        if (mCurrentBook == null) return;
         BufferedReader bufferedReader = new BufferedReader(
-                new InputStreamReader(new FileInputStream(mCurrentFilePath), mCharsetName));
+                new InputStreamReader(new FileInputStream(mCurrentBook.getFilePath()), mCharsetName));
         CharStreams.skipFully(bufferedReader, from);
         String line;
         for (int i = (int) from; i < to; ) {
@@ -124,7 +128,7 @@ public class ChapterFactory {
             if (line == null) break;
 //            LogUtils.w(line + Thread.currentThread().getName());
             if (line.startsWith(CHAPTER_MATCHER)) {
-                synchronized (ChapterFactory.getInstance()) {
+                synchronized (ChapterFactory.getsInstance()) {
                     mChapterMap.put(i, line);
                 }
             }
@@ -138,38 +142,44 @@ public class ChapterFactory {
         if (mChapterMap == null || mChapterMap.size() == 0) return;
         Matcher m1, m2;
         String chapterName;
+        mChapterList.clear();
+        //全书总字符数
+        int charNum = 0;
+        boolean isFirst = true;
         for (Integer index : mChapterMap.keySet()) {
             chapterName = mChapterMap.get(index);
             m1 = mChapterPattern.matcher(chapterName);
             m2 = mChapterPattern2.matcher(chapterName);
             if (m1.find() || m2.find()) {
-                mChapterList.add(chapterName);
                 //add entities
+                ChapterVo entity = null;
+                if (isFirst) {
+                    entity = new ChapterVo(mCurrentBook.getFilePath(),
+                            mCurrentBook.getBookId(), mChapterMap.get(index), 0, 0);
+                    isFirst = false;
+                } else {
+                    entity = new ChapterVo(mCurrentBook.getFilePath(),
+                            mCurrentBook.getBookId(), mChapterMap.get(index), index, 0);
+                }
+                if (mChapterList.size() > 0) {
+                    mChapterList.get(mChapterList.size() - 1).setLastCharPosition(index);
+                }
+                mChapterList.add(entity);
             } else {
                 LogUtils.w(chapterName);
 //                mChapterMap.remove(index);//todo modify exception
             }
+            charNum = index;
         }
+        charNum += mChapterMap.get(charNum).length();
+        mCurrentBook.setCharNumber(charNum);
+        //生成章节列表
+        mChapterList.get(mChapterList.size() - 1).setLastCharPosition(charNum);
+        //将章节列表存入数据库
+//        DatabaseManager.getsInstance().getChapterManager().refresh(mChapterList);
 
-        if(mChapterGeneratorListener != null){
-            mChapterGeneratorListener.onChapterGenerated(getChapterList());
-        }
-
-    }
-
-    public ImmutableList<String> getChapterList() {
-        return ImmutableList.copyOf(mChapterList);
-    }
-
-    private OnChapterGeneratorListener mChapterGeneratorListener;
-
-    public void setChapterGeneratorListener(OnChapterGeneratorListener listener){
-        this.mChapterGeneratorListener = listener;
-    }
-
-    public interface OnChapterGeneratorListener{
-
-        void onChapterGenerated(ImmutableList<String> chapterList);
+        //使用eventBus 实现数据传递
+        EventBusWrapper.getDefault().post(new EventGeneratedChapter(ImmutableList.copyOf(mChapterList)));
     }
 
 }

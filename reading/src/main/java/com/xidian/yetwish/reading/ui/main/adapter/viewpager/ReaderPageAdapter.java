@@ -5,8 +5,10 @@ import android.support.v4.view.PagerAdapter;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.xidian.yetwish.reading.framework.vo.reader.PageVo;
 import com.xidian.yetwish.reading.ui.widget.ReaderView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -17,17 +19,21 @@ public class ReaderPageAdapter extends PagerAdapter implements View.OnClickListe
 
     private Context mContext;
     private List<ReaderView> mViews;
+    private List<PageVo> mData;
 
-    public ReaderPageAdapter(Context context, List<ReaderView> views, OnClickListener listener) {
-        this.mContext = context;
-        this.mViews = views;
-        this.mClickListener = listener;
-    }
 
     private OnClickListener mClickListener;
 
     public void setOnClickListener(OnClickListener listener) {
         mClickListener = listener;
+    }
+
+
+    public ReaderPageAdapter(Context context, List<PageVo> data, OnClickListener listener) {
+        this.mContext = context;
+        this.mData= data;
+        this.mClickListener = listener;
+        updateViewByData();
     }
 
     @Override
@@ -51,6 +57,24 @@ public class ReaderPageAdapter extends PagerAdapter implements View.OnClickListe
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
         container.removeView(mViews.get(position));
+    }
+
+    @Override
+    public void notifyDataSetChanged() {
+        updateViewByData();
+        super.notifyDataSetChanged();
+    }
+
+
+    private void updateViewByData(){
+        if(mViews == null)
+            mViews = new ArrayList<>(mData.size());
+        mViews.clear();
+        for(PageVo page : mData){
+            ReaderView view = new ReaderView(mContext);
+            view.setData(page);
+            mViews.add(view);
+        }
     }
 
     @Override

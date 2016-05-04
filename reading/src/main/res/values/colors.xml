@@ -22,7 +22,7 @@
 
     <color name="colorPrimaryText">#333333</color>
     <color name="colorSecondaryText">#808080</color>
-
+    <color name="colorChapterText">#0F0F0F</color>
 
 
 </resources>

@@ -74,7 +74,7 @@ public class AutoSearchActivity extends ToolbarActivity {
         initView();
     }
 
-    private synchronized void scanAllFiles(File rootFile) throws IOException {
+    private void scanAllFiles(File rootFile) throws IOException {
         File[] files = rootFile.listFiles(mFileFilter);
         if (files == null) return;
         for (File file : files) {
@@ -111,8 +111,8 @@ public class AutoSearchActivity extends ToolbarActivity {
                 //TODO show dialog,confirm to add books
 //                List<File> files = mAdapter.getCheckFiles();
                 List<BookVo> books = new ArrayList<BookVo>();
-                books.add(new BookVo("1", "Thinking in Java", "Bruce Eckel", 30, R.mipmap.thinking_in_java));
-                books.add(new BookVo("2", "Le Petit Prince", "[法] 圣埃克苏佩里", 96, R.mipmap.book_icon));
+                books.add(new BookVo("Thinking in Java", "Bruce Eckel", 30, R.mipmap.thinking_in_java));
+                books.add(new BookVo("Le Petit Prince", "[法] 圣埃克苏佩里", 96, R.mipmap.book_icon));
                 EventBusWrapper.getDefault().post(new EventAddBooks(books));
                 finish();
             }

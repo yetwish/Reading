@@ -7,8 +7,9 @@ package com.xidian.yetwish.reading.framework.database.generator;
 public class Page {
 
     private Long id;
-    private Long pageId;
-    private Long chapterId;
+    private String pageId;
+    private String chapterId;
+    private String bookId;
     private Long firstCharPosition;
     private Long lastCharPosition;
     private String path;
@@ -21,10 +22,11 @@ public class Page {
         this.id = id;
     }
 
-    public Page(Long id, Long pageId, Long chapterId, Long firstCharPosition, Long lastCharPosition, String path, String content) {
+    public Page(Long id, String pageId, String chapterId, String bookId, Long firstCharPosition, Long lastCharPosition, String path, String content) {
         this.id = id;
         this.pageId = pageId;
         this.chapterId = chapterId;
+        this.bookId = bookId;
         this.firstCharPosition = firstCharPosition;
         this.lastCharPosition = lastCharPosition;
         this.path = path;
@@ -39,20 +41,28 @@ public class Page {
         this.id = id;
     }
 
-    public Long getPageId() {
+    public String getPageId() {
         return pageId;
     }
 
-    public void setPageId(Long pageId) {
+    public void setPageId(String pageId) {
         this.pageId = pageId;
     }
 
-    public Long getChapterId() {
+    public String getChapterId() {
         return chapterId;
     }
 
-    public void setChapterId(Long chapterId) {
+    public void setChapterId(String chapterId) {
         this.chapterId = chapterId;
+    }
+
+    public String getBookId() {
+        return bookId;
+    }
+
+    public void setBookId(String bookId) {
+        this.bookId = bookId;
     }
 
     public Long getFirstCharPosition() {

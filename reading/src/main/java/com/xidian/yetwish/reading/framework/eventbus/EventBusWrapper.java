@@ -8,7 +8,7 @@ import com.google.common.eventbus.EventBus;
  */
 public class EventBusWrapper {
 
-    private static EventBusWrapper instance;
+    private static EventBusWrapper sInstance;
 
     private EventBus mRealEventBus;
 
@@ -20,14 +20,14 @@ public class EventBusWrapper {
 
 
     public static final EventBusWrapper getDefault() {
-        if (instance == null) {
+        if (sInstance == null) {
             synchronized (EventBusWrapper.class) {
-                if (instance == null) {
-                    instance = new EventBusWrapper();
+                if (sInstance == null) {
+                    sInstance = new EventBusWrapper();
                 }
             }
         }
-        return instance;
+        return sInstance;
     }
 
 

@@ -78,8 +78,8 @@ public class ReadingActivity extends SlideMenuActivity {
 
     private void initReadingList() {
         mBookList = new ArrayList<>();
-        mBookList.add(new BookVo("1", "Thinking in Java", "Bruce Eckel", 30, R.mipmap.thinking_in_java));
-        mBookList.add(new BookVo("2", "Le Petit Prince", "[法] 圣埃克苏佩里", 96, R.mipmap.book_icon));
+        mBookList.add(new BookVo("Thinking in Java", "Bruce Eckel", 30, R.mipmap.thinking_in_java));
+        mBookList.add(new BookVo("Le Petit Prince", "[法] 圣埃克苏佩里", 96, R.mipmap.book_icon));
         mAdapter = new BookListAdapter(ReadingActivity.this, mBookList);
         lvReading = (EmptyRecyclerView) findViewById(R.id.lvReading);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);

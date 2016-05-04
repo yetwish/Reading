@@ -3,6 +3,7 @@ package com.xidian.yetwish.reading.framework.vo.reader;
 import com.google.common.base.Function;
 import com.google.common.collect.Ordering;
 import com.xidian.yetwish.reading.framework.database.generator.Chapter;
+import com.xidian.yetwish.reading.framework.utils.BookUtils;
 
 /**
  * 章节entity
@@ -18,8 +19,12 @@ public class ChapterVo {
     private long lastCharPosition;
     private int pageNumber;
 
+    public ChapterVo(){
+
+    }
+
     public ChapterVo(String filePath, String bookId, String name, long firstCharPosition, long lastCharPosition){
-        this.chapterId = name.hashCode()+"_"+System.currentTimeMillis();
+        this.chapterId = BookUtils.generateSequenceId();
         this.filePath = filePath;
         this.bookId = bookId;
         this.name = name;
@@ -31,7 +36,7 @@ public class ChapterVo {
 
     }
 
-    public Chapter asChapter(){
+    public Chapter convertToDb(){
         Chapter chapter = new Chapter();
 
         return chapter;
@@ -91,5 +96,18 @@ public class ChapterVo {
 
     public void setPageNumber(int pageNumber) {
         this.pageNumber = pageNumber;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Chapter [")
+                .append(" cid "+chapterId)
+                .append(" bid "+bookId)
+                .append(" name "+name)
+                .append(" firstPosition "+ firstCharPosition)
+                .append(" lastPosition "+lastCharPosition)
+                .append(" ]");
+        return sb.toString();
     }
 }

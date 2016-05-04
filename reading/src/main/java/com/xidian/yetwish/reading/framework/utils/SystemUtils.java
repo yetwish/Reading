@@ -13,9 +13,9 @@ import java.util.regex.Pattern;
 /**
  * Created by Yetwish on 2016/4/19 0019.
  */
-public class AppUtils {
+public class SystemUtils {
 
-    private AppUtils(){
+    private SystemUtils(){
          /* can not be instantiated */
         throw new UnsupportedOperationException("can not be instantiated");
     }
