@@ -7,6 +7,9 @@ import android.text.TextUtils;
 
 import java.io.File;
 import java.io.FileFilter;
+import java.text.Format;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -83,6 +86,16 @@ public class SystemUtils {
         }
 
         return size;
+    }
+
+
+    private static final Format TIME_FORMATE = new SimpleDateFormat("HH:mm");
+
+    public static String getCurrentTimeText(){
+
+        Calendar currentTime = Calendar.getInstance();
+
+        return TIME_FORMATE.format(currentTime.getTime());
     }
 
     /***

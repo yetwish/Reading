@@ -25,6 +25,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
+ * todo 如果没有分章节 怎么办
  * chapter factory , to divide the book into chapters and save chapterEntities
  * Created by Yetwish on 2016/4/24 0024.
  */
@@ -59,6 +60,8 @@ public class ChapterFactory {
 
     private long mBookLen;
     private BookVo mCurrentBook;
+    //全书总字符数
+    private long mBookCharNum;
 
     private List<ChapterVo> mChapterList;
 
@@ -123,9 +126,13 @@ public class ChapterFactory {
                 new InputStreamReader(new FileInputStream(mCurrentBook.getFilePath()), mCharsetName));
         CharStreams.skipFully(bufferedReader, from);
         String line;
-        for (int i = (int) from; i < to; ) {
+        int i;
+        for (i = (int) from; i < to; ) {
             line = bufferedReader.readLine();
-            if (line == null) break;
+            if (line == null) {
+                mBookCharNum = i;
+                break;
+            }
 //            LogUtils.w(line + Thread.currentThread().getName());
             if (line.startsWith(CHAPTER_MATCHER)) {
                 synchronized (ChapterFactory.getsInstance()) {
@@ -134,6 +141,7 @@ public class ChapterFactory {
             }
             i += line.length();
         }
+        mBookCharNum = i > mBookCharNum ? i : mBookCharNum;
         bufferedReader.close();
     }
 
@@ -143,38 +151,28 @@ public class ChapterFactory {
         Matcher m1, m2;
         String chapterName;
         mChapterList.clear();
-        //全书总字符数
-        int charNum = 0;
-        boolean isFirst = true;
+
         for (Integer index : mChapterMap.keySet()) {
             chapterName = mChapterMap.get(index);
             m1 = mChapterPattern.matcher(chapterName);
             m2 = mChapterPattern2.matcher(chapterName);
             if (m1.find() || m2.find()) {
                 //add entities
-                ChapterVo entity = null;
-                if (isFirst) {
-                    entity = new ChapterVo(mCurrentBook.getFilePath(),
-                            mCurrentBook.getBookId(), mChapterMap.get(index), 0, 0);
-                    isFirst = false;
-                } else {
-                    entity = new ChapterVo(mCurrentBook.getFilePath(),
-                            mCurrentBook.getBookId(), mChapterMap.get(index), index, 0);
-                }
+                ChapterVo entity = new ChapterVo(mCurrentBook.getFilePath(),
+                        mCurrentBook.getBookId(), mChapterMap.get(index), index, 0);
                 if (mChapterList.size() > 0) {
                     mChapterList.get(mChapterList.size() - 1).setLastCharPosition(index);
                 }
                 mChapterList.add(entity);
-            } else {
-                LogUtils.w(chapterName);
-//                mChapterMap.remove(index);//todo modify exception
             }
-            charNum = index;
+//            else {
+//                LogUtils.w(chapterName);
+//               mChapterMap.remove(index);//todo modify exception
+//            }
         }
-        charNum += mChapterMap.get(charNum).length();
-        mCurrentBook.setCharNumber(charNum);
+        mCurrentBook.setCharNumber(mBookCharNum);
         //生成章节列表
-        mChapterList.get(mChapterList.size() - 1).setLastCharPosition(charNum);
+        mChapterList.get(mChapterList.size() - 1).setLastCharPosition(mBookCharNum);
         //将章节列表存入数据库
 //        DatabaseManager.getsInstance().getChapterManager().refresh(mChapterList);
 

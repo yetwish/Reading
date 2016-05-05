@@ -11,6 +11,7 @@ import android.view.inputmethod.InputMethodManager;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.xidian.yetwish.reading.R;
 
+
 /**
  * base activity,dialog and something
  * Created by Yetwish on 2016/4/8 0008.

@@ -27,13 +27,15 @@ import com.xidian.yetwish.reading.ui.main.adapter.ChapterAdapter;
 import com.xidian.yetwish.reading.ui.main.adapter.viewpager.ReaderPageAdapter;
 import com.xidian.yetwish.reading.ui.widget.EmptyRecyclerView;
 import com.xidian.yetwish.reading.ui.main.adapter.viewpager.DepthPageTransformer;
+import com.xidian.yetwish.reading.ui.widget.PopupReader;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 文本阅读activity
+ * todo 正在加载 请稍后
+ * 文本阅读activity  根据手机屏幕计算出rows and cols
  * Created by Yetwish on 2016/4/23 0023.
  */
 public class ReaderActivity extends Activity {
@@ -73,6 +75,8 @@ public class ReaderActivity extends Activity {
         try {
             BookVo book = new BookVo("大荒蛮神", "更俗", 0.1f, 0);
             book.setFilePath(Environment.getExternalStorageDirectory().getAbsolutePath() + "/tencent/QQfile_recv/大荒蛮神.txt");
+//            book.setFilePath(Environment.getExternalStorageDirectory().getAbsolutePath() + "/Download/test.txt");
+//            book.setFilePath(Environment.getExternalStorageDirectory().getAbsolutePath() + "/UCDownloads/test2.txt");
             book.setBookId(BookUtils.generateSequenceId());
             ChapterFactory.getsInstance().concurrentReadFile(book);
         } catch (IOException e) {
@@ -97,7 +101,9 @@ public class ReaderActivity extends Activity {
         mPageAdapter = new ReaderPageAdapter(ReaderActivity.this, mPageList, new ReaderPageAdapter.OnClickListener() {
             @Override
             public void onClick() {
-                //todo
+                //todo onclick
+                PopupReader popupReader = new PopupReader(ReaderActivity.this);
+                popupReader.show(mViewPager);
             }
         });
         mViewPager.setAdapter(mPageAdapter);
@@ -166,7 +172,7 @@ public class ReaderActivity extends Activity {
         mChapters.addAll(event.getChapterList());
         mChapterAdapter.notifyDataSetChanged();
         //设置初始 page 数据
-        PageFactory.getInstance().paging(mChapters.get(0));
+        PageFactory.getInstance(ReaderActivity.this).paging(mChapters.get(0));
 
     }
 

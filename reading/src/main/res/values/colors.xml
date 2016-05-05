@@ -7,7 +7,7 @@
 
     <color name="colorHighLight">#DF3E3E</color>
 
-
+    <color name="colorReaderBarBg">#535358</color>
     <color name="colorPrimaryLight">#C3ED</color>
     <color name="colorReading">#92E0E0</color>
     <color name="colorSlideMenu">#535358</color>
@@ -17,7 +17,7 @@
 
     <color name="colorTransparent">#00FFFFFF</color>
     <color name="colorTransparentFrame">#aaFFFFFF</color>
-    <color name="colorWhite">#FFFFFF</color>
+    <color name="colorWhite">#FeFeFe</color>
     <color name="colorBlack">#000000</color>
 
     <color name="colorPrimaryText">#333333</color>

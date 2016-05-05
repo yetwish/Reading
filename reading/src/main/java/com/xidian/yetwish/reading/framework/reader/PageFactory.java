@@ -1,10 +1,12 @@
 package com.xidian.yetwish.reading.framework.reader;
 
 
+import android.content.Context;
 import android.text.TextUtils;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.util.concurrent.FutureCallback;
+import com.xidian.yetwish.reading.BaseApplication;
 import com.xidian.yetwish.reading.framework.database.DatabaseManager;
 import com.xidian.yetwish.reading.framework.eventbus.EventBusWrapper;
 import com.xidian.yetwish.reading.framework.eventbus.event.EventGeneratedPage;
@@ -20,7 +22,6 @@ import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
@@ -30,39 +31,24 @@ import java.util.concurrent.Callable;
  */
 public class PageFactory {
 
-    public static int DEFAULT_NUMBER = 100;
-
-    private static int DEFAULT_ROWS = 19;
-
-    private static int DEFAULT_COLS = 20;
-
     private static PageFactory sInstance;
-
-    public static PageFactory getInstance() {
+    public static PageFactory getInstance(Context context) {
         if (sInstance == null) {
             synchronized (PageFactory.class) {
                 if (sInstance == null) {
-                    sInstance = new PageFactory();
+                    sInstance = new PageFactory(context);
                 }
             }
         }
         return sInstance;
     }
 
-    private PageFactory() {
-    }
+    private int mRow;
+    private int mCol;
 
-    /**
-     * 每页中最多容纳的字符
-     */
-    private int eachPageCharNumber = DEFAULT_NUMBER;
-
-    public int getEachPageCharNumber() {
-        return eachPageCharNumber;
-    }
-
-    public void setEachPageCharNumber(int charNumber) {
-        eachPageCharNumber = charNumber;
+    private PageFactory(Context context) {
+        mRow = ReaderController.getInstance(context).getRowOfPage();
+        mCol = ReaderController.getInstance(context).getColOfPage();
     }
 
     public void startPaging(BookVo book) {
@@ -110,7 +96,10 @@ public class PageFactory {
         });
     }
 
-
+    /**
+     * 最后一个字符的处理
+     * @param chapter
+     */
     public void paging(final ChapterVo chapter) {
 
         if (isPaged(chapter)) {
@@ -176,10 +165,10 @@ public class PageFactory {
             }
             int row = getRowOfText(line);
             curRow += row;
-            if (curRow < DEFAULT_ROWS) {
+            if (curRow < mRow) {
                 sbContent.append(line).append("\n");
 //                LogUtils.w(sbContent.toString());
-            } else if (curRow == DEFAULT_ROWS) {
+            } else if (curRow == mRow) {
                 sbContent.append(line).append("\n");
 //                LogUtils.w("page " + sbContent.toString());
                 //生成pageVo
@@ -191,14 +180,14 @@ public class PageFactory {
                 firstIndex = position + line.length();
             } else {
                 boolean isFirst = true;
-                while (curRow > DEFAULT_ROWS) {
+                while (curRow > mRow) {
                     //截断
                     curRow -= row;
-                    if (isFirst) {
-                        divideIndex = (DEFAULT_ROWS - curRow) * DEFAULT_COLS - 2 + 1;
+                    if (isFirst) {//todo
+                        divideIndex = (mRow - curRow) * mCol - 2 + 1;
                         isFirst = false;
                     } else
-                        divideIndex = (DEFAULT_ROWS - curRow) * DEFAULT_COLS + 1;
+                        divideIndex = (mRow - curRow) * mCol + 1;
                     sbContent.append(line, 0, divideIndex);
                     //生成pageVo
                     page = new PageVo(chapter.getBookId(), chapter.getChapterId(), chapter.getFilePath(),
@@ -231,8 +220,8 @@ public class PageFactory {
     }
 
     private int getRowOfText(String text) {
-        int row = text.length() / DEFAULT_COLS;
-        int col = text.length() % DEFAULT_COLS;
+        int row = text.length() / mCol;
+        int col = text.length() % mCol;
         if (col != 0)
             row = row + 1;
         return row;

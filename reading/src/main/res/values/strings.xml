@@ -30,9 +30,15 @@
 
     <string name="loading">正在加载</string>
 
+    <string name="exam_book_title">大荒蛮神</string>
+    <string name="pre_chapter">上一章</string>
+    <string name="next_chapter">下一章</string>
+
+
     <!--the description of images-->
     <string name="des_avatar">avatar</string>
     <string name="des_item_text">text of menu item</string>
     <string name="des_item_arrow">the right arrow</string>
     <string name="des_add_fab">add bookVo fab</string>
+
 </resources>

@@ -76,5 +76,25 @@
         <item name="android:textColor">@color/menu_item_text</item>
     </style>
 
+    <style name="Reader_TextStyle">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:textColor">@color/colorWhite</item>
+    </style>
+
+    <style name="Reader_TextStyle_Title" parent="Reader_TextStyle">
+        <item name="android:textSize">@dimen/reader_title_text_size</item>
+    </style>
+
+    <style name="Reader_TextStyle_Content" parent="Reader_TextStyle">
+        <item name="android:textSize">@dimen/reader_content_text_size</item>
+    </style>
+
+
+    <style name="Reader_IconStyle">
+        <item name="android:layout_width">wrap_content</item>>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:scaleType">centerCrop</item>
+    </style>
 
 </resources>
