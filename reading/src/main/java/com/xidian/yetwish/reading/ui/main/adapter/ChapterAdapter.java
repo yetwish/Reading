@@ -17,12 +17,12 @@ public class ChapterAdapter extends CommonAdapter<ChapterVo> {
 
 
     public ChapterAdapter(Context context, List<ChapterVo> data) {
-        super(context, android.R.layout.simple_list_item_1, data);
+        super(context, R.layout.item_chapter_list, data);
     }
 
     @Override
     public void convert(ViewHolder holder, ChapterVo data) {
-        holder.setText(android.R.id.text1, data.getName())
-                .setBackgroundColor(android.R.id.text1, ContextCompat.getColor(mContext, R.color.colorWhite));
+        holder.setText(R.id.tvItemChapterName, data.getName())
+                .setText(R.id.tvItemPosition,data.getFirstCharPosition()+"");
     }
 }

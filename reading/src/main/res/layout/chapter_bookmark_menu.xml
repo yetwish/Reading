@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/reader_chapter_list_width"
+    android:layout_height="match_parent"
+    android:background="@color/colorWhite"
+    android:orientation="vertical">
+    <RadioGroup
+        android:layout_marginTop="10dp"
+        android:id="@+id/rgTabs"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/menu_height"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:checked="true"
+            android:id="@+id/rbChapter"
+            style="@style/RadioButton_Menu_Horizontal"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:drawableLeft="@drawable/menu_chapter_bg"
+            android:text="章节目录"/>
+
+
+        <RadioButton
+            android:id="@+id/rbBookMark"
+            style="@style/RadioButton_Menu_Horizontal"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:drawableLeft="@drawable/menu_bookmark_bg"
+            android:text="书签列表"/>
+    </RadioGroup>
+
+    <com.xidian.yetwish.reading.ui.widget.EmptyRecyclerView
+        android:scrollbars="vertical"
+        android:id="@+id/lvChapter"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+
+</LinearLayout>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/menu_height">
+
+    <TextView
+        android:id="@+id/tvItemChapterName"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_toLeftOf="@+id/tvItemPosition"
+        android:drawableBottom="@color/colorLine"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/menu_margin_left"
+        android:singleLine="true"
+        android:text="第一章 降临神界"
+        android:textColor="@color/colorText" />
+
+
+    <TextView
+        android:id="@+id/tvItemPosition"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/menu_margin_left"
+        android:text="2.0%"
+        android:textColor="@color/colorText" />
+
+    <View
+        style="@style/Separator"
+        android:layout_alignParentBottom="true" />
+
+</RelativeLayout>

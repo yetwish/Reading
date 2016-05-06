@@ -6,16 +6,137 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/vpReaderContainer"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <android.support.v4.view.ViewPager
+            android:id="@+id/vpReaderContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
-    </android.support.v4.view.ViewPager>
+        <RelativeLayout
+            android:id="@+id/rlReaderTopContainer"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/reader_popup_top_height"
+            android:background="@color/colorReaderBarBg"
+            android:paddingLeft="@dimen/menu_margin_left"
+            android:visibility="gone">
 
-    <com.xidian.yetwish.reading.ui.widget.EmptyRecyclerView
-        android:id="@+id/lvChapter"
+            <ImageView
+                android:id="@+id/ivReaderBack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/ic_chevron_left_white_48dp" />
+
+            <TextView
+                style="@style/Reader_TextStyle_Title"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/menu_item_margin"
+                android:layout_toRightOf="@+id/ivReaderBack"
+                android:text="@string/exam_book_title" />
+        </RelativeLayout>
+
+        <View
+            android:visibility="gone"
+            android:id="@+id/midContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/llReaderBottomContainer"
+            android:layout_below="@+id/rlReaderTopContainer"
+            android:background="@color/colorTransparent" />
+
+        <LinearLayout
+            android:id="@+id/llReaderBottomContainer"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/reader_popup_bottom_height"
+            android:layout_alignParentBottom="true"
+            android:background="@color/colorReaderBarBg"
+            android:orientation="vertical"
+            android:padding="@dimen/reader_padding"
+            android:visibility="gone">
+
+
+            <RelativeLayout
+                android:id="@+id/rlReaderProgressContainer"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp">
+
+                <TextView
+                    android:id="@+id/tvPreChapter"
+                    style="@style/Reader_TextStyle_Content"
+                    android:layout_centerVertical="true"
+                    android:text="@string/pre_chapter" />
+
+                <ProgressBar
+                    style="@android:style/Widget.Holo.ProgressBar.Horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/menu_margin_left"
+                    android:layout_marginRight="@dimen/menu_margin_left"
+                    android:layout_toLeftOf="@+id/tvNextChapter"
+                    android:layout_toRightOf="@+id/tvPreChapter"
+                    android:max="100"
+                    android:progress="80" />
+
+                <TextView
+                    android:id="@+id/tvNextChapter"
+                    style="@style/Reader_TextStyle_Content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:text="@string/next_chapter" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/llReaderMenuContainer"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingBottom="5dp">
+
+                <ImageView
+                    android:id="@+id/ivReaderMenu"
+                    android:layout_width="0dp"
+                    android:layout_height="32dp"
+                    android:layout_weight="1"
+                    android:src="@mipmap/ic_list_white_36dp" />
+
+                <ImageView
+                    android:id="@+id/ivReaderTextSize"
+                    android:layout_width="0dp"
+                    android:layout_height="32dp"
+                    android:layout_weight="1"
+                    android:src="@mipmap/ic_text_format_white_36dp" />
+
+
+                <ImageView
+                    android:id="@+id/ivReaderBookMark"
+                    android:layout_width="0dp"
+                    android:layout_height="32dp"
+                    android:layout_weight="1"
+                    android:src="@mipmap/ic_bookmark_white_36dp" />
+
+                <ImageView
+                    android:id="@+id/ivReaderNote"
+                    android:layout_width="0dp"
+                    android:layout_height="32dp"
+                    android:layout_weight="1"
+                    android:src="@mipmap/ic_create_white_36dp" />
+            </LinearLayout>
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+
+    <include layout="@layout/chapter_bookmark_menu"
         android:layout_width="@dimen/reader_chapter_list_width"
         android:layout_height="match_parent"
         android:layout_gravity="start" />

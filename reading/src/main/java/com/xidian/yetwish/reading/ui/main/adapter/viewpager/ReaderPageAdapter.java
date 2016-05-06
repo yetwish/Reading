@@ -21,18 +21,20 @@ public class ReaderPageAdapter extends PagerAdapter implements View.OnClickListe
     private List<ReaderView> mViews;
     private List<PageVo> mData;
 
+    public interface OnReaderViewClickListener {
+        void onClick();
+    }
 
-    private OnClickListener mClickListener;
+    private OnReaderViewClickListener mClickListener;
 
-    public void setOnClickListener(OnClickListener listener) {
+    public void setOnClickListener(OnReaderViewClickListener listener) {
         mClickListener = listener;
     }
 
 
-    public ReaderPageAdapter(Context context, List<PageVo> data, OnClickListener listener) {
+    public ReaderPageAdapter(Context context, List<PageVo> data) {
         this.mContext = context;
         this.mData= data;
-        this.mClickListener = listener;
         updateViewByData();
     }
 
@@ -83,9 +85,6 @@ public class ReaderPageAdapter extends PagerAdapter implements View.OnClickListe
             mClickListener.onClick();
     }
 
-    public interface OnClickListener {
-        void onClick();
-    }
 
 
 }

@@ -56,21 +56,21 @@
 
         <RadioButton
             android:id="@+id/menuReading"
-            style="@style/RadioButton_Menu"
+            style="@style/RadioButton_Menu_Vertical"
             android:drawableLeft="@drawable/menu_reading_bg"
             android:drawableStart="@drawable/menu_reading_bg"
             android:text="@string/app_name" />
 
         <RadioButton
             android:id="@+id/menuNote"
-            style="@style/RadioButton_Menu"
+            style="@style/RadioButton_Menu_Vertical"
             android:drawableLeft="@drawable/menu_note_bg"
             android:drawableStart="@drawable/menu_note_bg"
             android:text="@string/note_title" />
 
         <RadioButton
             android:id="@+id/menuRead"
-            style="@style/RadioButton_Menu"
+            style="@style/RadioButton_Menu_Vertical"
             android:drawableLeft="@drawable/menu_read_bg"
             android:drawableStart="@drawable/menu_read_bg"
             android:text="@string/read_title" />

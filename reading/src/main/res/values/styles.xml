@@ -56,6 +56,18 @@
     <style name="RadioButton_Menu">
         <item name="android:drawablePadding">@dimen/radio_drawable_padding</item>
         <item name="android:paddingLeft">@dimen/menu_margin_left</item>
+        <item name="android:button">@null</item>
+    </style>
+
+    <style name="RadioButton_Menu_Horizontal" parent="RadioButton_Menu">
+        <item name="android:textColor">@color/chapter_item_text</item>
+        <item name="android:background">@drawable/chapter_menu_rb_bg</item>
+
+    </style>
+
+    <style name="RadioButton_Menu_Vertical" parent="RadioButton_Menu">
+        <item name="android:drawablePadding">@dimen/radio_drawable_padding</item>
+        <item name="android:paddingLeft">@dimen/menu_margin_left</item>
         <item name="android:paddingRight">@dimen/menu_margin_left</item>
         <item name="android:drawableRight">@drawable/menu_arrow_bg</item>
         <item name="android:drawableEnd">@drawable/menu_arrow_bg</item>>
