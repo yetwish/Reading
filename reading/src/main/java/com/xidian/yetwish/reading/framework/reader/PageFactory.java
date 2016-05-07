@@ -214,6 +214,7 @@ public class PageFactory {
 //            LogUtils.w(sbContent.toString());
             clearStringBuilder(sbContent);
         }
+        chapter.setPageNumber(pageList.size());
         reader.close();
 
         return ImmutableList.copyOf(pageList);

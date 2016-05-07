@@ -15,6 +15,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
+        <include
+            android:id="@+id/readerEmptyView"
+            layout="@layout/reader_empty_view" />
+
         <RelativeLayout
             android:id="@+id/rlReaderTopContainer"
             android:layout_width="match_parent"
@@ -39,13 +43,13 @@
         </RelativeLayout>
 
         <View
-            android:visibility="gone"
             android:id="@+id/midContainer"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_above="@+id/llReaderBottomContainer"
             android:layout_below="@+id/rlReaderTopContainer"
-            android:background="@color/colorTransparent" />
+            android:background="@color/colorTransparent"
+            android:visibility="gone" />
 
         <LinearLayout
             android:id="@+id/llReaderBottomContainer"
@@ -72,17 +76,20 @@
                     android:layout_centerVertical="true"
                     android:text="@string/pre_chapter" />
 
-                <ProgressBar
-                    style="@android:style/Widget.Holo.ProgressBar.Horizontal"
+                <SeekBar
+                    android:id="@+id/readerSeekBar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="@dimen/menu_margin_left"
-                    android:layout_marginRight="@dimen/menu_margin_left"
                     android:layout_toLeftOf="@+id/tvNextChapter"
                     android:layout_toRightOf="@+id/tvPreChapter"
                     android:max="100"
-                    android:progress="80" />
+                    android:maxHeight="4dp"
+                    android:paddingLeft="@dimen/menu_margin_left"
+                    android:paddingRight="@dimen/menu_margin_left"
+                    android:progress="80"
+                    android:progressDrawable="@drawable/seekbar_bg"
+                    android:thumb="@drawable/thumb_bg" />
 
                 <TextView
                     android:id="@+id/tvNextChapter"
@@ -136,7 +143,8 @@
     </RelativeLayout>
 
 
-    <include layout="@layout/chapter_bookmark_menu"
+    <include
+        layout="@layout/chapter_bookmark_menu"
         android:layout_width="@dimen/reader_chapter_list_width"
         android:layout_height="match_parent"
         android:layout_gravity="start" />

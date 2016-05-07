@@ -11,11 +11,12 @@ import android.view.View;
 import com.google.common.base.Splitter;
 import com.xidian.yetwish.reading.R;
 import com.xidian.yetwish.reading.framework.reader.ReaderController;
+import com.xidian.yetwish.reading.framework.utils.LogUtils;
 import com.xidian.yetwish.reading.framework.utils.SystemUtils;
 import com.xidian.yetwish.reading.framework.vo.reader.PageVo;
 
 /**
- * 文本阅读view
+ * 文本阅读view  改进 不用viewpager
  * Created by Yetwish on 2016/4/23 0023.
  */
 public class ReaderView extends View {
@@ -51,6 +52,8 @@ public class ReaderView extends View {
 
     private String mChapterName;
     private float mProgress;
+
+    private int mInfoTextHeight;
 
     public ReaderView(Context context) {
         this(context, null);
@@ -107,6 +110,8 @@ public class ReaderView extends View {
         mInfoPaint.setTextSize(mInfoTextSize);
         mInfoPaint.setColor(mInfoColor);
         mInfoPaint.setAntiAlias(true);
+        Paint.FontMetrics fontMetrics = mInfoPaint.getFontMetrics();
+        mInfoTextHeight = (int) Math.ceil(fontMetrics.bottom - fontMetrics.top);
 
         mBgPaint = new Paint();
         mBgPaint.setColor(mBgColor);
@@ -129,7 +134,7 @@ public class ReaderView extends View {
         super.onDraw(canvas);
         if (mPage == null)
             return;
-        int textHeight = mController.getTextHeight();
+        int lineHeight = mController.getLineHeight();
         int col = mController.getColOfPage();
         int rows = mController.getRowOfPage();
         int marginTop = mController.getTopMargin();
@@ -140,19 +145,20 @@ public class ReaderView extends View {
         for (String line : mContent) {
             for (int i = 0; j < rows && i < line.length(); i += col, j++) {
                 canvas.drawText(line, i, i + col <= line.length() ? i + col : line.length(),
-                        marginLeft, marginTop + j * textHeight, mContentPaint);
+                        marginLeft, marginTop + j * lineHeight, mContentPaint);
             }
         }
 
         //todo 时间监听?
-        canvas.drawText(SystemUtils.getCurrentTimeText(), marginLeft, marginTop + rows * textHeight, mInfoPaint);
+        canvas.drawText(SystemUtils.getCurrentTimeText(), marginLeft,
+                marginTop + rows * lineHeight - mController.getLineMargin(), mInfoPaint);
 
-        int width = (int) Math.ceil(mInfoPaint.measureText(mProgress + "%"));
+        int width = (int) Math.floor(mInfoPaint.measureText(mProgress + "%"));
         //draw progress
-        canvas.drawText(mProgress * 100 + "%", mController.getWidth() - marginLeft - width,
-                marginTop + rows * textHeight, mInfoPaint);
+        canvas.drawText(mProgress * 100 + "%", marginLeft + mController.getTextWidth() * col - width,
+                marginTop + rows * lineHeight - mController.getLineMargin(), mInfoPaint);
 
-        canvas.drawText(mChapterName, marginLeft, marginTop / 2 - textHeight / 4, mInfoPaint);
+        canvas.drawText(mChapterName, marginLeft, marginTop - mController.getLineMargin()-mInfoTextHeight, mInfoPaint);
         //显示电量  监听
 
     }

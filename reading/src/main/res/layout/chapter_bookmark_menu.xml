@@ -12,6 +12,7 @@
         android:orientation="horizontal">
 
         <RadioButton
+            android:drawablePadding="10dp"
             android:checked="true"
             android:id="@+id/rbChapter"
             style="@style/RadioButton_Menu_Horizontal"
@@ -23,6 +24,7 @@
 
 
         <RadioButton
+            android:drawablePadding="8dp"
             android:id="@+id/rbBookMark"
             style="@style/RadioButton_Menu_Horizontal"
             android:layout_width="0dp"

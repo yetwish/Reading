@@ -48,6 +48,7 @@ public class ReaderController {
 
     private int mTextWidth;
 
+
     private int mTextHeight;
 
     private static final String TEXT_EXAM = "永";
@@ -70,7 +71,7 @@ public class ReaderController {
         float width[] = new float[TEXT_EXAM.length()];
         paint.getTextWidths(TEXT_EXAM, width);
         mTextWidth = (int) Math.ceil(width[0]);
-        mTextHeight = (int) (fontMetrics.bottom - fontMetrics.top + mLineMargin);
+        mTextHeight = (int) (fontMetrics.bottom - fontMetrics.top);
     }
 
     public void updateTextSize(TextSize size) {
@@ -84,7 +85,7 @@ public class ReaderController {
 
     private void updatePageInfo() {
         //行数： (屏幕高度-上下边距) /(字体高度+行距)
-        mRowOfPage = (mHeight - mMarginTop) / mTextHeight;
+        mRowOfPage = (mHeight - mMarginTop) / (mTextHeight + mLineMargin);
         //列数：
         mColOfPage = (mWidth - mMarginHorizontal * 2) / mTextWidth;
 
@@ -94,11 +95,15 @@ public class ReaderController {
         LogUtils.w("row " + mRowOfPage + "," + "col " + mColOfPage);
     }
 
+    public int getLineHeight() {
+        return mTextHeight + mLineMargin;
+    }
+
     public int getTextHeight() {
         return mTextHeight;
     }
 
-    public int getTextWidth(){
+    public int getTextWidth() {
         return mTextWidth;
     }
 
@@ -113,7 +118,6 @@ public class ReaderController {
     public int getTextSize() {
         return mTextSize;
     }
-
 
 
     public int getLineMargin() {

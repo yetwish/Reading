@@ -54,7 +54,6 @@
     </style>
 
     <style name="RadioButton_Menu">
-        <item name="android:drawablePadding">@dimen/radio_drawable_padding</item>
         <item name="android:paddingLeft">@dimen/menu_margin_left</item>
         <item name="android:button">@null</item>
     </style>
