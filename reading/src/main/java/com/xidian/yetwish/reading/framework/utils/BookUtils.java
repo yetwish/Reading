@@ -22,7 +22,7 @@ public class BookUtils {
 
     private static final int MAX = 9999;
 
-    public static synchronized String generateSequenceId() {
+    public static synchronized long generateSequenceId() {
 
         Calendar currentTime = Calendar.getInstance();
 
@@ -32,12 +32,20 @@ public class BookUtils {
 
         NUMBER_FORMAT.format(seq, sb, HELPER_POSITION);
 
-        if(seq == MAX){
-            seq = 0 ;
-        }else {
-            seq ++;
+        if (seq == MAX) {
+            seq = 0;
+        } else {
+            seq++;
         }
-        return sb.toString();
+        return Long.parseLong(sb.toString());
+    }
+
+    private static final DecimalFormat DIGIT_FORMAT = new DecimalFormat("#.00");
+
+    public static String formatDigit(double digit) {
+        if (digit < 1)
+            return "0" + DIGIT_FORMAT.format(digit);
+        return DIGIT_FORMAT.format(digit);
     }
 
 

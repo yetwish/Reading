@@ -1,17 +1,19 @@
 package com.xidian.yetwish.reading.framework.vo;
 
-import android.graphics.Bitmap;
 
+import com.google.common.io.Files;
+import com.xidian.yetwish.reading.framework.database.generator.Book;
 import com.xidian.yetwish.reading.framework.utils.BookUtils;
+
+import java.io.Serializable;
+import java.util.Map;
 
 /**
  * Created by Yetwish on 2016/4/21 0021.
  */
-public class BookVo {
+public class BookVo implements Serializable {
 
-    public static final long INIT_CHAR_NUMBER = -1;
-
-    private String bookId;
+    private long bookId;
     private String name;
     private String author;
     private String language;
@@ -21,21 +23,42 @@ public class BookVo {
     private String filePath;
     private long charNumber;
 
-    public BookVo(String name, String author, float progress, int resId){
-        this.bookId = BookUtils.generateSequenceId();
-        this.name = name;
-        this.author = author;
-        this.progress = progress;
-        this.iconResId = resId;
-        this.charNumber = INIT_CHAR_NUMBER;
+    public BookVo(Book book) {
+        this.bookId = book.getBookId();
+        this.name = book.getName();
+        this.author = book.getAuthor();
+        this.language = book.getLanguage();
+        this.progress = book.getProgress();
+        this.iconPath = book.getIconPath();
+        this.filePath = book.getPath();
+        this.charNumber = book.getCharNumber();
     }
 
+    public Book convertToDb() {
+        Book book = new Book();
+        book.setBookId(bookId);
+        book.setName(name);
+        book.setAuthor(author);
+        book.setLanguage(language);
+        book.setProgress(progress);
+        book.setIconPath(iconPath);
+        book.setPath(filePath);
+        book.setCharNumber(charNumber);
+        return book;
+    }
 
-    public String getBookId() {
+    public BookVo(String filePath, String name) {
+        this.bookId = BookUtils.generateSequenceId();
+        this.filePath = filePath;
+        this.name = Files.getNameWithoutExtension(name);
+        this.progress = 0;
+    }
+
+    public long getBookId() {
         return bookId;
     }
 
-    public void setBookId(String bookId) {
+    public void setBookId(long bookId) {
         this.bookId = bookId;
     }
 

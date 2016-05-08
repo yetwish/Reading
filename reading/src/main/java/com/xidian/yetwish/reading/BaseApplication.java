@@ -2,6 +2,9 @@ package com.xidian.yetwish.reading;
 
 import android.app.Application;
 
+import com.xidian.yetwish.reading.framework.database.DatabaseManager;
+import com.xidian.yetwish.reading.ui.main.ReadingActivity;
+
 
 /**
  * base application class
@@ -20,6 +23,7 @@ public class BaseApplication extends Application{
     @Override
     public void onTerminate() {
         super.onTerminate();
+        DatabaseManager.getsInstance().recycle();
     }
 
     public static BaseApplication getInstance(){

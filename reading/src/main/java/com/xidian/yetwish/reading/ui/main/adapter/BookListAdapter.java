@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.xidian.yetwish.reading.R;
+import com.xidian.yetwish.reading.framework.eventbus.EventBusWrapper;
 import com.xidian.yetwish.reading.framework.vo.BookVo;
 import com.xidian.yetwish.reading.framework.utils.LogUtils;
 import com.xidian.yetwish.reading.framework.common_adapter.CommonAdapter;
@@ -20,13 +21,12 @@ import java.util.List;
  */
 public class BookListAdapter extends CommonAdapter<BookVo> {
 
-
     public BookListAdapter(final Context context, List<BookVo> data) {
         super(context, R.layout.item_book, data);
         setItemClickListener(new OnItemClickListener<BookVo>() {
             @Override
             public void onItemClick(ViewGroup parent, View view, BookVo data, int position) {
-                ReaderActivity.startActivity(context,data.getFilePath());
+                ReaderActivity.startActivity(context,data);
             }
 
             @Override
@@ -38,11 +38,10 @@ public class BookListAdapter extends CommonAdapter<BookVo> {
     }
 
     @Override
-    public void convert(ViewHolder holder, BookVo bookVo) {
-        holder.setImageResource(R.id.ivBookIcon, bookVo.getIconResId())
-                .setText(R.id.tvBookName, bookVo.getName())
-                .setText(R.id.tvBookAuthor, bookVo.getAuthor())
-                .setNumberProgress(R.id.pbBookProgress, bookVo.getProgress())
+    public void convert(ViewHolder holder, BookVo book) {
+        holder.setText(R.id.tvBookName, book.getName())
+                .setText(R.id.tvBookAuthor, book.getAuthor())
+                .setNumberProgress(R.id.pbBookProgress, book.getProgress())
                 .setOnClickListener(R.id.ivBookDelete, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -50,6 +49,11 @@ public class BookListAdapter extends CommonAdapter<BookVo> {
                         v.setVisibility(View.GONE);
                     }
                 });
+        if(book.getIconResId() != 0){
+            holder.setImageResource(R.id.ivBookIcon, book.getIconResId());
+        }else {
+            holder.setImageResource(R.id.ivBookIcon,R.mipmap.logo);
+        }
     }
 
 

@@ -6,9 +6,8 @@ package com.xidian.yetwish.reading.framework.database.generator;
  */
 public class NoteBook {
 
-    private Long id;
-    private String NoteBookId;
-    private String bookId;
+    private Long NoteBookId;
+    private Long bookId;
     private String name;
     private String iconPath;
     private Integer noteNumber;
@@ -17,12 +16,11 @@ public class NoteBook {
     public NoteBook() {
     }
 
-    public NoteBook(Long id) {
-        this.id = id;
+    public NoteBook(Long NoteBookId) {
+        this.NoteBookId = NoteBookId;
     }
 
-    public NoteBook(Long id, String NoteBookId, String bookId, String name, String iconPath, Integer noteNumber, String intro) {
-        this.id = id;
+    public NoteBook(Long NoteBookId, Long bookId, String name, String iconPath, Integer noteNumber, String intro) {
         this.NoteBookId = NoteBookId;
         this.bookId = bookId;
         this.name = name;
@@ -31,27 +29,19 @@ public class NoteBook {
         this.intro = intro;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getNoteBookId() {
+    public Long getNoteBookId() {
         return NoteBookId;
     }
 
-    public void setNoteBookId(String NoteBookId) {
+    public void setNoteBookId(Long NoteBookId) {
         this.NoteBookId = NoteBookId;
     }
 
-    public String getBookId() {
+    public Long getBookId() {
         return bookId;
     }
 
-    public void setBookId(String bookId) {
+    public void setBookId(Long bookId) {
         this.bookId = bookId;
     }
 

@@ -23,14 +23,13 @@ public class PageDao extends AbstractDao<Page, Long> {
      * Can be used for QueryBuilder and for referencing column names.
     */
     public static class Properties {
-        public final static Property Id = new Property(0, Long.class, "id", true, "_id");
-        public final static Property PageId = new Property(1, String.class, "pageId", false, "PAGE_ID");
-        public final static Property ChapterId = new Property(2, String.class, "chapterId", false, "CHAPTER_ID");
-        public final static Property BookId = new Property(3, String.class, "bookId", false, "BOOK_ID");
-        public final static Property FirstCharPosition = new Property(4, Long.class, "firstCharPosition", false, "FIRST_CHAR_POSITION");
-        public final static Property LastCharPosition = new Property(5, Long.class, "lastCharPosition", false, "LAST_CHAR_POSITION");
-        public final static Property Path = new Property(6, String.class, "path", false, "PATH");
-        public final static Property Content = new Property(7, String.class, "content", false, "CONTENT");
+        public final static Property PageId = new Property(0, Long.class, "pageId", true, "PAGE_ID");
+        public final static Property ChapterId = new Property(1, Long.class, "chapterId", false, "CHAPTER_ID");
+        public final static Property BookId = new Property(2, Long.class, "bookId", false, "BOOK_ID");
+        public final static Property FirstCharPosition = new Property(3, Long.class, "firstCharPosition", false, "FIRST_CHAR_POSITION");
+        public final static Property LastCharPosition = new Property(4, Long.class, "lastCharPosition", false, "LAST_CHAR_POSITION");
+        public final static Property Path = new Property(5, String.class, "path", false, "PATH");
+        public final static Property Content = new Property(6, String.class, "content", false, "CONTENT");
     };
 
 
@@ -46,17 +45,13 @@ public class PageDao extends AbstractDao<Page, Long> {
     public static void createTable(SQLiteDatabase db, boolean ifNotExists) {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "'PAGE' (" + //
-                "'_id' INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: id
-                "'PAGE_ID' TEXT," + // 1: pageId
-                "'CHAPTER_ID' TEXT," + // 2: chapterId
-                "'BOOK_ID' TEXT," + // 3: bookId
-                "'FIRST_CHAR_POSITION' INTEGER," + // 4: firstCharPosition
-                "'LAST_CHAR_POSITION' INTEGER," + // 5: lastCharPosition
-                "'PATH' TEXT," + // 6: path
-                "'CONTENT' TEXT);"); // 7: content
-        // Add Indexes
-        db.execSQL("CREATE UNIQUE INDEX " + constraint + "IDX_PAGE_PAGE_ID_CHAPTER_ID_BOOK_ID ON PAGE" +
-                " (PAGE_ID,CHAPTER_ID,BOOK_ID);");
+                "'PAGE_ID' INTEGER PRIMARY KEY ," + // 0: pageId
+                "'CHAPTER_ID' INTEGER," + // 1: chapterId
+                "'BOOK_ID' INTEGER," + // 2: bookId
+                "'FIRST_CHAR_POSITION' INTEGER," + // 3: firstCharPosition
+                "'LAST_CHAR_POSITION' INTEGER," + // 4: lastCharPosition
+                "'PATH' TEXT," + // 5: path
+                "'CONTENT' TEXT);"); // 6: content
     }
 
     /** Drops the underlying database table. */
@@ -70,44 +65,39 @@ public class PageDao extends AbstractDao<Page, Long> {
     protected void bindValues(SQLiteStatement stmt, Page entity) {
         stmt.clearBindings();
  
-        Long id = entity.getId();
-        if (id != null) {
-            stmt.bindLong(1, id);
-        }
- 
-        String pageId = entity.getPageId();
+        Long pageId = entity.getPageId();
         if (pageId != null) {
-            stmt.bindString(2, pageId);
+            stmt.bindLong(1, pageId);
         }
  
-        String chapterId = entity.getChapterId();
+        Long chapterId = entity.getChapterId();
         if (chapterId != null) {
-            stmt.bindString(3, chapterId);
+            stmt.bindLong(2, chapterId);
         }
  
-        String bookId = entity.getBookId();
+        Long bookId = entity.getBookId();
         if (bookId != null) {
-            stmt.bindString(4, bookId);
+            stmt.bindLong(3, bookId);
         }
  
         Long firstCharPosition = entity.getFirstCharPosition();
         if (firstCharPosition != null) {
-            stmt.bindLong(5, firstCharPosition);
+            stmt.bindLong(4, firstCharPosition);
         }
  
         Long lastCharPosition = entity.getLastCharPosition();
         if (lastCharPosition != null) {
-            stmt.bindLong(6, lastCharPosition);
+            stmt.bindLong(5, lastCharPosition);
         }
  
         String path = entity.getPath();
         if (path != null) {
-            stmt.bindString(7, path);
+            stmt.bindString(6, path);
         }
  
         String content = entity.getContent();
         if (content != null) {
-            stmt.bindString(8, content);
+            stmt.bindString(7, content);
         }
     }
 
@@ -121,14 +111,13 @@ public class PageDao extends AbstractDao<Page, Long> {
     @Override
     public Page readEntity(Cursor cursor, int offset) {
         Page entity = new Page( //
-            cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
-            cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // pageId
-            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // chapterId
-            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // bookId
-            cursor.isNull(offset + 4) ? null : cursor.getLong(offset + 4), // firstCharPosition
-            cursor.isNull(offset + 5) ? null : cursor.getLong(offset + 5), // lastCharPosition
-            cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6), // path
-            cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7) // content
+            cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // pageId
+            cursor.isNull(offset + 1) ? null : cursor.getLong(offset + 1), // chapterId
+            cursor.isNull(offset + 2) ? null : cursor.getLong(offset + 2), // bookId
+            cursor.isNull(offset + 3) ? null : cursor.getLong(offset + 3), // firstCharPosition
+            cursor.isNull(offset + 4) ? null : cursor.getLong(offset + 4), // lastCharPosition
+            cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5), // path
+            cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6) // content
         );
         return entity;
     }
@@ -136,20 +125,19 @@ public class PageDao extends AbstractDao<Page, Long> {
     /** @inheritdoc */
     @Override
     public void readEntity(Cursor cursor, Page entity, int offset) {
-        entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
-        entity.setPageId(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
-        entity.setChapterId(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
-        entity.setBookId(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
-        entity.setFirstCharPosition(cursor.isNull(offset + 4) ? null : cursor.getLong(offset + 4));
-        entity.setLastCharPosition(cursor.isNull(offset + 5) ? null : cursor.getLong(offset + 5));
-        entity.setPath(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
-        entity.setContent(cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7));
+        entity.setPageId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
+        entity.setChapterId(cursor.isNull(offset + 1) ? null : cursor.getLong(offset + 1));
+        entity.setBookId(cursor.isNull(offset + 2) ? null : cursor.getLong(offset + 2));
+        entity.setFirstCharPosition(cursor.isNull(offset + 3) ? null : cursor.getLong(offset + 3));
+        entity.setLastCharPosition(cursor.isNull(offset + 4) ? null : cursor.getLong(offset + 4));
+        entity.setPath(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
+        entity.setContent(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
      }
     
     /** @inheritdoc */
     @Override
     protected Long updateKeyAfterInsert(Page entity, long rowId) {
-        entity.setId(rowId);
+        entity.setPageId(rowId);
         return rowId;
     }
     
@@ -157,7 +145,7 @@ public class PageDao extends AbstractDao<Page, Long> {
     @Override
     public Long getKey(Page entity) {
         if(entity != null) {
-            return entity.getId();
+            return entity.getPageId();
         } else {
             return null;
         }

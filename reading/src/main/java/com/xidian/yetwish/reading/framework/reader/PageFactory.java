@@ -32,6 +32,7 @@ import java.util.concurrent.Callable;
 public class PageFactory {
 
     private static PageFactory sInstance;
+
     public static PageFactory getInstance(Context context) {
         if (sInstance == null) {
             synchronized (PageFactory.class) {
@@ -51,19 +52,10 @@ public class PageFactory {
         mCol = ReaderController.getInstance(context).getColOfPage();
     }
 
+    //todo
     public void startPaging(BookVo book) {
         if (book == null) return;
-        DatabaseManager.getsInstance().getChapterManager().query(book.getBookId(), new ApiCallback<ImmutableList<ChapterVo>>() {
-            @Override
-            public void onDataReceived(ImmutableList<ChapterVo> data) {
-                startPaging(data);
-            }
-
-            @Override
-            public void onException(int code, String reason) {
-                LogUtils.w(reason);
-            }
-        });
+//        DatabaseManager.getsInstance().getChapterManager().query(book.getBookId());
     }
 
     public void startPaging(ImmutableList<ChapterVo> chapterList) {
@@ -98,15 +90,11 @@ public class PageFactory {
 
     /**
      * 最后一个字符的处理
+     *
      * @param chapter
      */
     public void paging(final ChapterVo chapter) {
 
-        if (isPaged(chapter)) {
-            //从数据库中获取数据
-
-            return;
-        }
         ThreadFactory.createThread().start(new Callable<ImmutableList<PageVo>>() {
             @Override
             public ImmutableList<PageVo> call() throws Exception {
@@ -116,27 +104,18 @@ public class PageFactory {
         }, new FutureCallback<ImmutableList<PageVo>>() {
             @Override
             public void onSuccess(ImmutableList<PageVo> result) {
-                //通过eventBus将数据发送出去
-                EventBusWrapper.getDefault().post(new EventGeneratedPage(chapter,result));
                 //将分页数据存入数据库。
-//                DatabaseManager.getsInstance().getPageManager().refresh(result);
+                DatabaseManager.getsInstance().getPageManager().refresh(result);
+
+                //通过eventBus将数据发送出去
+                EventBusWrapper.getDefault().post(new EventGeneratedPage(chapter, result));
             }
+
             @Override
             public void onFailure(Throwable t) {
 
             }
         });
-    }
-
-    /**
-     * 判断某一章节是否已经分过页
-     *
-     * @param chapter
-     * @return
-     */
-    private boolean isPaged(ChapterVo chapter) {
-        //查询数据库，判断是否已经分过页
-        return false;
     }
 
     /**

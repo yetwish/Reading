@@ -8,12 +8,14 @@ import com.xidian.yetwish.reading.framework.database.DatabaseManager;
 import com.xidian.yetwish.reading.framework.database.generator.Chapter;
 import com.xidian.yetwish.reading.framework.database.generator.ChapterDao;
 import com.xidian.yetwish.reading.framework.service.ApiCallback;
+import com.xidian.yetwish.reading.framework.utils.LogUtils;
 import com.xidian.yetwish.reading.framework.vo.reader.ChapterVo;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import de.greenrobot.dao.query.Query;
+import de.greenrobot.dao.query.WhereCondition;
 
 /**
  * the manager of chapter db table. supply several methods to operate the db.
@@ -55,41 +57,67 @@ public class DbChapterManager {
         });
     }
 
-    public void query(String bookId, final ApiCallback<ImmutableList<ChapterVo>> callback) {
+    public void queryByBookId(final long bookId, final ApiCallback<ImmutableList<ChapterVo>> callback) {
         mHandler.post(new Runnable() {
             @Override
             public void run() {
-                List<ChapterVo> list = null;
+                final List<ChapterVo> list = new ArrayList<ChapterVo>();
                 DatabaseManager manager = DatabaseManager.getsInstance();
                 if (manager != null) {
                     ChapterDao dao = manager.getDaoSession().getChapterDao();
                     Query<Chapter> query = dao.queryBuilder()
+                            .where(ChapterDao.Properties.BookId.eq(bookId))
                             .orderAsc(ChapterDao.Properties.FirstCharPosition).build();
                     List<Chapter> dbList = query.list();
                     if (dbList != null && dbList.size() > 0) {
-                        list = new ArrayList<ChapterVo>();
                         for (Chapter chapter : dbList) {
                             list.add(new ChapterVo(chapter));
                         }
                     }
                 }
-                final ImmutableList<ChapterVo> chapterList = ImmutableList.copyOf(list);
                 FWHelper.getInstance().getMainHandler().post(new Runnable() {
                     @Override
                     public void run() {
-                        callback.onDataReceived(chapterList);
+                        if (callback != null)
+                            callback.onDataReceived(ImmutableList.copyOf(list));
                     }
                 });
             }
         });
     }
 
-    public void query(final long position,ApiCallback<ChapterVo> callback){
+    public ChapterVo query(final long chapterId) {
+        ChapterVo chapter = null;
+        DatabaseManager manager = DatabaseManager.getsInstance();
+        if (manager != null) {
+            ChapterDao dao = manager.getDaoSession().getChapterDao();
+            Chapter dbEntity = dao.load(chapterId);
+            if (dbEntity != null)
+                chapter = new ChapterVo(dbEntity);
+        }
+        return chapter;
+    }
+
+    public ChapterVo queryByPosition(long position) {
+        ChapterVo chapter = null;
+        DatabaseManager manager = DatabaseManager.getsInstance();
+        if (manager != null) {
+            ChapterDao dao = manager.getDaoSession().getChapterDao();
+            WhereCondition condition = dao.queryBuilder().and(ChapterDao.Properties.FirstCharPosition.le(position),
+                    ChapterDao.Properties.LastCharPosition.gt(position));
+            Query<Chapter> query = dao.queryBuilder().where(condition).build();
+            List<Chapter> dbList = query.list();
+            if (dbList != null && dbList.size() != 0) {
+//                LogUtils.w("chapter dbList size " + dbList.size());
+                chapter = new ChapterVo(dbList.get(0));
+            }
+        }
+        return chapter;
 
     }
 
 
-    public void delete(final String bookId) {
+    public void delete(final long bookId) {
         mHandler.post(new Runnable() {
             @Override
             public void run() {

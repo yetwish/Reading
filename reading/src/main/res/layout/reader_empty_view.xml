@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@color/colorReaderBg"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <ImageView
-        android:src="@mipmap/logo"
+        android:src="@mipmap/logo_grey"
         android:layout_centerHorizontal="true"
         android:layout_above="@+id/tvReaderEmptyView"
         android:layout_width="@dimen/empty_icon_size"

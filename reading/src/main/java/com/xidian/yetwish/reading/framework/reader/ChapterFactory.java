@@ -1,10 +1,15 @@
 package com.xidian.yetwish.reading.framework.reader;
 
+import com.google.common.base.Splitter;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Ordering;
 import com.google.common.io.CharStreams;
 import com.google.common.util.concurrent.FutureCallback;
+import com.xidian.yetwish.reading.framework.database.DatabaseManager;
 import com.xidian.yetwish.reading.framework.eventbus.EventBusWrapper;
+import com.xidian.yetwish.reading.framework.eventbus.event.EventAddedBook;
 import com.xidian.yetwish.reading.framework.eventbus.event.EventGeneratedChapter;
+import com.xidian.yetwish.reading.framework.service.ApiCallback;
 import com.xidian.yetwish.reading.framework.thread.ThreadRunner;
 import com.xidian.yetwish.reading.framework.utils.SystemUtils;
 import com.xidian.yetwish.reading.framework.utils.LogUtils;
@@ -21,6 +26,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.concurrent.Callable;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -39,7 +45,6 @@ public class ChapterFactory {
                 if (sInstance == null) {
                     sInstance = new ChapterFactory();
                 }
-
             }
         }
         return sInstance;
@@ -48,6 +53,7 @@ public class ChapterFactory {
     private static final String CHAPTER_FLAG_1 = "第.*回";
     private static final String CHAPTER_FLAG_2 = "第.*章";
     private static final String CHAPTER_MATCHER = "第";
+    private static final String AUTHOR_MATCHER = "作者：";
 
     public static final String CHARSET_GBK = "GBK";
     public static final String CHARSET_UTF_8 = "UTF-8";
@@ -76,12 +82,12 @@ public class ChapterFactory {
         mChapterList = new ArrayList<>();
     }
 
+
     public void concurrentReadFile(BookVo book) throws IOException {
-        //todo 判断该book是否生成过章节目录，如果生成过，则从数据库中获取
         mCurrentBook = book;
         File bookFile = new File(book.getFilePath());
         mBookLen = bookFile.length();
-        mChapterMap = new TreeMap<>();
+        mChapterMap = new ConcurrentHashMap<>();
         List<Callable<String>> calls = new ArrayList<>();
 
         long eachThreadScanLength = 0;
@@ -139,44 +145,64 @@ public class ChapterFactory {
                     mChapterMap.put(i, line);
                 }
             }
+            if (from == 0 && line.startsWith(AUTHOR_MATCHER)) {
+                String[] authors = line.split("：");
+                if (authors.length >= 1) {
+                    mCurrentBook.setAuthor(authors[1].trim());
+                }
+            }
             i += line.length();
         }
         mBookCharNum = i > mBookCharNum ? i : mBookCharNum;
         bufferedReader.close();
     }
 
+    private Ordering<Integer> integerOrdering = Ordering.natural();
 
     public void generateChapterList() {
-        if (mChapterMap == null || mChapterMap.size() == 0) return;
-        Matcher m1, m2;
-        String chapterName;
-        mChapterList.clear();
+        if (mChapterMap == null || mChapterMap.size() == 0) {//未分章节
+            ChapterVo entity = new ChapterVo(mCurrentBook.getFilePath(),
+                    mCurrentBook.getBookId(), mCurrentBook.getName(), mBookCharNum, 0);
 
-        for (Integer index : mChapterMap.keySet()) {
-            chapterName = mChapterMap.get(index);
-            m1 = mChapterPattern.matcher(chapterName);
-            m2 = mChapterPattern2.matcher(chapterName);
-            if (m1.find() || m2.find()) {
-                //add entities
-                ChapterVo entity = new ChapterVo(mCurrentBook.getFilePath(),
-                        mCurrentBook.getBookId(), mChapterMap.get(index), index, 0);
-                if (mChapterList.size() > 0) {
-                    mChapterList.get(mChapterList.size() - 1).setLastCharPosition(index);
+            mChapterList.add(entity);
+        } else {
+            Matcher m1, m2;
+            String chapterName;
+            mChapterList.clear();
+            //todo modify exception
+            for (Integer index : integerOrdering.immutableSortedCopy(mChapterMap.keySet())) {
+                chapterName = mChapterMap.get(index);
+                m1 = mChapterPattern.matcher(chapterName);
+                m2 = mChapterPattern2.matcher(chapterName);
+                if (m1.find() || m2.find()) {
+                    //add entities
+                    ChapterVo entity = new ChapterVo(mCurrentBook.getFilePath(),
+                            mCurrentBook.getBookId(), mChapterMap.get(index), index, 0);
+                    if (mChapterList.size() > 0) {
+                        mChapterList.get(mChapterList.size() - 1).setLastCharPosition(index);
+                    }
+                    mChapterList.add(entity);
                 }
-                mChapterList.add(entity);
-            }
 //            else {
 //                LogUtils.w(chapterName);
 //               mChapterMap.remove(index);//todo modify exception
 //            }
+            }
+            //生成章节列表
+            mChapterList.get(mChapterList.size() - 1).setLastCharPosition(mBookCharNum);
+
         }
         mCurrentBook.setCharNumber(mBookCharNum);
-        //生成章节列表
-        mChapterList.get(mChapterList.size() - 1).setLastCharPosition(mBookCharNum);
+
+        //将书本信息存入数据库
+        DatabaseManager.getsInstance().getBookManager().refresh(mCurrentBook);
+
         //将章节列表存入数据库
-//        DatabaseManager.getsInstance().getChapterManager().refresh(mChapterList);
+        DatabaseManager.getsInstance().getChapterManager().refresh(mChapterList);
 
         //使用eventBus 实现数据传递
+        LogUtils.w("posted!");
+        EventBusWrapper.getDefault().post(new EventAddedBook());
         EventBusWrapper.getDefault().post(new EventGeneratedChapter(ImmutableList.copyOf(mChapterList)));
     }
 

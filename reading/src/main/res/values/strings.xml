@@ -28,8 +28,12 @@
     <string name="empty_no_txt">没有找到任何.TXT文件</string>
     <string name="empty_no_file">没有TXT文件</string>
 
+    <string name="has_added">已添加</string>
+
     <string name="loading">正在加载</string>
     <string name="waitForLoading">正在加载，请稍候</string>
+
+    <string name="waitForAddingBook">正在添加书本信息</string>
 
     <string name="exam_book_title">大荒蛮神</string>
     <string name="pre_chapter">上一章</string>

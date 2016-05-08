@@ -11,6 +11,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 import android.widget.TextView;
 
+import com.google.common.collect.ImmutableList;
 import com.google.common.util.concurrent.FutureCallback;
 import com.xidian.yetwish.reading.R;
 import com.xidian.yetwish.reading.framework.vo.BookVo;
@@ -108,13 +109,20 @@ public class AutoSearchActivity extends ToolbarActivity {
         tvAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ImmutableList<File> fileList = mAdapter.getCheckFiles();
+                if (fileList.size() == 0) {
+                    //没选中文件
+                    return;
+                }
                 //TODO show dialog,confirm to add books
-//                List<File> files = mAdapter.getCheckFiles();
-                List<BookVo> books = new ArrayList<BookVo>();
-                books.add(new BookVo("Thinking in Java", "Bruce Eckel", 30, R.mipmap.thinking_in_java));
-                books.add(new BookVo("Le Petit Prince", "[法] 圣埃克苏佩里", 96, R.mipmap.book_icon));
-                EventBusWrapper.getDefault().post(new EventAddBooks(books));
-                finish();
+                showProgressDialog(getString(R.string.waitForAddingBook));
+                new AddBookHelper().addBook(fileList, new Runnable() {
+                    @Override
+                    public void run() {
+                        hideProgressDialog();
+                        finish();
+                    }
+                });
             }
         });
     }
@@ -138,7 +146,7 @@ public class AutoSearchActivity extends ToolbarActivity {
             Callable<File> call = new Callable<File>() {
                 @Override
                 public File call() throws Exception {
-                    LogUtils.w("start scanning files!");
+//                    LogUtils.w("start scanning files!");
                     scanAllFiles(file);
                     return null;
                 }
@@ -149,7 +157,7 @@ public class AutoSearchActivity extends ToolbarActivity {
         ThreadRunner.getInstance().start(calls, new FutureCallback<List<File>>() {
             @Override
             public void onSuccess(List<File> result) {
-                LogUtils.w("success!");
+//                LogUtils.w("success!");
                 fileList.addAll(mMatchFiles);
                 mAdapter.notifyDataSetChanged();
                 hideProgressDialog();
@@ -158,7 +166,7 @@ public class AutoSearchActivity extends ToolbarActivity {
 
             @Override
             public void onFailure(Throwable t) {
-                LogUtils.w("failure!");
+//                LogUtils.w("failure!");
                 fileList.addAll(mMatchFiles);
                 mAdapter.notifyDataSetChanged();
                 hideProgressDialog();
@@ -198,26 +206,12 @@ public class AutoSearchActivity extends ToolbarActivity {
     }
 
     /**
-     * 如果是在后台，内存不足给清理了，在onPause是否需要处理？
+     * todo 如果是在后台，内存不足给清理了，在onPause是否需要处理？
      */
-    @Override
-    protected void onPause() {
-        super.onPause();
-        LogUtils.w("send pause");
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        LogUtils.w("send stop");
-
-    }
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
         cancelScanFiles();
-        LogUtils.w("send destroy");
     }
 
 

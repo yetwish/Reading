@@ -143,6 +143,7 @@ public abstract class SectionAdapter<T> extends MultiTypeItemCommonAdapter<T> {
         return position - nSections;
     }
 
+
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         position = getIndexForPosition(position);

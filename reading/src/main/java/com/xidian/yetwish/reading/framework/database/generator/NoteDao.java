@@ -23,11 +23,10 @@ public class NoteDao extends AbstractDao<Note, Long> {
      * Can be used for QueryBuilder and for referencing column names.
     */
     public static class Properties {
-        public final static Property Id = new Property(0, Long.class, "id", true, "_id");
-        public final static Property NoteBookId = new Property(1, String.class, "NoteBookId", false, "NOTE_BOOK_ID");
-        public final static Property NoteId = new Property(2, String.class, "noteId", false, "NOTE_ID");
-        public final static Property Name = new Property(3, String.class, "name", false, "NAME");
-        public final static Property Path = new Property(4, String.class, "path", false, "PATH");
+        public final static Property NoteId = new Property(0, Long.class, "noteId", true, "NOTE_ID");
+        public final static Property NoteBookId = new Property(1, Long.class, "NoteBookId", false, "NOTE_BOOK_ID");
+        public final static Property Name = new Property(2, String.class, "name", false, "NAME");
+        public final static Property Path = new Property(3, String.class, "path", false, "PATH");
     };
 
 
@@ -43,14 +42,10 @@ public class NoteDao extends AbstractDao<Note, Long> {
     public static void createTable(SQLiteDatabase db, boolean ifNotExists) {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "'NOTE' (" + //
-                "'_id' INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: id
-                "'NOTE_BOOK_ID' TEXT," + // 1: NoteBookId
-                "'NOTE_ID' TEXT," + // 2: noteId
-                "'NAME' TEXT," + // 3: name
-                "'PATH' TEXT);"); // 4: path
-        // Add Indexes
-        db.execSQL("CREATE UNIQUE INDEX " + constraint + "IDX_NOTE_NOTE_BOOK_ID_NOTE_ID ON NOTE" +
-                " (NOTE_BOOK_ID,NOTE_ID);");
+                "'NOTE_ID' INTEGER PRIMARY KEY ," + // 0: noteId
+                "'NOTE_BOOK_ID' INTEGER," + // 1: NoteBookId
+                "'NAME' TEXT," + // 2: name
+                "'PATH' TEXT);"); // 3: path
     }
 
     /** Drops the underlying database table. */
@@ -64,29 +59,24 @@ public class NoteDao extends AbstractDao<Note, Long> {
     protected void bindValues(SQLiteStatement stmt, Note entity) {
         stmt.clearBindings();
  
-        Long id = entity.getId();
-        if (id != null) {
-            stmt.bindLong(1, id);
-        }
- 
-        String NoteBookId = entity.getNoteBookId();
-        if (NoteBookId != null) {
-            stmt.bindString(2, NoteBookId);
-        }
- 
-        String noteId = entity.getNoteId();
+        Long noteId = entity.getNoteId();
         if (noteId != null) {
-            stmt.bindString(3, noteId);
+            stmt.bindLong(1, noteId);
+        }
+ 
+        Long NoteBookId = entity.getNoteBookId();
+        if (NoteBookId != null) {
+            stmt.bindLong(2, NoteBookId);
         }
  
         String name = entity.getName();
         if (name != null) {
-            stmt.bindString(4, name);
+            stmt.bindString(3, name);
         }
  
         String path = entity.getPath();
         if (path != null) {
-            stmt.bindString(5, path);
+            stmt.bindString(4, path);
         }
     }
 
@@ -100,11 +90,10 @@ public class NoteDao extends AbstractDao<Note, Long> {
     @Override
     public Note readEntity(Cursor cursor, int offset) {
         Note entity = new Note( //
-            cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
-            cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // NoteBookId
-            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // noteId
-            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // name
-            cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4) // path
+            cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // noteId
+            cursor.isNull(offset + 1) ? null : cursor.getLong(offset + 1), // NoteBookId
+            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // name
+            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3) // path
         );
         return entity;
     }
@@ -112,17 +101,16 @@ public class NoteDao extends AbstractDao<Note, Long> {
     /** @inheritdoc */
     @Override
     public void readEntity(Cursor cursor, Note entity, int offset) {
-        entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
-        entity.setNoteBookId(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
-        entity.setNoteId(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
-        entity.setName(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
-        entity.setPath(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
+        entity.setNoteId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
+        entity.setNoteBookId(cursor.isNull(offset + 1) ? null : cursor.getLong(offset + 1));
+        entity.setName(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
+        entity.setPath(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
      }
     
     /** @inheritdoc */
     @Override
     protected Long updateKeyAfterInsert(Note entity, long rowId) {
-        entity.setId(rowId);
+        entity.setNoteId(rowId);
         return rowId;
     }
     
@@ -130,7 +118,7 @@ public class NoteDao extends AbstractDao<Note, Long> {
     @Override
     public Long getKey(Note entity) {
         if(entity != null) {
-            return entity.getId();
+            return entity.getNoteId();
         } else {
             return null;
         }

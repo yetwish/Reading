@@ -6,7 +6,11 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 
+import com.google.common.collect.ImmutableList;
 import com.xidian.yetwish.reading.R;
+import com.xidian.yetwish.reading.framework.database.DatabaseManager;
+import com.xidian.yetwish.reading.framework.utils.LogUtils;
+import com.xidian.yetwish.reading.framework.vo.BookVo;
 import com.xidian.yetwish.reading.ui.file_browser.TXTFileFilter;
 import com.xidian.yetwish.reading.framework.utils.ToastUtils;
 import com.xidian.yetwish.reading.framework.common_adapter.CommonAdapter;
@@ -38,6 +42,7 @@ public class FileBrowserAdapter extends CommonAdapter<File> {
 
     private OnFilePathChangedListener mFilePathListener;
 
+    private List<String> mAddedFiles;
 
     public void setFilePathChangedListener(OnFilePathChangedListener listener) {
         this.mFilePathListener = listener;
@@ -49,6 +54,11 @@ public class FileBrowserAdapter extends CommonAdapter<File> {
         mData = new ArrayList<>();
         mCheckMap = new HashMap<>();
         mFileFilter = new TXTFileFilter();
+        ImmutableList<BookVo> addedBooks = DatabaseManager.getsInstance().getBookManager().queryAll();
+        mAddedFiles = new ArrayList<>(addedBooks.size());
+        for (BookVo book : addedBooks) {
+            mAddedFiles.add(book.getFilePath());
+        }
         updateFileList(rootFile);
         setItemClickListener(new OnItemClickListener<File>() {
             @Override
@@ -99,14 +109,31 @@ public class FileBrowserAdapter extends CommonAdapter<File> {
     public void convert(final ViewHolder holder, final File file) {
         holder.setText(R.id.tvItemFileTitle, file.getName());
 
+        holder.setVisible(R.id.tvItemHasAdded, false)
+                .setVisible(R.id.cbItemFileChose, false);
+
         if (file.isDirectory() || file.getName().equals(UPPER_DIR_NAME)) {
             holder.setImageResource(R.id.ivItemFileIcon, R.mipmap.ic_folder_gray_48dp)
                     .setText(R.id.tvItemFileSize, "Folder")
                     .setVisible(R.id.cbItemFileChose, false);
         } else {
             holder.setImageResource(R.id.ivItemFileIcon, R.mipmap.ic_insert_drive_file_gray_48dp)
-                    .setText(R.id.tvItemFileSize, file.getAbsolutePath() + "")
-                    .setVisible(R.id.cbItemFileChose, true);
+                    .setText(R.id.tvItemFileSize, file.getAbsolutePath() + "");
+
+            CheckBox cb = holder.getView(R.id.cbItemFileChose);
+
+            LogUtils.w(mAddedFiles.size() + ", size");
+
+            if (!mAddedFiles.contains(file.getAbsolutePath())) {
+                //未导入
+                cb.setVisibility(View.VISIBLE);
+                LogUtils.w("visible ");
+            } else {
+                holder.setVisible(R.id.tvItemHasAdded, true);
+            }
+
+            if (cb.getVisibility() != View.VISIBLE)
+                return;
 
             //update the state of checkBox
             if (mCheckMap.containsKey(file.getAbsolutePath()))
@@ -114,23 +141,23 @@ public class FileBrowserAdapter extends CommonAdapter<File> {
             else holder.setChecked(R.id.cbItemFileChose, false);
 
 
-        }
+            ((CheckBox) holder.getView(R.id.cbItemFileChose)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    //use holder.getLayoutPosition() to get the latest position of data
+                    mCheckMap.put(mData.get(holder.getLayoutPosition()).getAbsolutePath(), isChecked);
+                }
+            });
 
-        ((CheckBox) holder.getView(R.id.cbItemFileChose)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                //use holder.getLayoutPosition() to get the latest position of data
-                mCheckMap.put(mData.get(holder.getLayoutPosition()).getAbsolutePath(), isChecked);
-            }
-        });
+        }
     }
 
-    public List<File> getCheckFiles() {
+    public ImmutableList<File> getCheckFiles() {
         List<File> files = new ArrayList<File>();
-        for(String path: mCheckMap.keySet()){
+        for (String path : mCheckMap.keySet()) {
             files.add(new File(path));
         }
-        return files;
+        return ImmutableList.copyOf(files);
     }
 
 

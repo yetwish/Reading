@@ -6,7 +6,7 @@ package com.xidian.yetwish.reading.framework.utils;
  */
 public class Constant {
 
-    public static final String EXTRA_FILE_PATH = "FilePath";
+    public static final String EXTRA_BOOK = "book";
 
     public static final String TXT_EXAMPLE = "第二十一回金剪无声云委地宝钗有梦燕依人\n" +
             "\n" +

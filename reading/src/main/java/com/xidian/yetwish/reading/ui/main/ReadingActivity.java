@@ -10,8 +10,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageButton;
 
+import com.google.common.collect.ImmutableList;
 import com.google.common.eventbus.Subscribe;
 import com.xidian.yetwish.reading.R;
+import com.xidian.yetwish.reading.framework.database.DatabaseManager;
 import com.xidian.yetwish.reading.framework.vo.BookVo;
 import com.xidian.yetwish.reading.framework.eventbus.EventBusWrapper;
 import com.xidian.yetwish.reading.framework.eventbus.event.EventAddBooks;
@@ -56,8 +58,11 @@ public class ReadingActivity extends SlideMenuActivity {
         super.onCreate(savedInstanceState);
         setMainLayout(R.layout.activity_reading);
         LogUtils.w("receive create");
-//        EventBus.getDefault().register(this);
         EventBusWrapper.getDefault().register(this);
+
+        //初始化数据库等系统服务
+        DatabaseManager.getsInstance().init(ReadingActivity.this);
+
         FabReading = (ImageButton) findViewById(R.id.fab_reading);
         FabReading.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,8 +83,7 @@ public class ReadingActivity extends SlideMenuActivity {
 
     private void initReadingList() {
         mBookList = new ArrayList<>();
-        mBookList.add(new BookVo("Thinking in Java", "Bruce Eckel", 30, R.mipmap.thinking_in_java));
-        mBookList.add(new BookVo("Le Petit Prince", "[法] 圣埃克苏佩里", 96, R.mipmap.book_icon));
+
         mAdapter = new BookListAdapter(ReadingActivity.this, mBookList);
         lvReading = (EmptyRecyclerView) findViewById(R.id.lvReading);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
@@ -104,7 +108,6 @@ public class ReadingActivity extends SlideMenuActivity {
                         }
                     }
                 });
-
     }
 
 
@@ -158,13 +161,20 @@ public class ReadingActivity extends SlideMenuActivity {
     protected void onResume() {
         super.onResume();
         mSlideMenu.setSelectedItemIndex(SlideMenu.MENU_READING);
-        LogUtils.w("receive onResume" + ", " + mBookList);
+        refreshBookList();
+    }
+
+    private void refreshBookList() {
+        ImmutableList<BookVo> dbList = DatabaseManager.getsInstance().getBookManager().queryReading();
+        mBookList.clear();
+        mBookList.addAll(dbList);
+        if (mAdapter != null)
+            mAdapter.notifyDataSetChanged();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        LogUtils.w("receive start");
     }
 
     private OnFABItemClickListener mFABItemClickListener = new OnFABItemClickListener() {
@@ -181,14 +191,14 @@ public class ReadingActivity extends SlideMenuActivity {
 
 
     @Subscribe
-    public void onBookAdded(EventAddBooks event) {
-        List<BookVo> bookEntities = event.getBookList();
-        LogUtils.w("add bookEntities" + ", " + bookEntities);
-        if (bookEntities != null) {
-            mBookList.addAll(bookEntities);
+    public void onAddBooksToReading(EventAddBooks event) {
+        List<BookVo> books = event.getBookList();
+        if (books != null) {
+            mBookList.addAll(books);
             if (mAdapter != null)
                 mAdapter.notifyDataSetChanged();
         }
     }
+
 
 }

@@ -14,9 +14,9 @@ public class FWHelper {
     private Handler mMainHandler;
 
     public static FWHelper getInstance() {
-        if (sInstance != null) {
+        if (sInstance == null) {
             synchronized (FWHelper.class) {
-                if (sInstance != null)
+                if (sInstance == null)
                     sInstance = new FWHelper();
             }
         }
@@ -27,7 +27,7 @@ public class FWHelper {
         this.mMainHandler = new Handler(Looper.getMainLooper());
     }
 
-    public Handler getMainHandler(){
+    public Handler getMainHandler() {
         return mMainHandler;
     }
 }

@@ -1,6 +1,7 @@
 package com.xidian.yetwish.reading.framework.eventbus.event;
 
 
+import com.google.common.collect.ImmutableList;
 import com.xidian.yetwish.reading.framework.vo.BookVo;
 
 import java.util.List;
@@ -10,9 +11,9 @@ import java.util.List;
  */
 public class EventAddBooks {
 
-    private List<BookVo> bookVoList;
+    private ImmutableList<BookVo> bookVoList;
 
-    public EventAddBooks(List<BookVo> bookEntities) {
+    public EventAddBooks(ImmutableList<BookVo> bookEntities) {
         this.bookVoList = bookEntities;
     }
 

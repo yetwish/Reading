@@ -13,12 +13,12 @@
 
     <TextView
         android:id="@+id/tvItemFileTitle"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/menu_item_margin"
+        android:layout_marginRight="@dimen/file_list_item_margin_right"
         android:layout_marginTop="@dimen/item_margin_primary"
         android:layout_toRightOf="@+id/ivItemFileIcon"
-        android:layout_toLeftOf="@+id/cbItemFileChose"
         android:singleLine="true"
         android:text="Android"
         android:textColor="@color/colorSlideMenu"
@@ -36,14 +36,25 @@
         android:textSize="@dimen/item_secondary_text_size" />
 
     <CheckBox
-        android:checked="false"
-        android:id="@+id/cbItemFileChose"
         android:visibility="gone"
-        android:layout_marginRight="@dimen/menu_item_margin"
-        android:layout_centerVertical="true"
-        android:layout_alignParentRight="true"
+        android:id="@+id/cbItemFileChose"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/menu_item_margin"
+        android:checked="false"/>
+
+    <TextView
+        android:visibility="gone"
+        android:textColor="@color/colorPrimary"
+        android:id="@+id/tvItemHasAdded"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/menu_margin_left"
+        android:text="@string/has_added" />
 
     <View
         style="@style/Separator"

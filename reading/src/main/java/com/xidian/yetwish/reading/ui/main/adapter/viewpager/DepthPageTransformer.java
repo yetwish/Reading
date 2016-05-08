@@ -27,7 +27,7 @@ public class DepthPageTransformer implements ViewPager.PageTransformer {
 
         } else if (position <= 1) { // (0,1]
             // Fade the page out.
-            view.setAlpha(1 - position);
+            view.setAlpha(1);
 
             // Counteract the default slide transition
             view.setTranslationX(pageWidth * -position);
@@ -35,8 +35,8 @@ public class DepthPageTransformer implements ViewPager.PageTransformer {
             // Scale the page down (between MIN_SCALE and 1)
             float scaleFactor = MIN_SCALE
                     + (1 - MIN_SCALE) * (1 - Math.abs(position));
-            view.setScaleX(scaleFactor);
-            view.setScaleY(scaleFactor);
+            view.setScaleX(1);
+            view.setScaleY(1);
 
         } else { // (1,+Infinity]
             // This page is way off-screen to the right.

@@ -1,5 +1,6 @@
 package com.xidian.yetwish.reading.framework.database;
 
+import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Handler;
 import android.os.HandlerThread;
@@ -12,13 +13,14 @@ import com.xidian.yetwish.reading.framework.database.manager.DbChapterManager;
 import com.xidian.yetwish.reading.framework.database.manager.DbNoteBookManager;
 import com.xidian.yetwish.reading.framework.database.manager.DbNoteManager;
 import com.xidian.yetwish.reading.framework.database.manager.DbPageManager;
+import com.xidian.yetwish.reading.framework.utils.LogUtils;
 
 /**
  * Created by Yetwish on 2016/4/21 0021.
  */
 public class DatabaseManager {
 
-    public static final String DATABASE_NAME = "Reading";
+    public static final String DATABASE_NAME = "Reading.db";
 
     private static DatabaseManager sInstance;
 
@@ -33,6 +35,8 @@ public class DatabaseManager {
 
     private DaoMaster mDaoMaster;
     private DaoSession mDaoSession;
+
+    private Context mContext;
 
     private DatabaseManager() {
 
@@ -114,7 +118,7 @@ public class DatabaseManager {
     public DaoMaster getDaoMaster() {
         if (mDaoMaster == null) {
             DaoMaster.OpenHelper helper;
-            helper = new DatabaseOpenHelper(BaseApplication.getInstance(), DATABASE_NAME, null);
+            helper = new DatabaseOpenHelper(mContext, DATABASE_NAME, null);
             SQLiteDatabase db = helper.getWritableDatabase();
             mDaoMaster = new DaoMaster(db);
         }
@@ -129,8 +133,9 @@ public class DatabaseManager {
     }
 
 
-    public void init(){
-       getDaoMaster();
+    public void init(Context context) {
+        mContext = context.getApplicationContext();
+        getDaoMaster();
     }
 
     public void recycle() {

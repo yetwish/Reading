@@ -3,6 +3,7 @@ package com.xidian.yetwish.reading.ui.widget;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
@@ -10,9 +11,13 @@ import android.view.View;
 
 import com.google.common.base.Splitter;
 import com.xidian.yetwish.reading.R;
+import com.xidian.yetwish.reading.framework.database.DatabaseManager;
 import com.xidian.yetwish.reading.framework.reader.ReaderController;
+import com.xidian.yetwish.reading.framework.utils.BookUtils;
 import com.xidian.yetwish.reading.framework.utils.LogUtils;
 import com.xidian.yetwish.reading.framework.utils.SystemUtils;
+import com.xidian.yetwish.reading.framework.vo.BookVo;
+import com.xidian.yetwish.reading.framework.vo.reader.ChapterVo;
 import com.xidian.yetwish.reading.framework.vo.reader.PageVo;
 
 /**
@@ -35,11 +40,12 @@ public class ReaderView extends View {
     private Paint mChapterPaint;
     private Paint mInfoPaint;
     private Paint mBgPaint;
+    private Paint mBoarderPaint;
 
     private int mContentColor;
     private int mBgColor;
     private int mInfoColor;
-    private int mMenuBarColor;
+    private int mBoarderColor;
 
     private int mInfoTextSize;
     private int mContentTextSize;
@@ -49,9 +55,6 @@ public class ReaderView extends View {
 
     private PageVo mPage;
     private Iterable<String> mContent;
-
-    private String mChapterName;
-    private float mProgress;
 
     private int mInfoTextHeight;
 
@@ -83,6 +86,7 @@ public class ReaderView extends View {
         }
         setColorByTheme();
         mInfoTextSize = mContext.getResources().getDimensionPixelOffset(R.dimen.reader_info_size);
+        mBoarderColor = ContextCompat.getColor(mContext, R.color.colorBlack);
     }
 
 
@@ -90,8 +94,7 @@ public class ReaderView extends View {
         if (mTheme == THEME_DAY) {
             mContentColor = ContextCompat.getColor(mContext, R.color.colorPrimaryText);
             mInfoColor = ContextCompat.getColor(mContext, R.color.colorSecondaryText);
-            mMenuBarColor = ContextCompat.getColor(mContext, R.color.colorPrimaryLight);
-            mBgColor = ContextCompat.getColor(mContext, R.color.colorTransparent); //白天模式无背景色
+            mBgColor = ContextCompat.getColor(mContext, R.color.colorReaderBg); //白天模式无背景色
         } else {
             // mTheme == THEME_NIGHT
         }
@@ -117,6 +120,11 @@ public class ReaderView extends View {
         mBgPaint.setColor(mBgColor);
         mBgPaint.setAntiAlias(true);
         mBgPaint.setStyle(Paint.Style.FILL);
+
+
+        mBoarderPaint = new Paint();
+        mBoarderPaint.setColor(mBoarderColor);
+        mBoarderPaint.setStrokeWidth(2);
     }
 
     public void setData(PageVo page) {
@@ -124,10 +132,29 @@ public class ReaderView extends View {
         mContent = Splitter.on("\n")
                 .omitEmptyStrings()
                 .split(mPage.getContent());
-        //获取章节名称和进度
-        mChapterName = "第一章 降临神界";
-        mProgress = 0.1233f;
+        getPageInfo();
     }
+
+    private String mChapterName;
+    private float mProgress;
+
+    private static BookVo sBook;
+
+    private static long sBookId;
+
+    //获取章节名称和进度
+    private void getPageInfo() {
+        ChapterVo chapter = DatabaseManager.getsInstance().getChapterManager().query(mPage.getChapterId());
+        if (chapter != null)
+            mChapterName = chapter.getName();
+        if (sBook == null || sBookId != mPage.getBookId()) {
+            sBookId = mPage.getBookId();
+            sBook = DatabaseManager.getsInstance().getBookManager().query(sBookId);
+        }
+        if (sBook != null)
+            mProgress = mPage.getFirstCharPosition() * 100.0f / sBook.getCharNumber();
+    }
+
 
     @Override
     protected void onDraw(Canvas canvas) {
@@ -141,6 +168,14 @@ public class ReaderView extends View {
         int marginLeft = mController.getHorizontalMargin();
         int offset = (mController.getWidth() - col * mController.getTextWidth() - marginLeft * 2) / 2;
         marginLeft += offset;
+
+        int screenWidth = mController.getWidth();
+        int screenHeight = mController.getHeight();
+        //画背景
+        canvas.drawRect(0, 0, screenWidth, screenHeight, mBgPaint);
+        //画边框
+        canvas.drawLine(screenWidth, 0, screenWidth, screenHeight, mBoarderPaint);
+
         int j = 0;
         for (String line : mContent) {
             for (int i = 0; j < rows && i < line.length(); i += col, j++) {
@@ -153,13 +188,17 @@ public class ReaderView extends View {
         canvas.drawText(SystemUtils.getCurrentTimeText(), marginLeft,
                 marginTop + rows * lineHeight - mController.getLineMargin(), mInfoPaint);
 
-        int width = (int) Math.floor(mInfoPaint.measureText(mProgress + "%"));
+        String progress = BookUtils.formatDigit(mProgress) + "%";
+
+        int width = (int) Math.floor(mInfoPaint.measureText(progress));
         //draw progress
-        canvas.drawText(mProgress * 100 + "%", marginLeft + mController.getTextWidth() * col - width,
+        canvas.drawText(progress, marginLeft + mController.getTextWidth() * col - width,
                 marginTop + rows * lineHeight - mController.getLineMargin(), mInfoPaint);
 
-        canvas.drawText(mChapterName, marginLeft, marginTop - mController.getLineMargin()-mInfoTextHeight, mInfoPaint);
+        if (mChapterName != null)
+            canvas.drawText(mChapterName, marginLeft, marginTop - mController.getLineMargin() - mInfoTextHeight, mInfoPaint);
         //显示电量  监听
+
 
     }
 

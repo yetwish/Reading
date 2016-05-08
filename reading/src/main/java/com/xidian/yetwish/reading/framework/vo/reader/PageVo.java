@@ -10,14 +10,14 @@ import com.xidian.yetwish.reading.framework.utils.BookUtils;
 public class PageVo {
 
     private String filePath;
-    private String pageId;
-    private String chapterId;
-    private String bookId;
+    private long pageId;
+    private long chapterId;
+    private long bookId;
     private long firstCharPosition;
     private long lastCharPosition;
     private String content;
 
-    public PageVo(String bookId,String chapterId,String filePath,long firstCharPosition,long lastCharPosition,String content){
+    public PageVo(long bookId, long chapterId, String filePath, long firstCharPosition, long lastCharPosition, String content) {
         this.pageId = BookUtils.generateSequenceId();
         this.filePath = filePath;
         this.bookId = bookId;
@@ -28,14 +28,25 @@ public class PageVo {
     }
 
     public PageVo(Page page) {
-
+        this.pageId = page.getPageId();
+        this.filePath = page.getPath();
+        this.bookId = page.getBookId();
+        this.chapterId = page.getChapterId();
+        this.firstCharPosition = page.getFirstCharPosition();
+        this.lastCharPosition = page.getLastCharPosition();
+        this.content = page.getContent();
     }
 
     public Page convertToDb() {
         Page page = new Page();
-
+        page.setPageId(pageId);
+        page.setPath(filePath);
+        page.setBookId(bookId);
+        page.setChapterId(chapterId);
+        page.setFirstCharPosition(firstCharPosition);
+        page.setLastCharPosition(lastCharPosition);
+        page.setContent(content);
         return page;
-
     }
 
     public String getFilePath() {
@@ -46,27 +57,27 @@ public class PageVo {
         this.filePath = filePath;
     }
 
-    public String getPageId() {
+    public long getPageId() {
         return pageId;
     }
 
-    public void setPageId(String pageId) {
+    public void setPageId(long pageId) {
         this.pageId = pageId;
     }
 
-    public String getChapterId() {
+    public long getChapterId() {
         return chapterId;
     }
 
-    public void setChapterId(String chapterId) {
+    public void setChapterId(long chapterId) {
         this.chapterId = chapterId;
     }
 
-    public String getBookId() {
+    public long getBookId() {
         return bookId;
     }
 
-    public void setBookId(String bookId) {
+    public void setBookId(long bookId) {
         this.bookId = bookId;
     }
 

@@ -9,13 +9,24 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.google.common.base.Function;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Ordering;
+import com.google.common.eventbus.Subscribe;
 import com.xidian.yetwish.reading.R;
+import com.xidian.yetwish.reading.framework.eventbus.EventBusWrapper;
+import com.xidian.yetwish.reading.framework.eventbus.event.EventAddBooks;
+import com.xidian.yetwish.reading.framework.eventbus.event.EventAddedBook;
+import com.xidian.yetwish.reading.framework.reader.ChapterFactory;
+import com.xidian.yetwish.reading.framework.utils.LogUtils;
+import com.xidian.yetwish.reading.framework.vo.BookVo;
 import com.xidian.yetwish.reading.ui.ToolbarActivity;
 import com.xidian.yetwish.reading.ui.file_browser.adapter.FileBrowserAdapter;
 import com.xidian.yetwish.reading.ui.widget.EmptyRecyclerView;
 
 import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * todo data  todo checkbox position ,order
@@ -43,6 +54,7 @@ public class FileBrowserActivity extends ToolbarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setMainLayout(R.layout.activity_file_browser);
+        EventBusWrapper.getDefault().register(this);
         initData();
         initView();
     }
@@ -67,7 +79,20 @@ public class FileBrowserActivity extends ToolbarActivity {
         tvAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ImmutableList<File> fileList = mFileAdapter.getCheckFiles();
+                if (fileList.size() == 0) {
+                    //没选中文件
+                    return;
+                }
                 //TODO show dialog,confirm to add books. repeat code @AutoSearchActivity#tvAdd.
+                showProgressDialog(getString(R.string.waitForAddingBook));
+                new AddBookHelper().addBook(fileList, new Runnable() {
+                    @Override
+                    public void run() {
+                        hideProgressDialog();
+                        finish();
+                    }
+                });
             }
         });
 
@@ -85,4 +110,6 @@ public class FileBrowserActivity extends ToolbarActivity {
         });
         lvFileList.setAdapter(mFileAdapter);
     }
+
+
 }

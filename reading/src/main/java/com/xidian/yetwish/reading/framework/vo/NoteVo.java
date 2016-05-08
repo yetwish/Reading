@@ -1,29 +1,56 @@
 package com.xidian.yetwish.reading.framework.vo;
 
+import com.xidian.yetwish.reading.framework.database.generator.Note;
+import com.xidian.yetwish.reading.framework.utils.BookUtils;
+
+import java.io.File;
+
 /**
  * Created by Yetwish on 2016/4/21 0021.
  */
 public class NoteVo {
 
-    private String noteId;
-    private String notBookId;
+    private long noteId;
+    private long noteBookId;
     private String name;
     private String filePath;
 
-    public String getNoteId() {
+
+    public NoteVo(){
+        this.noteId = BookUtils.generateSequenceId();
+    }
+
+
+    public NoteVo(Note note){
+        this.noteId = note.getNoteId();
+        this.noteBookId = note.getNoteBookId();
+        this.name = note.getName();
+        this.filePath = note.getPath();
+    }
+
+    public Note convertToDb(){
+        Note note = new Note();
+        note.setNoteId(noteId);
+        note.setNoteBookId(noteBookId);
+        note.setName(name);
+        note.setPath(filePath);
+        return note;
+    }
+
+    public long getNoteId() {
         return noteId;
     }
 
-    public void setNoteId(String noteId) {
+    public void setNoteId(long noteId) {
         this.noteId = noteId;
     }
 
-    public String getNotBookId() {
-        return notBookId;
+    public long getNoteBookId() {
+        return noteBookId;
     }
 
-    public void setNotBookId(String notBookId) {
-        this.notBookId = notBookId;
+    public void setNoteBookId(long noteBookId) {
+        this.noteBookId = noteBookId;
     }
 
     public String getName() {

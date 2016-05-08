@@ -6,49 +6,39 @@ package com.xidian.yetwish.reading.framework.database.generator;
  */
 public class Note {
 
-    private Long id;
-    private String NoteBookId;
-    private String noteId;
+    private Long noteId;
+    private Long NoteBookId;
     private String name;
     private String path;
 
     public Note() {
     }
 
-    public Note(Long id) {
-        this.id = id;
+    public Note(Long noteId) {
+        this.noteId = noteId;
     }
 
-    public Note(Long id, String NoteBookId, String noteId, String name, String path) {
-        this.id = id;
-        this.NoteBookId = NoteBookId;
+    public Note(Long noteId, Long NoteBookId, String name, String path) {
         this.noteId = noteId;
+        this.NoteBookId = NoteBookId;
         this.name = name;
         this.path = path;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getNoteBookId() {
-        return NoteBookId;
-    }
-
-    public void setNoteBookId(String NoteBookId) {
-        this.NoteBookId = NoteBookId;
-    }
-
-    public String getNoteId() {
+    public Long getNoteId() {
         return noteId;
     }
 
-    public void setNoteId(String noteId) {
+    public void setNoteId(Long noteId) {
         this.noteId = noteId;
+    }
+
+    public Long getNoteBookId() {
+        return NoteBookId;
+    }
+
+    public void setNoteBookId(Long NoteBookId) {
+        this.NoteBookId = NoteBookId;
     }
 
     public String getName() {

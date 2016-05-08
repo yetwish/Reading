@@ -6,52 +6,53 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
-import com.daimajia.numberprogressbar.NumberProgressBar;
+import com.google.common.collect.ImmutableList;
 import com.google.common.eventbus.Subscribe;
 import com.xidian.yetwish.reading.R;
 import com.xidian.yetwish.reading.framework.common_adapter.CommonAdapter;
+import com.xidian.yetwish.reading.framework.database.DatabaseManager;
 import com.xidian.yetwish.reading.framework.eventbus.EventBusWrapper;
 import com.xidian.yetwish.reading.framework.eventbus.event.EventGeneratedChapter;
 import com.xidian.yetwish.reading.framework.eventbus.event.EventGeneratedPage;
 import com.xidian.yetwish.reading.framework.reader.ChapterFactory;
 import com.xidian.yetwish.reading.framework.reader.PageFactory;
-import com.xidian.yetwish.reading.framework.utils.BookUtils;
+import com.xidian.yetwish.reading.framework.service.ApiCallback;
 import com.xidian.yetwish.reading.framework.utils.Constant;
 import com.xidian.yetwish.reading.framework.utils.LogUtils;
 import com.xidian.yetwish.reading.framework.utils.ScreenUtils;
-import com.xidian.yetwish.reading.framework.utils.ToastUtils;
 import com.xidian.yetwish.reading.framework.vo.BookVo;
 import com.xidian.yetwish.reading.framework.vo.reader.ChapterVo;
 import com.xidian.yetwish.reading.framework.vo.reader.PageVo;
 import com.xidian.yetwish.reading.ui.main.adapter.ChapterAdapter;
 import com.xidian.yetwish.reading.ui.main.adapter.IReaderProgressChangeListener;
+import com.xidian.yetwish.reading.ui.main.adapter.viewpager.DepthPageTransformer;
 import com.xidian.yetwish.reading.ui.main.adapter.viewpager.ReaderPageAdapter;
 import com.xidian.yetwish.reading.ui.widget.EmptyRecyclerView;
-import com.xidian.yetwish.reading.ui.main.adapter.viewpager.DepthPageTransformer;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * todo 存在问题 viewpager position
+ * todo 更换readerView实现方式，提供seekBar
  * 文本阅读activity  根据手机屏幕计算出rows and cols
  * Created by Yetwish on 2016/4/23 0023.
  */
 public class ReaderActivity extends Activity implements View.OnClickListener, IReaderProgressChangeListener {
 
-    public static final void startActivity(Context context, String bookPath) {
+    public static void startActivity(Context context, BookVo book) {
         Intent intent = new Intent(context, ReaderActivity.class);
-        intent.putExtra(Constant.EXTRA_FILE_PATH, bookPath);
+        intent.putExtra(Constant.EXTRA_BOOK, book);
         context.startActivity(intent);
     }
 
@@ -87,13 +88,19 @@ public class ReaderActivity extends Activity implements View.OnClickListener, IR
     private View mTopContainer;
     private View mBottomContainer;
     private View mMidContainer;
+
     //todo
-    private NumberProgressBar pbProgress;
+//    private SeekBar mSeekBar;
+    private ProgressBar mProgressBar;
+
     private int topBarHeight;
     private int bottomBarHeight;
 
     private boolean isHiding = false;
 
+    private BookVo mBook;
+
+    private long mPosition = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,17 +113,47 @@ public class ReaderActivity extends Activity implements View.OnClickListener, IR
     }
 
     private void initData() {
-        try {
-            BookVo book = new BookVo("大荒蛮神", "更俗", 0.1f, 0);
-            book.setFilePath(Environment.getExternalStorageDirectory().getAbsolutePath() + "/tencent/QQfile_recv/大荒蛮神.txt");
-//            book.setFilePath(Environment.getExternalStorageDirectory().getAbsolutePath() + "/Download/test.txt");
-//            book.setFilePath(Environment.getExternalStorageDirectory().getAbsolutePath() + "/UCDownloads/test2.txt");
-            book.setBookId(BookUtils.generateSequenceId());
-            ChapterFactory.getsInstance().concurrentReadFile(book);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        Serializable obj = getIntent().getSerializableExtra(Constant.EXTRA_BOOK);
+        if (!(obj instanceof BookVo))
+            return;
+        mBook = (BookVo) obj;
+        //判断该book是否生成过章节目录，如果生成过，则从数据库中获取
+        DatabaseManager.getsInstance().getChapterManager().queryByBookId(mBook.getBookId(), new ApiCallback<ImmutableList<ChapterVo>>() {
+            @Override
+            public void onDataReceived(ImmutableList<ChapterVo> chapterList) {
+                if (chapterList.size() != 0) {
+                    mChapterList.addAll(chapterList);
+                    if (mChapterAdapter != null)
+                        mChapterAdapter.notifyDataSetChanged();
+                    mPosition = Math.round(mBook.getCharNumber() * mBook.getProgress() / 100);
+//                    LogUtils.w(mPosition+" position");
+                    ChapterVo chapter = DatabaseManager.getsInstance().getChapterManager()
+                            .queryByPosition(mPosition);
+                    int chapterIndex = -1;
+                    for (int i = 0; i < mChapterList.size(); i++) {
+                        if (mChapterList.get(i).getChapterId() == chapter.getChapterId()) {
+                            chapterIndex = i;
+                            break;
+                        }
 
+                    }
+                    if (chapterIndex < 0)
+                        chapterIndex = 0;
+                    loadChapter(chapterIndex, true);
+                } else {
+                    try {
+                        ChapterFactory.getsInstance().concurrentReadFile(mBook);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onException(int code, String reason) {
+
+            }
+        });
     }
 
     private void initView() {
@@ -181,14 +218,36 @@ public class ReaderActivity extends Activity implements View.OnClickListener, IR
 
     }
 
+    private void initMenuBar() {
+        mTopContainer = findViewById(R.id.rlReaderTopContainer);
+        mBottomContainer = findViewById(R.id.llReaderBottomContainer);
+        mMidContainer = findViewById(R.id.midContainer);
+
+        mTopContainer.setOnClickListener(this);
+        mMidContainer.setOnClickListener(this);
+        mBottomContainer.setOnClickListener(this);
+
+        mProgressBar = (ProgressBar) findViewById(R.id.readerProgress);
+
+        findViewById(R.id.ivReaderMenu).setOnClickListener(this);
+        findViewById(R.id.ivReaderBack).setOnClickListener(this);
+        findViewById(R.id.tvPreChapter).setOnClickListener(this);
+        findViewById(R.id.tvNextChapter).setOnClickListener(this);
+        findViewById(R.id.ivReaderTextSize).setOnClickListener(this);
+        findViewById(R.id.ivReaderBookMark).setOnClickListener(this);
+        findViewById(R.id.ivReaderNote).setOnClickListener(this);
+
+        topBarHeight = getResources().getDimensionPixelOffset(R.dimen.reader_popup_top_height);
+        bottomBarHeight = getResources().getDimensionPixelOffset(R.dimen.reader_popup_bottom_height);
+    }
+
+
     private ReaderPageAdapter.OnReaderViewClickListener mReaderClickListener = new ReaderPageAdapter.OnReaderViewClickListener() {
         @Override
         public void onClick() {
             if (mTopContainer.isShown()) {
-                LogUtils.w("hide");
                 hideMenu();
             } else {
-                LogUtils.w("show");
                 showMenu();
             }
         }
@@ -197,7 +256,6 @@ public class ReaderActivity extends Activity implements View.OnClickListener, IR
     private ViewPager.OnPageChangeListener mPageChangeListener = new ViewPager.OnPageChangeListener() {
         @Override
         public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
         }
 
         @Override
@@ -205,13 +263,13 @@ public class ReaderActivity extends Activity implements View.OnClickListener, IR
             //更新curIndex 判断是否加载了前/后chapter无，则加载
             mCurPageIndex = position;
             mCurChapter = getChapterIndex(position);
+            updateProgress();
             loadPreChapter();
             loadNextChapter();
         }
 
         @Override
         public void onPageScrollStateChanged(int state) {
-
         }
     };
 
@@ -223,7 +281,7 @@ public class ReaderActivity extends Activity implements View.OnClickListener, IR
      */
     private synchronized int getChapterIndex(int position) {
         int index = 0;
-        for (int i = 0; i < mChapterList.size(); i++) {
+        for (int i = 0; i < mChapterList.size() && position < mPageList.size(); i++) {
             if (mChapterList.get(i).getFirstCharPosition() < mPageList.get(position).getFirstCharPosition() &&
                     mChapterList.get(i).getLastCharPosition() > mPageList.get(position).getFirstCharPosition()) {
                 index = i;
@@ -245,14 +303,16 @@ public class ReaderActivity extends Activity implements View.OnClickListener, IR
         return index;
     }
 
-    private void loadChapter(int index, boolean progressChange) {
-        if (mChapterList.size() == 0) //todo 考虑没分章节的情况
+    private void loadChapter(final int index, boolean progressChange) {
+        if (mChapterList.size() == 0)
             return;
         //判断内存中是否已加载
-        if (loadedIndexs.contains(index)) {
+        if (progressChange && loadedIndexs.contains(index)) {
             //跳转到该index
             int pageIndex = getPageIndex(mChapterList.get(index).getFirstCharPosition());
             mViewPager.setCurrentItem(pageIndex, false);
+            mCurPageIndex = pageIndex;
+            updateProgress();
             return;
         }
         if (progressChange) {
@@ -260,7 +320,23 @@ public class ReaderActivity extends Activity implements View.OnClickListener, IR
             mEmptyView.setVisibility(View.VISIBLE);
             mViewPager.setVisibility(View.GONE);
         }
-        PageFactory.getInstance(ReaderActivity.this).paging(mChapterList.get(index));
+        DatabaseManager.getsInstance().getPageManager().queryByChapter(mChapterList.get(index).getChapterId(), new ApiCallback<ImmutableList<PageVo>>() {
+            @Override
+            public void onDataReceived(ImmutableList<PageVo> pageList) {
+                if (pageList.size() != 0) {
+                    addLoadedPageList(index, pageList);
+                } else {
+                    PageFactory.getInstance(ReaderActivity.this).paging(mChapterList.get(index));
+                }
+            }
+
+            @Override
+            public void onException(int code, String reason) {
+
+            }
+        });
+
+
     }
 
     private void loadNextChapter() {
@@ -277,26 +353,75 @@ public class ReaderActivity extends Activity implements View.OnClickListener, IR
             loadChapter(mCurChapter - 1, false);
     }
 
+    @Override
+    public void onProgressChanged(int chapterIndex, long firstCharPosition) {
+        if (chapterIndex >= mChapterList.size() || chapterIndex < 0) return;
+        loadChapter(chapterIndex, true);
+        mCurChapter = chapterIndex;
+        loadPreChapter();
+        updateProgress();
+        closeDrawer();
+    }
 
-    private void initMenuBar() {
-        mTopContainer = findViewById(R.id.rlReaderTopContainer);
-        mBottomContainer = findViewById(R.id.llReaderBottomContainer);
-        mMidContainer = findViewById(R.id.midContainer);
 
-        mTopContainer.setOnClickListener(this);
-        mMidContainer.setOnClickListener(this);
-        mBottomContainer.setOnClickListener(this);
+    private void updateProgress() {
+        float progress = mPageList.get(mCurPageIndex).getFirstCharPosition() * 100.0f / mBook.getCharNumber();
+        mProgressBar.setProgress((int) Math.floor(progress * 100));
+        mBook.setProgress(progress);
+    }
 
-        findViewById(R.id.ivReaderMenu).setOnClickListener(this);
-        findViewById(R.id.ivReaderBack).setOnClickListener(this);
-        findViewById(R.id.tvPreChapter).setOnClickListener(this);
-        findViewById(R.id.tvNextChapter).setOnClickListener(this);
-        findViewById(R.id.ivReaderTextSize).setOnClickListener(this);
-        findViewById(R.id.ivReaderBookMark).setOnClickListener(this);
-        findViewById(R.id.ivReaderNote).setOnClickListener(this);
+    private synchronized void addLoadedPageList(int chapterIndex, ImmutableList<PageVo> list) {
+        if (list == null || list.size() == 0) return;
+        loadedIndexs.add(chapterIndex);
+        int pageIndex = getPageIndex(list.get(0).getFirstCharPosition());
 
-        topBarHeight = getResources().getDimensionPixelOffset(R.dimen.reader_popup_top_height);
-        bottomBarHeight = getResources().getDimensionPixelOffset(R.dimen.reader_popup_bottom_height);
+        if (pageIndex <= mCurPageIndex) {
+            mCurPageIndex += list.size();
+            mPageList.addAll(pageIndex, list);
+            if (mViewPager.getAdapter().equals(mPageAdapter)) {
+                mPageAdapter2 = new ReaderPageAdapter(ReaderActivity.this, mPageList);
+                mPageAdapter2.setOnClickListener(mReaderClickListener);
+                mViewPager.setAdapter(mPageAdapter2);
+                mPageAdapter = null;
+            } else {
+                mPageAdapter = new ReaderPageAdapter(ReaderActivity.this, mPageList);
+                mViewPager.setAdapter(mPageAdapter);
+                mPageAdapter.setOnClickListener(mReaderClickListener);
+                mPageAdapter2 = null;
+            }
+            mViewPager.setCurrentItem(mCurPageIndex, false);
+        } else {
+            ((ReaderPageAdapter) mViewPager.getAdapter()).addPages(list);
+        }
+        if (chapterIndex == loadingIndex) {
+            mEmptyView.setVisibility(View.GONE);
+            mViewPager.setVisibility(View.VISIBLE);
+            if (mPosition != 0) {
+                pageIndex = getPageIndex(mPosition);
+                mPosition = 0;
+            }else {
+                pageIndex = getPageIndex(list.get(0).getFirstCharPosition());
+            }
+            mViewPager.setCurrentItem(pageIndex, false);
+            mCurPageIndex = pageIndex;
+            mCurChapter = chapterIndex;
+        }
+    }
+
+    @Subscribe
+    public void onChapterGenerated(EventGeneratedChapter event) {
+        mChapterList.clear();
+        mChapterList.addAll(event.getChapterList());
+        mChapterAdapter.notifyDataSetChanged();
+        //设置初始 page 数据  //0->progress
+        loadChapter(0, true);
+    }
+
+
+    @Subscribe
+    public void onPageGenerator(EventGeneratedPage event) {
+        int chapterIndex = mChapterList.indexOf(event.getChapter());
+        addLoadedPageList(chapterIndex, event.getPageList());
     }
 
 
@@ -365,14 +490,6 @@ public class ReaderActivity extends Activity implements View.OnClickListener, IR
         return false;
     }
 
-    @Override
-    public void onProgressChanged(int chapterIndex, long position) {
-        if (chapterIndex >= mChapterList.size() || chapterIndex < 0) return;
-        loadChapter(chapterIndex, true);
-        loadChapter(chapterIndex - 1, false);
-        closeDrawer();
-    }
-
 
     @Override
     public void onClick(View v) {
@@ -383,6 +500,7 @@ public class ReaderActivity extends Activity implements View.OnClickListener, IR
                 break;
             case R.id.ivReaderBack:
                 //返回
+                finish();
                 break;
             case R.id.tvPreChapter:
                 //上一章
@@ -408,6 +526,21 @@ public class ReaderActivity extends Activity implements View.OnClickListener, IR
         }
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        //save progress
+        DatabaseManager.getsInstance().getBookManager().refresh(mBook);
+//        LogUtils.w("pause " + mPageList.get(mCurPageIndex).getFirstCharPosition());
+//        LogUtils.w("pause " + mChapterList.get(mCurChapter));
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mChapterList.clear();
+        loadedIndexs.clear();
+    }
 
     @Override
     public void onBackPressed() {
@@ -415,57 +548,6 @@ public class ReaderActivity extends Activity implements View.OnClickListener, IR
             return;
         }
         super.onBackPressed();
-    }
-
-    @Subscribe
-    public void onChapterGenerated(EventGeneratedChapter event) {
-        mChapterList.clear();
-        mChapterList.addAll(event.getChapterList());
-        mChapterAdapter.notifyDataSetChanged();
-        //设置初始 page 数据  //0->progress
-        loadChapter(0, true);
-    }
-
-
-    //todo cur Chapter
-    @Subscribe
-    public void onPageGenerator(EventGeneratedPage event) {
-        //todo  存在一个问题， 选择某一章时，获取到的分页列表 、 判断是否已经存在数据 应该放在哪个地方？
-        if (event.getPageList().size() == 0) return;
-        synchronized (this) {
-            int chapterIndex = mChapterList.indexOf(event.getChapter());
-            loadedIndexs.add(chapterIndex);
-
-            int pageIndex = getPageIndex(event.getPageList().get(0).getFirstCharPosition());
-
-            if (pageIndex <= mCurPageIndex) {
-                mCurPageIndex += event.getPageList().size();
-                mPageList.addAll(pageIndex, event.getPageList());
-                if (mViewPager.getAdapter().equals(mPageAdapter)) {
-                    mPageAdapter2 = new ReaderPageAdapter(ReaderActivity.this, mPageList);
-                    mPageAdapter2.setOnClickListener(mReaderClickListener);
-                    mViewPager.setAdapter(mPageAdapter2);
-                    mPageAdapter = null;
-                } else {
-                    mPageAdapter = new ReaderPageAdapter(ReaderActivity.this, mPageList);
-                    mViewPager.setAdapter(mPageAdapter);
-                    mPageAdapter.setOnClickListener(mReaderClickListener);
-                    mPageAdapter2 = null;
-                }
-                mViewPager.setCurrentItem(mCurPageIndex, false);
-            } else {
-                ((ReaderPageAdapter) mViewPager.getAdapter()).addPages(event.getPageList());
-            }
-            if (chapterIndex == loadingIndex) {
-                mEmptyView.setVisibility(View.GONE);
-                mViewPager.setVisibility(View.VISIBLE);
-                pageIndex = getPageIndex(event.getPageList().get(0).getFirstCharPosition());
-                mViewPager.setCurrentItem(pageIndex, true);
-                mCurPageIndex = pageIndex;
-                mCurChapter = chapterIndex;
-            }
-
-        }
     }
 
 

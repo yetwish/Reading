@@ -6,10 +6,9 @@ package com.xidian.yetwish.reading.framework.database.generator;
  */
 public class Page {
 
-    private Long id;
-    private String pageId;
-    private String chapterId;
-    private String bookId;
+    private Long pageId;
+    private Long chapterId;
+    private Long bookId;
     private Long firstCharPosition;
     private Long lastCharPosition;
     private String path;
@@ -18,12 +17,11 @@ public class Page {
     public Page() {
     }
 
-    public Page(Long id) {
-        this.id = id;
+    public Page(Long pageId) {
+        this.pageId = pageId;
     }
 
-    public Page(Long id, String pageId, String chapterId, String bookId, Long firstCharPosition, Long lastCharPosition, String path, String content) {
-        this.id = id;
+    public Page(Long pageId, Long chapterId, Long bookId, Long firstCharPosition, Long lastCharPosition, String path, String content) {
         this.pageId = pageId;
         this.chapterId = chapterId;
         this.bookId = bookId;
@@ -33,35 +31,27 @@ public class Page {
         this.content = content;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getPageId() {
+    public Long getPageId() {
         return pageId;
     }
 
-    public void setPageId(String pageId) {
+    public void setPageId(Long pageId) {
         this.pageId = pageId;
     }
 
-    public String getChapterId() {
+    public Long getChapterId() {
         return chapterId;
     }
 
-    public void setChapterId(String chapterId) {
+    public void setChapterId(Long chapterId) {
         this.chapterId = chapterId;
     }
 
-    public String getBookId() {
+    public Long getBookId() {
         return bookId;
     }
 
-    public void setBookId(String bookId) {
+    public void setBookId(Long bookId) {
         this.bookId = bookId;
     }
 

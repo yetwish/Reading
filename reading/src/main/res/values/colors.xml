@@ -16,11 +16,12 @@
 
     <color name="colorSeekBarBg">#656565</color>
 
+    <color name="colorReaderBg">#F5EEE4</color>
 
     <color name="colorTransparent">#00FFFFFF</color>
     <color name="colorTransparentFrame">#aaFFFFFF</color>
     <color name="colorWhite">#FeFeFe</color>
-    <color name="colorBlack">#000000</color>
+    <color name="colorBlack">#030303</color>
 
     <color name="colorPrimaryText">#333333</color>
     <color name="colorSecondaryText">#808080</color>
