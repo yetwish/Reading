@@ -1,4 +1,4 @@
-package com.xidian.yetwish.reading.ui.file_browser;
+package com.xidian.yetwish.reading.ui.add_book.auto_search;
 
 import com.xidian.yetwish.reading.R;
 import com.xidian.yetwish.reading.framework.common_adapter.support.SectionSupport;

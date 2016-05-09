@@ -103,27 +103,8 @@ public class ReaderPageAdapter extends PagerAdapter implements View.OnClickListe
             mData.addAll(location, pageList);
             mViews.addAll(location, views);
         }
-
-
-
-//
-//
-//
-//            int i = 0;
-//            for (PageVo page : pageList) {
-//                if (mData.contains(page)) continue;
-//                ReaderView view = new ReaderView(mContext);
-//                view.setData(page);
-//                if (location == DEFAULT_INDEX) {
-//                    mData.add(page);
-//                    mViews.add(view);
-//                } else {
-//                    mData.add(location + i, page);
-//                    mViews.add(location + i, view);
-//                    i++;
-//                }
-//            }
         notifyDataSetChanged();
+
     }
 
     @Override

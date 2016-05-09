@@ -35,6 +35,7 @@
                 android:src="@mipmap/ic_chevron_left_white_48dp" />
 
             <TextView
+                android:id="@+id/tvReaderName"
                 style="@style/Reader_TextStyle_Title"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/menu_item_margin"

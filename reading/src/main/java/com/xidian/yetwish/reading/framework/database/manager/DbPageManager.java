@@ -27,7 +27,7 @@ public class DbPageManager {
         this.mHandler = handler;
     }
 
-    public void refresh(final List<PageVo> uploadList) {
+    public void refresh(final ImmutableList<PageVo> uploadList) {
         mHandler.post(new Runnable() {
             @Override
             public void run() {

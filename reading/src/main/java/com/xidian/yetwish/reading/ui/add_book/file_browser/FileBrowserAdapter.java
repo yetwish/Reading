@@ -1,4 +1,4 @@
-package com.xidian.yetwish.reading.ui.file_browser.adapter;
+package com.xidian.yetwish.reading.ui.add_book.file_browser;
 
 import android.content.Context;
 import android.view.View;
@@ -11,11 +11,11 @@ import com.xidian.yetwish.reading.R;
 import com.xidian.yetwish.reading.framework.database.DatabaseManager;
 import com.xidian.yetwish.reading.framework.utils.LogUtils;
 import com.xidian.yetwish.reading.framework.vo.BookVo;
-import com.xidian.yetwish.reading.ui.file_browser.TXTFileFilter;
 import com.xidian.yetwish.reading.framework.utils.ToastUtils;
 import com.xidian.yetwish.reading.framework.common_adapter.CommonAdapter;
 import com.xidian.yetwish.reading.framework.common_adapter.OnItemClickListener;
 import com.xidian.yetwish.reading.framework.common_adapter.ViewHolder;
+import com.xidian.yetwish.reading.ui.add_book.TXTFileFilter;
 
 import java.io.File;
 import java.util.ArrayList;

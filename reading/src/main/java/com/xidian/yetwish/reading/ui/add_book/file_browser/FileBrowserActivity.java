@@ -1,4 +1,4 @@
-package com.xidian.yetwish.reading.ui.file_browser;
+package com.xidian.yetwish.reading.ui.add_book.file_browser;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,22 +11,13 @@ import android.widget.TextView;
 import com.google.common.base.Function;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Ordering;
-import com.google.common.eventbus.Subscribe;
 import com.xidian.yetwish.reading.R;
 import com.xidian.yetwish.reading.framework.eventbus.EventBusWrapper;
-import com.xidian.yetwish.reading.framework.eventbus.event.EventAddBooks;
-import com.xidian.yetwish.reading.framework.eventbus.event.EventAddedBook;
-import com.xidian.yetwish.reading.framework.reader.ChapterFactory;
-import com.xidian.yetwish.reading.framework.utils.LogUtils;
-import com.xidian.yetwish.reading.framework.vo.BookVo;
 import com.xidian.yetwish.reading.ui.ToolbarActivity;
-import com.xidian.yetwish.reading.ui.file_browser.adapter.FileBrowserAdapter;
+import com.xidian.yetwish.reading.ui.add_book.AddBookHelper;
 import com.xidian.yetwish.reading.ui.widget.EmptyRecyclerView;
 
 import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * todo data  todo checkbox position ,order

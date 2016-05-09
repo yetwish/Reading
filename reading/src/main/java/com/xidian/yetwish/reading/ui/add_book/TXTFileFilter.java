@@ -1,4 +1,4 @@
-package com.xidian.yetwish.reading.ui.file_browser;
+package com.xidian.yetwish.reading.ui.add_book;
 
 import java.io.File;
 import java.io.FileFilter;

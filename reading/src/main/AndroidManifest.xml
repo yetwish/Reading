@@ -34,11 +34,11 @@
             android:launchMode="singleTask" />
 
         <activity
-            android:name=".ui.file_browser.AutoSearchActivity"
+            android:name=".ui.add_book.auto_search.AutoSearchActivity"
             android:label="@string/search_title" />
 
         <activity
-            android:name=".ui.file_browser.FileBrowserActivity"
+            android:name=".ui.add_book.file_browser.FileBrowserActivity"
             android:label="@string/explorer_title" />
 
         <activity

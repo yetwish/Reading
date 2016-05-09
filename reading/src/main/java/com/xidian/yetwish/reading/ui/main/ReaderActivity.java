@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,6 +15,7 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.eventbus.Subscribe;
@@ -89,9 +91,11 @@ public class ReaderActivity extends Activity implements View.OnClickListener, IR
     private View mBottomContainer;
     private View mMidContainer;
 
+
     //todo
 //    private SeekBar mSeekBar;
     private ProgressBar mProgressBar;
+    private TextView tvName;
 
     private int topBarHeight;
     private int bottomBarHeight;
@@ -117,7 +121,8 @@ public class ReaderActivity extends Activity implements View.OnClickListener, IR
         if (!(obj instanceof BookVo))
             return;
         mBook = (BookVo) obj;
-        //判断该book是否生成过章节目录，如果生成过，则从数据库中获取
+        tvName.setText(mBook.getName());
+        //判断数据库中是否存储该book的章节信息，若无则重新扫描一遍书本
         DatabaseManager.getsInstance().getChapterManager().queryByBookId(mBook.getBookId(), new ApiCallback<ImmutableList<ChapterVo>>() {
             @Override
             public void onDataReceived(ImmutableList<ChapterVo> chapterList) {
@@ -129,20 +134,26 @@ public class ReaderActivity extends Activity implements View.OnClickListener, IR
 //                    LogUtils.w(mPosition+" position");
                     ChapterVo chapter = DatabaseManager.getsInstance().getChapterManager()
                             .queryByPosition(mPosition);
+                    if (chapter == null) {
+                        loadChapter(0, true);
+                        return;
+                    }
+
                     int chapterIndex = -1;
                     for (int i = 0; i < mChapterList.size(); i++) {
                         if (mChapterList.get(i).getChapterId() == chapter.getChapterId()) {
                             chapterIndex = i;
                             break;
                         }
-
                     }
                     if (chapterIndex < 0)
                         chapterIndex = 0;
                     loadChapter(chapterIndex, true);
-                } else {
+                    mCurChapter = chapterIndex;
+                    loadPreChapter();
+                }else {
                     try {
-                        ChapterFactory.getsInstance().concurrentReadFile(mBook);
+                        ChapterFactory.createDivider().scanBook(mBook);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -237,6 +248,8 @@ public class ReaderActivity extends Activity implements View.OnClickListener, IR
         findViewById(R.id.ivReaderBookMark).setOnClickListener(this);
         findViewById(R.id.ivReaderNote).setOnClickListener(this);
 
+        tvName = (TextView) findViewById(R.id.tvReaderName);
+
         topBarHeight = getResources().getDimensionPixelOffset(R.dimen.reader_popup_top_height);
         bottomBarHeight = getResources().getDimensionPixelOffset(R.dimen.reader_popup_bottom_height);
     }
@@ -326,7 +339,7 @@ public class ReaderActivity extends Activity implements View.OnClickListener, IR
                 if (pageList.size() != 0) {
                     addLoadedPageList(index, pageList);
                 } else {
-                    PageFactory.getInstance(ReaderActivity.this).paging(mChapterList.get(index));
+                    PageFactory.createPageDivider(ReaderActivity.this).paging(mChapterList.get(index));
                 }
             }
 
@@ -394,17 +407,18 @@ public class ReaderActivity extends Activity implements View.OnClickListener, IR
             ((ReaderPageAdapter) mViewPager.getAdapter()).addPages(list);
         }
         if (chapterIndex == loadingIndex) {
-            mEmptyView.setVisibility(View.GONE);
             mViewPager.setVisibility(View.VISIBLE);
             if (mPosition != 0) {
                 pageIndex = getPageIndex(mPosition);
+                mViewPager.setCurrentItem(pageIndex, true);
                 mPosition = 0;
-            }else {
+            } else {
                 pageIndex = getPageIndex(list.get(0).getFirstCharPosition());
+                mViewPager.setCurrentItem(pageIndex, false);
             }
-            mViewPager.setCurrentItem(pageIndex, false);
             mCurPageIndex = pageIndex;
             mCurChapter = chapterIndex;
+            mEmptyView.setVisibility(View.GONE);
         }
     }
 

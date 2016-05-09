@@ -1,4 +1,4 @@
-package com.xidian.yetwish.reading.ui.file_browser;
+package com.xidian.yetwish.reading.ui.add_book;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.eventbus.Subscribe;
@@ -35,10 +35,12 @@ public class AddBookHelper {
     public void addBook(ImmutableList<File> fileList, Runnable listener) {
         this.mListener = listener;
         for (File file : fileList) {
+            BookVo book = new BookVo(file.getAbsolutePath(), file.getName());
+            mAddedBook.add(book);
+        }
+        for (BookVo book : mAddedBook) {
             try {
-                BookVo book = new BookVo(file.getAbsolutePath(), file.getName());
-                mAddedBook.add(book);
-                ChapterFactory.getsInstance().concurrentReadFile(book);
+                ChapterFactory.createDivider().scanBook(book);
             } catch (IOException e) {
                 e.printStackTrace();
             }

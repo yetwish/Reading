@@ -23,8 +23,8 @@ import com.xidian.yetwish.reading.ui.widget.SlideMenu;
 import com.xidian.yetwish.reading.ui.SlideMenuActivity;
 import com.xidian.yetwish.reading.ui.fab.OnFABItemClickListener;
 import com.xidian.yetwish.reading.ui.fab.PopupMenu;
-import com.xidian.yetwish.reading.ui.file_browser.AutoSearchActivity;
-import com.xidian.yetwish.reading.ui.file_browser.FileBrowserActivity;
+import com.xidian.yetwish.reading.ui.add_book.auto_search.AutoSearchActivity;
+import com.xidian.yetwish.reading.ui.add_book.file_browser.FileBrowserActivity;
 import com.xidian.yetwish.reading.framework.utils.LogUtils;
 import com.xidian.yetwish.reading.framework.utils.ScreenUtils;
 

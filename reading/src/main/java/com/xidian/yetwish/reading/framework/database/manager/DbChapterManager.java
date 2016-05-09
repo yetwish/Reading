@@ -29,7 +29,7 @@ public class DbChapterManager {
         this.mHandler = handler;
     }
 
-    public void refresh(final List<ChapterVo> uploadList) {
+    public void refresh(final ImmutableList<ChapterVo> uploadList) {
         mHandler.post(new Runnable() {
             @Override
             public void run() {
