@@ -83,9 +83,16 @@ public class SlideMenu extends RelativeLayout {
     private OnClickListener mClickListener = new OnClickListener() {
         @Override
         public void onClick(View v) {
+            switch (v.getId()) {
+                case R.id.menuAbout:
+                case R.id.menuSetting:
+                case R.id.menuUpdate:
+                    if (mMenuListener != null)
+                        mMenuListener.onMenuItemChanged(v.getId());
+                    return;
+            }
             if (mMenuListener != null) {
                 mMenuListener.onSelectSameItem();
-                LogUtils.i("same item!");
             }
         }
     };
@@ -97,7 +104,7 @@ public class SlideMenu extends RelativeLayout {
                     "the index of menu item should between 1 to 3.");
         }
         isInit = true;
-        LogUtils.i("itemIndex : " + itemIndex);
+//        LogUtils.i("itemIndex : " + itemIndex);
         switch (itemIndex) {
             case MENU_READING:
                 menuReading.setChecked(true);

@@ -7,6 +7,9 @@
     android:orientation="vertical"
     tools:context=".ui.main.ReadingActivity">
 
+    <include layout="@layout/reading_empty_view"
+        android:id="@+id/readingEmptyView"/>
+
     <com.xidian.yetwish.reading.ui.widget.EmptyRecyclerView
         android:id="@+id/lvReading"
         android:layout_width="match_parent"
@@ -20,7 +23,7 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:contentDescription="@string/des_add_fab"
-        android:src="@mipmap/ic_add_white_36dp" />
+        android:src="@mipmap/ic_add_white_24dp" />
 
 
 </RelativeLayout>

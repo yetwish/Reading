@@ -43,6 +43,7 @@ public class ReadingActivity extends SlideMenuActivity {
     private BookListAdapter mAdapter;
 
     private EmptyRecyclerView lvReading;
+    private View mEmptyView;
 
     private boolean isHidden;
     private boolean isFloating;
@@ -57,7 +58,6 @@ public class ReadingActivity extends SlideMenuActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setMainLayout(R.layout.activity_reading);
-        LogUtils.w("receive create");
         EventBusWrapper.getDefault().register(this);
 
         //初始化数据库等系统服务
@@ -78,6 +78,7 @@ public class ReadingActivity extends SlideMenuActivity {
             }
         });
 
+        mEmptyView = findViewById(R.id.readingEmptyView);
         initReadingList();
     }
 
@@ -157,6 +158,13 @@ public class ReadingActivity extends SlideMenuActivity {
     };
 
 
+    private void updateEmptyViewVisibility(){
+        if(mAdapter.getItemCount() > 0)
+            mEmptyView.setVisibility(View.GONE);
+        else
+            mEmptyView.setVisibility(View.VISIBLE);
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -170,6 +178,7 @@ public class ReadingActivity extends SlideMenuActivity {
         mBookList.addAll(dbList);
         if (mAdapter != null)
             mAdapter.notifyDataSetChanged();
+        updateEmptyViewVisibility();
     }
 
     private OnFABItemClickListener mFABItemClickListener = new OnFABItemClickListener() {
@@ -196,6 +205,7 @@ public class ReadingActivity extends SlideMenuActivity {
             if (mAdapter != null)
                 mAdapter.notifyDataSetChanged();
         }
+        updateEmptyViewVisibility();
     }
 
 

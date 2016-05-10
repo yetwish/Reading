@@ -3,6 +3,7 @@ package com.xidian.yetwish.reading.ui.note;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -17,13 +18,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.common.collect.ImmutableList;
 import com.xidian.yetwish.reading.R;
 import com.xidian.yetwish.reading.framework.database.DatabaseManager;
-import com.xidian.yetwish.reading.framework.database.generator.NoteBook;
 import com.xidian.yetwish.reading.framework.exception.IllegalIntentDataException;
 import com.xidian.yetwish.reading.framework.utils.BitmapUtils;
-import com.xidian.yetwish.reading.framework.utils.LogUtils;
 import com.xidian.yetwish.reading.framework.utils.SharedPreferencesUtils;
 import com.xidian.yetwish.reading.framework.utils.ScreenUtils;
 import com.xidian.yetwish.reading.framework.vo.NoteBookVo;
@@ -53,6 +53,8 @@ public class NoteBookActivity extends BaseActivity implements PopupListView.Popu
     private PopupListView lvNote;
     private View mEmptyView;
     private List<PopupView> mNoteViews;
+
+    private TextView tvNoteBookIntro;
 
     private AppBarLayout mAppBarLayout;
     private NestedScrollView mScrollView;
@@ -89,6 +91,24 @@ public class NoteBookActivity extends BaseActivity implements PopupListView.Popu
         mNoteViews = new ArrayList<>();
         lvNote.setItemViews(mNoteViews);
         lvNote.setPopupItemClickListener(this);
+
+        tvNoteBookIntro = (TextView) findViewById(R.id.tvNoteBookIntro);
+        if (mNoteBook.getIntroduction() != null)
+            tvNoteBookIntro.setText(mNoteBook.getIntroduction());
+        tvNoteBookIntro.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //show dialog
+                showInputDialog(mNoteBook.getName(), getString(R.string.hint_note_book_intro),
+                        tvNoteBookIntro.getText(), new MaterialDialog.InputCallback() {
+                            @Override
+                            public void onInput(@NonNull MaterialDialog dialog, CharSequence input) {
+                                tvNoteBookIntro.setText(input);
+                                mNoteBook.setIntroduction(input.toString());
+                            }
+                        });
+            }
+        });
 
         mEmptyView = findViewById(R.id.noteEmptyView);
         mEmptyViewLayoutParams = new LinearLayout.LayoutParams(
@@ -242,8 +262,8 @@ public class NoteBookActivity extends BaseActivity implements PopupListView.Popu
         super.onPause();
         if (mNoteViews.size() != mNoteBook.getNoteNumber()) {
             mNoteBook.setNoteNumber(mNoteViews.size());
-            DatabaseManager.getsInstance().getNoteBookManager().refresh(mNoteBook);
         }
+        DatabaseManager.getsInstance().getNoteBookManager().refresh(mNoteBook);
     }
 
     @Override

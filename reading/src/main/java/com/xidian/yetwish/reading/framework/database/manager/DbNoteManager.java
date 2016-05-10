@@ -56,22 +56,17 @@ public class DbNoteManager {
     }
 
     /**
-     * todo
+     * query all notes of a book.
+     *
+     * @param bookId
+     * @return null or ImmutableList<NoteVo>
      */
-    public ImmutableList<NoteVo> queryByBook(long noteBookId) {
-        List<NoteVo> noteList = new ArrayList<>();
-        DatabaseManager manager = DatabaseManager.getsInstance();
-        if (manager != null) {
-            NoteDao dao = manager.getDaoSession().getNoteDao();
-            Query<Note> query = dao.queryBuilder().where(NoteDao.Properties.NoteBookId.eq(noteBookId)).build();
-            List<Note> dbList = query.list();
-            if (dbList != null && dbList.size() > 0) {
-                for (Note note : dbList) {
-                    noteList.add(new NoteVo(note));
-                }
-            }
+    public ImmutableList<NoteVo> queryByBook(long bookId) {
+        final long noteBookId = DatabaseManager.getsInstance().getNoteBookManager().queryNoteBookByBook(bookId);
+        if (noteBookId != -1) {
+            return queryByNoteBook(noteBookId);
         }
-        return ImmutableList.copyOf(noteList);
+        return null;
     }
 
     public ImmutableList<NoteVo> queryByNoteBook(long noteBookId) {
@@ -88,6 +83,44 @@ public class DbNoteManager {
             }
         }
         return ImmutableList.copyOf(noteList);
+    }
+
+    /**
+     * todo
+     *
+     * @param bookId
+     */
+    public void deleteByBookId(final long bookId) {
+        final long noteBookId = DatabaseManager.getsInstance().getNoteBookManager().queryNoteBookByBook(bookId);
+        if (noteBookId != -1) {
+            deleteByNoteBookId(noteBookId);
+        }
+    }
+
+    public void deleteByNoteBookId(final long noteBookId) {
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                DatabaseManager manager = DatabaseManager.getsInstance();
+                if (manager != null) {
+                    NoteDao dao = manager.getDaoSession().getNoteDao();
+                    dao.queryBuilder().where(NoteDao.Properties.NoteBookId.eq(noteBookId))
+                            .buildDelete().executeDeleteWithoutDetachingEntities();
+                }
+            }
+        });
+    }
+
+    public void deleteAll() {
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                DatabaseManager manager = DatabaseManager.getsInstance();
+                if (manager != null) {
+                    manager.getDaoSession().getNoteDao().deleteAll();
+                }
+            }
+        });
     }
 }
 

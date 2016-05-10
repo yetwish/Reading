@@ -1,10 +1,13 @@
 package com.xidian.yetwish.reading.ui;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 
 import com.xidian.yetwish.reading.R;
+import com.xidian.yetwish.reading.framework.utils.SharedPreferencesUtils;
 import com.xidian.yetwish.reading.ui.main.ReadingActivity;
 
 /**
@@ -30,25 +33,32 @@ public class SplashActivity extends BaseActivity {
 
     };
 
+    public static void startActivity(Context context,boolean splash){
+        Intent intent = new Intent(context,SplashActivity.class);
+        intent.putExtra(SharedPreferencesUtils.EXTRA_SPLASH,splash);
+        context.startActivity(intent);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
+        boolean splash = getIntent().getBooleanExtra(SharedPreferencesUtils.EXTRA_SPLASH,true);
+        if(splash){
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        Thread.sleep(1000);
+                    }catch (InterruptedException e){
+                        //TODO catch exception
+                    }finally {
+                        mHandler.sendEmptyMessage(MSG_SPLASH);
+                    }
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Thread.sleep(1000);
-                }catch (InterruptedException e){
-                    //TODO catch exception
-                }finally {
-                    mHandler.sendEmptyMessage(MSG_SPLASH);
                 }
-
-            }
-        }).start();
-
+            }).start();
+        }
     }
 }

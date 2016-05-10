@@ -16,7 +16,6 @@ import com.xidian.yetwish.reading.framework.utils.LogUtils;
 import com.xidian.yetwish.reading.ui.main.NoteActivity;
 import com.xidian.yetwish.reading.ui.main.ReadActivity;
 import com.xidian.yetwish.reading.ui.main.ReadingActivity;
-import com.xidian.yetwish.reading.ui.note.DemoActivity;
 import com.xidian.yetwish.reading.ui.widget.SlideMenu;
 
 /**
@@ -74,11 +73,11 @@ public class SlideMenuActivity extends BaseActivity {
                         NoteActivity.startActivity(mContext);
                         break;
                     case R.id.menuRead:
-                        DemoActivity.startActivity(mContext);
-//                        ReadActivity.startActivity(mContext);
+                        ReadActivity.startActivity(mContext);
                         break;
                     case R.id.menuAbout:
-                        //TODO
+                        LogUtils.w("click");
+                        SplashActivity.startActivity(mContext,false);
                         break;
                     case R.id.menuSetting:
                         break;
@@ -100,7 +99,7 @@ public class SlideMenuActivity extends BaseActivity {
     //close drawer when press the back key while drawer is open.
     @Override
     public void onBackPressed() {
-        LogUtils.w(mDrawerLayout.isDrawerOpen(mSlideMenu)+"");
+//        LogUtils.w(mDrawerLayout.isDrawerOpen(mSlideMenu)+"");
         if(mDrawerLayout.isDrawerOpen(mSlideMenu)){
             mDrawerLayout.closeDrawers();
         }else {

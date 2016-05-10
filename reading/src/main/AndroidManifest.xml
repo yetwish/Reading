@@ -52,10 +52,6 @@
 
         <activity android:name=".ui.note.NoteEditActivity" />
 
-        <activity
-            android:name=".ui.note.DemoActivity"
-            android:label="@string/note_create" />
-
     </application>
 
 </manifest>

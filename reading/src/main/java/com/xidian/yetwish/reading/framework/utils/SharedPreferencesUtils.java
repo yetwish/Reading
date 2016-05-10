@@ -15,6 +15,7 @@ public class SharedPreferencesUtils {
     public static final String EXTRA_NOTEBOOK = "extraNoteBook";
     public static final String EXTRA_NOTEBOOK_ID = "extraNoteBookId";
     public static final String EXTRA_NOTE = "extraNote";
+    public static final String EXTRA_SPLASH = "extraSplash";
 
 
     public static final int REQUEST_CODE_NOTE_EDIT = 0x01;

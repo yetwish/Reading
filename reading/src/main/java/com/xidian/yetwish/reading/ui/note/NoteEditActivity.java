@@ -23,6 +23,7 @@ import com.xidian.yetwish.reading.ui.ToolbarActivity;
 import java.io.Serializable;
 
 /**
+ * todo 监听enter
  * Created by Yetwish on 2016/5/10 0010.
  */
 public class NoteEditActivity extends ToolbarActivity {

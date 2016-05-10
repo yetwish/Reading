@@ -40,10 +40,14 @@
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
             <TextView
+                android:id="@+id/tvNoteBookIntro"
                 android:layout_width="wrap_content"
+                android:drawableRight="@mipmap/ic_create_white_24dp"
+                android:drawablePadding="@dimen/menu_item_margin"
                 android:layout_height="@dimen/app_bar_backdrop_height"
                 android:layout_marginLeft="48dp"
-                android:layout_marginRight="48dp"
+                android:layout_marginRight="38dp"
+                android:background="@null"
                 android:gravity="center_vertical"
                 android:maxLines="5"
                 android:paddingBottom="15dp"
@@ -63,15 +67,15 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="24dp" >
+            android:layout_marginTop="24dp"
+            android:orientation="vertical">
             <!--list view-->
             <com.xidian.yetwish.reading.ui.com.baobomb.popuplistview.PopupListView
                 android:id="@+id/lvNote"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent" />
 
             <include
                 android:id="@+id/noteEmptyView"

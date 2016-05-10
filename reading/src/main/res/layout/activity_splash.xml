@@ -2,14 +2,35 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ff5566">
+    android:background="@color/colorPrimary">
+
+    <ImageView
+        android:id="@+id/ivLogo"
+        android:layout_width="@dimen/logon_size"
+        android:layout_height="@dimen/logon_size"
+        android:layout_centerInParent="true"
+        android:paddingBottom="20dp"
+        android:paddingRight="20dp"
+        android:src="@mipmap/logo_grey" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ivLogo"
+        android:gravity="right"
+        android:paddingRight="20dp"
+        android:text="@string/splash"
+        android:textColor="@color/colorWhite"
+        android:textSize="16sp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="Splash_Activiy"
-        android:textColor="#ffffff"
-        android:textSize="30sp" />
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:text="@string/author"
+        android:layout_marginBottom="16dp"
+        android:textColor="@color/colorWhite"
+        android:textSize="14sp" />
 
 </RelativeLayout>
