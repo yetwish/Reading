@@ -50,4 +50,12 @@ public class FABMenuItem extends LinearLayout {
 
     }
 
+    public void setText(String text){
+        tvTitle.setText(text);
+    }
+
+    public void setImageRes(int resId){
+        ibIcon.setImageResource(resId);
+    }
+
 }

@@ -1,4 +1,4 @@
-package com.xidian.yetwish.reading.ui.main.adapter.viewpager;
+package com.xidian.yetwish.reading.ui.reader.viewpager;
 
 import android.content.Context;
 import android.support.v4.view.PagerAdapter;
@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.common.collect.ImmutableList;
-import com.xidian.yetwish.reading.framework.utils.LogUtils;
 import com.xidian.yetwish.reading.framework.vo.reader.PageVo;
 import com.xidian.yetwish.reading.ui.widget.ReaderView;
 

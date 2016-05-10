@@ -4,10 +4,12 @@ package com.xidian.yetwish.reading.framework.vo;
 import com.xidian.yetwish.reading.framework.database.generator.NoteBook;
 import com.xidian.yetwish.reading.framework.utils.BookUtils;
 
+import java.io.Serializable;
+
 /**
  * Created by Yetwish on 2016/4/21 0021.
  */
-public class NoteBookVo {
+public class NoteBookVo implements Serializable {
 
     private long noteBookId;
     private long bookId;
@@ -17,8 +19,9 @@ public class NoteBookVo {
     private int noteNumber;
     private String introduction;
 
-    public NoteBookVo(){
+    public NoteBookVo(String name){
         this.noteBookId = BookUtils.generateSequenceId();
+        this.name = name;
     }
 
     public NoteBookVo(NoteBook noteBook){
@@ -28,16 +31,18 @@ public class NoteBookVo {
         this.iconPath = noteBook.getIconPath();
         this.noteNumber = noteBook.getNoteNumber();
         this.introduction = noteBook.getIntro();
+        this.iconResId = noteBook.getIconResId();
     }
 
     public NoteBook convertToDb(){
         NoteBook noteBook = new NoteBook();
-        noteBook.setBookId(noteBookId);
         noteBook.setBookId(bookId);
+        noteBook.setNoteBookId(noteBookId);
         noteBook.setName(name);
         noteBook.setIconPath(iconPath);
         noteBook.setNoteNumber(noteNumber);
         noteBook.setIntro(introduction);
+        noteBook.setIconResId(iconResId);
         return noteBook;
     }
 

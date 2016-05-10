@@ -9,6 +9,12 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:textColorPrimary">@color/colorWhite</item>
+        <item name="actionMenuTextColor">@color/ac_menu_text</item>
+    </style>
+
+    <style name="ActionMenuAppearance">
+        <item name="android:color">@color/ac_menu_text</item>
+        <item name="android:textSize">@dimen/item_secondary_text_size</item>
     </style>
 
 

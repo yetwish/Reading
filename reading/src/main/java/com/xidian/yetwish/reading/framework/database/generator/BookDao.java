@@ -29,8 +29,9 @@ public class BookDao extends AbstractDao<Book, Long> {
         public final static Property Language = new Property(3, String.class, "language", false, "LANGUAGE");
         public final static Property Progress = new Property(4, Float.class, "progress", false, "PROGRESS");
         public final static Property IconPath = new Property(5, String.class, "iconPath", false, "ICON_PATH");
-        public final static Property Path = new Property(6, String.class, "path", false, "PATH");
-        public final static Property CharNumber = new Property(7, Long.class, "charNumber", false, "CHAR_NUMBER");
+        public final static Property IconResId = new Property(6, Integer.class, "iconResId", false, "ICON_RES_ID");
+        public final static Property Path = new Property(7, String.class, "path", false, "PATH");
+        public final static Property CharNumber = new Property(8, Long.class, "charNumber", false, "CHAR_NUMBER");
     };
 
 
@@ -52,8 +53,9 @@ public class BookDao extends AbstractDao<Book, Long> {
                 "'LANGUAGE' TEXT," + // 3: language
                 "'PROGRESS' REAL," + // 4: progress
                 "'ICON_PATH' TEXT," + // 5: iconPath
-                "'PATH' TEXT," + // 6: path
-                "'CHAR_NUMBER' INTEGER);"); // 7: charNumber
+                "'ICON_RES_ID' INTEGER," + // 6: iconResId
+                "'PATH' TEXT," + // 7: path
+                "'CHAR_NUMBER' INTEGER);"); // 8: charNumber
     }
 
     /** Drops the underlying database table. */
@@ -97,14 +99,19 @@ public class BookDao extends AbstractDao<Book, Long> {
             stmt.bindString(6, iconPath);
         }
  
+        Integer iconResId = entity.getIconResId();
+        if (iconResId != null) {
+            stmt.bindLong(7, iconResId);
+        }
+ 
         String path = entity.getPath();
         if (path != null) {
-            stmt.bindString(7, path);
+            stmt.bindString(8, path);
         }
  
         Long charNumber = entity.getCharNumber();
         if (charNumber != null) {
-            stmt.bindLong(8, charNumber);
+            stmt.bindLong(9, charNumber);
         }
     }
 
@@ -124,8 +131,9 @@ public class BookDao extends AbstractDao<Book, Long> {
             cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // language
             cursor.isNull(offset + 4) ? null : cursor.getFloat(offset + 4), // progress
             cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5), // iconPath
-            cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6), // path
-            cursor.isNull(offset + 7) ? null : cursor.getLong(offset + 7) // charNumber
+            cursor.isNull(offset + 6) ? null : cursor.getInt(offset + 6), // iconResId
+            cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7), // path
+            cursor.isNull(offset + 8) ? null : cursor.getLong(offset + 8) // charNumber
         );
         return entity;
     }
@@ -139,8 +147,9 @@ public class BookDao extends AbstractDao<Book, Long> {
         entity.setLanguage(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
         entity.setProgress(cursor.isNull(offset + 4) ? null : cursor.getFloat(offset + 4));
         entity.setIconPath(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
-        entity.setPath(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
-        entity.setCharNumber(cursor.isNull(offset + 7) ? null : cursor.getLong(offset + 7));
+        entity.setIconResId(cursor.isNull(offset + 6) ? null : cursor.getInt(offset + 6));
+        entity.setPath(cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7));
+        entity.setCharNumber(cursor.isNull(offset + 8) ? null : cursor.getLong(offset + 8));
      }
     
     /** @inheritdoc */

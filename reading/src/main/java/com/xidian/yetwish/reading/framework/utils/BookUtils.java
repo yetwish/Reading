@@ -12,6 +12,11 @@ import java.util.Calendar;
  */
 public class BookUtils {
 
+    private BookUtils() {
+        /* can not be instantiated */
+        throw new UnsupportedOperationException("can not be instantiated");
+    }
+
     private final static Format DATE_FORMAT = new SimpleDateFormat("MMddHHmmssS");
 
     private final static FieldPosition HELPER_POSITION = new FieldPosition(0);

@@ -10,13 +10,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 
 import com.xidian.yetwish.reading.R;
 import com.xidian.yetwish.reading.framework.utils.LogUtils;
 import com.xidian.yetwish.reading.ui.main.NoteActivity;
 import com.xidian.yetwish.reading.ui.main.ReadActivity;
 import com.xidian.yetwish.reading.ui.main.ReadingActivity;
+import com.xidian.yetwish.reading.ui.note.DemoActivity;
 import com.xidian.yetwish.reading.ui.widget.SlideMenu;
 
 /**
@@ -74,7 +74,8 @@ public class SlideMenuActivity extends BaseActivity {
                         NoteActivity.startActivity(mContext);
                         break;
                     case R.id.menuRead:
-                        ReadActivity.startActivity(mContext);
+                        DemoActivity.startActivity(mContext);
+//                        ReadActivity.startActivity(mContext);
                         break;
                     case R.id.menuAbout:
                         //TODO

@@ -7,7 +7,7 @@
     android:background="@color/colorTransparent">
 
     <com.xidian.yetwish.reading.ui.fab.FABMenuItem
-        android:id="@+id/fabItemFolder"
+        android:id="@+id/fabItemBottom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -19,10 +19,10 @@
 
 
     <com.xidian.yetwish.reading.ui.fab.FABMenuItem
-        android:id="@+id/fabItemSearch"
+        android:id="@+id/fabItemTop"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/fabItemFolder"
+        android:layout_above="@+id/fabItemBottom"
         android:layout_alignParentRight="true"
         android:layout_marginRight="@dimen/fab_sub_marginRight"
         app:src="@mipmap/ic_search_white_24dp"

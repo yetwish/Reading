@@ -1,4 +1,4 @@
-package com.xidian.yetwish.reading.ui.main.adapter;
+package com.xidian.yetwish.reading.ui.reader;
 
 /**
  * Created by Yetwish on 2016/5/7 0007.

@@ -172,20 +172,18 @@ public class ReadingActivity extends SlideMenuActivity {
             mAdapter.notifyDataSetChanged();
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-    }
-
     private OnFABItemClickListener mFABItemClickListener = new OnFABItemClickListener() {
-        @Override
-        public void onAutoSearching() {
-            AutoSearchActivity.startActivity(ReadingActivity.this);
-        }
 
         @Override
-        public void onChoseManually() {
-            FileBrowserActivity.startActivity(ReadingActivity.this);
+        public void onFabItemClick(int position) {
+            switch (position){
+                case PopupMenu.ITEM_TOP:
+                    AutoSearchActivity.startActivity(ReadingActivity.this);
+                    break;
+                case PopupMenu.ITEM_BOTTOM:
+                    FileBrowserActivity.startActivity(ReadingActivity.this);
+                    break;
+            }
         }
     };
 

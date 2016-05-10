@@ -6,13 +6,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.xidian.yetwish.reading.R;
-import com.xidian.yetwish.reading.framework.eventbus.EventBusWrapper;
+import com.xidian.yetwish.reading.framework.utils.BitmapUtils;
 import com.xidian.yetwish.reading.framework.vo.BookVo;
 import com.xidian.yetwish.reading.framework.utils.LogUtils;
 import com.xidian.yetwish.reading.framework.common_adapter.CommonAdapter;
 import com.xidian.yetwish.reading.framework.common_adapter.OnItemClickListener;
 import com.xidian.yetwish.reading.framework.common_adapter.ViewHolder;
-import com.xidian.yetwish.reading.ui.main.ReaderActivity;
+import com.xidian.yetwish.reading.ui.reader.ReaderActivity;
 
 import java.util.List;
 
@@ -21,8 +21,11 @@ import java.util.List;
  */
 public class BookListAdapter extends CommonAdapter<BookVo> {
 
+    private int iconHeight ;
+    private int iconWidth ;
+
     public BookListAdapter(final Context context, List<BookVo> data) {
-        super(context, R.layout.item_book, data);
+        super(context, R.layout.item_book_list, data);
         setItemClickListener(new OnItemClickListener<BookVo>() {
             @Override
             public void onItemClick(ViewGroup parent, View view, BookVo data, int position) {
@@ -35,6 +38,8 @@ public class BookListAdapter extends CommonAdapter<BookVo> {
                 ivDelete.setVisibility(View.VISIBLE);
             }
         });
+        iconWidth = mContext.getResources().getDimensionPixelSize(R.dimen.item_icon_width);
+        iconHeight = mContext.getResources().getDimensionPixelSize(R.dimen.item_icon_height);
     }
 
     @Override
@@ -52,7 +57,10 @@ public class BookListAdapter extends CommonAdapter<BookVo> {
         if(book.getIconResId() != 0){
             holder.setImageResource(R.id.ivBookIcon, book.getIconResId());
         }else {
-            holder.setImageResource(R.id.ivBookIcon,R.mipmap.logo);
+            int resId = BitmapUtils.getRandomAppBarBgImageRes();
+            book.setIconResId(resId);
+            holder.setImageBitmap(R.id.ivBookIcon,BitmapUtils.decodeSampleBitmapFromResource(
+                    mContext.getResources(),resId,iconWidth,iconHeight));
         }
     }
 

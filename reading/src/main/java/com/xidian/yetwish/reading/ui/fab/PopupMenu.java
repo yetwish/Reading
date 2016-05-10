@@ -9,15 +9,19 @@ import com.xidian.yetwish.reading.ui.SlideMenuActivity;
 import com.xidian.yetwish.reading.framework.utils.ScreenUtils;
 
 /**
- * Popup window for FAB's menu  TODO refactoring + animation + frameBg
+ * Popup window for FAB's menu  TODO refactoring + animation + frameBg todo use fab in support design library
  * Created by Yetwish on 2016/4/13 0013.
  */
 public class PopupMenu extends PopupWindow implements View.OnClickListener {
 
     private SlideMenuActivity mContext;
 
-    private FABMenuItem menuSearch;
-    private FABMenuItem menuFolder;
+
+    public static final int ITEM_TOP = 0x01;
+    public static final int ITEM_BOTTOM = 0x02;
+
+    private FABMenuItem menuTop;
+    private FABMenuItem menuBottom;
 
     private OnFABItemClickListener mFABItemClickListener;
 
@@ -25,6 +29,20 @@ public class PopupMenu extends PopupWindow implements View.OnClickListener {
         this.mContext = context;
         this.mFABItemClickListener = listener;
         initMenu();
+    }
+
+    public void setTopItem(int resId, String text) {
+        if (menuTop != null) {
+            menuTop.setText(text);
+            menuTop.setImageRes(resId);
+        }
+    }
+
+    public void setBottomItem(int resId, String text) {
+        if (menuBottom != null) {
+            menuBottom.setText(text);
+            menuBottom.setImageRes(resId);
+        }
     }
 
     private void initMenu() {
@@ -38,11 +56,11 @@ public class PopupMenu extends PopupWindow implements View.OnClickListener {
         this.update();
         root.findViewById(R.id.rlPopupBg).setOnClickListener(this);
 
-        menuSearch = (FABMenuItem) root.findViewById(R.id.fabItemSearch);
-        menuFolder = (FABMenuItem) root.findViewById(R.id.fabItemFolder);
+        menuTop = (FABMenuItem) root.findViewById(R.id.fabItemTop);
+        menuBottom = (FABMenuItem) root.findViewById(R.id.fabItemBottom);
 
-        menuSearch.setOnClickListener(this);
-        menuFolder.setOnClickListener(this);
+        menuTop.setOnClickListener(this);
+        menuBottom.setOnClickListener(this);
     }
 
     /**
@@ -65,14 +83,14 @@ public class PopupMenu extends PopupWindow implements View.OnClickListener {
             case R.id.rlPopupBg:
                 hide();
                 break;
-            case R.id.fabItemSearch:
+            case R.id.fabItemTop:
                 if (mFABItemClickListener != null)
-                    mFABItemClickListener.onAutoSearching();
+                    mFABItemClickListener.onFabItemClick(ITEM_TOP);
                 hide();
                 break;
-            case R.id.fabItemFolder:
+            case R.id.fabItemBottom:
                 if (mFABItemClickListener != null)
-                    mFABItemClickListener.onChoseManually();
+                    mFABItemClickListener.onFabItemClick(ITEM_BOTTOM);
                 hide();
                 break;
         }

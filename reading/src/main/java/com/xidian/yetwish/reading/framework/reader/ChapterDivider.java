@@ -65,7 +65,11 @@ public class ChapterDivider {
         mChapterMap = new ConcurrentHashMap<>();
     }
 
-
+    /**
+     * todo 阻塞main thread
+     * @param book
+     * @throws IOException
+     */
     public void scanBook(BookVo book) throws IOException {
         mCurrentBook = book;
         File bookFile = new File(book.getFilePath());

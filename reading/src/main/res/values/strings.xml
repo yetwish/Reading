@@ -15,6 +15,22 @@
     <string name="auto_searching">自动扫描</string>
     <string name="chose_manual">手动选择</string>
 
+    <string name="note_book_title">读书笔记</string>
+    <string name="note_create">创建笔记</string>
+    <string name="note_edit">编辑笔记</string>
+
+
+    <string name="note_favorite">杂了个记</string>
+    <string name="note_book">读书笔记</string>
+
+    <string name="note_book_intro_default">创建该笔记本的人很懒，没有添加任何简介...</string>
+
+    <string name="note_plz_enter_title">请在这里输入标题</string>
+    <string name="note_plz_enter_content">记...</string>
+
+    <string name="menu_note_edit_finish">完成</string>
+    <string name="menu_note_add">添加笔记</string>
+
     <string name="reader_title">Reading</string>
 
     <string name="search_title">扫描结果</string>
@@ -32,6 +48,8 @@
 
     <string name="loading">正在加载</string>
     <string name="waitForLoading">正在加载，请稍候</string>
+
+    <string name="plz_add_note">快来添加第一份笔记吧~</string>
 
     <string name="waitForAddingBook">正在添加书本信息</string>
     <string name="waitForScanning">正在扫描本地书籍</string>

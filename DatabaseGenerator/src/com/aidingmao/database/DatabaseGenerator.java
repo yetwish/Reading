@@ -2,8 +2,6 @@ package com.aidingmao.database;
 
 import de.greenrobot.daogenerator.DaoGenerator;
 import de.greenrobot.daogenerator.Entity;
-import de.greenrobot.daogenerator.Index;
-import de.greenrobot.daogenerator.Property;
 import de.greenrobot.daogenerator.Schema;
 
 public class DatabaseGenerator {
@@ -29,6 +27,7 @@ public class DatabaseGenerator {
 		book.addStringProperty("language");
 		book.addFloatProperty("progress");
 		book.addStringProperty("iconPath");
+		book.addIntProperty("iconResId");
 		book.addStringProperty("path");
 		book.addLongProperty("charNumber");
 	}
@@ -39,6 +38,7 @@ public class DatabaseGenerator {
 		noteBook.addLongProperty("bookId");
 		noteBook.addStringProperty("name");
 		noteBook.addStringProperty("iconPath");
+		noteBook.addIntProperty("iconResId");
 		noteBook.addIntProperty("noteNumber");
 		noteBook.addStringProperty("intro");
 	}

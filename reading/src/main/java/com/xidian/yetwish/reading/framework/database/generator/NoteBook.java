@@ -10,6 +10,7 @@ public class NoteBook {
     private Long bookId;
     private String name;
     private String iconPath;
+    private Integer iconResId;
     private Integer noteNumber;
     private String intro;
 
@@ -20,11 +21,12 @@ public class NoteBook {
         this.NoteBookId = NoteBookId;
     }
 
-    public NoteBook(Long NoteBookId, Long bookId, String name, String iconPath, Integer noteNumber, String intro) {
+    public NoteBook(Long NoteBookId, Long bookId, String name, String iconPath, Integer iconResId, Integer noteNumber, String intro) {
         this.NoteBookId = NoteBookId;
         this.bookId = bookId;
         this.name = name;
         this.iconPath = iconPath;
+        this.iconResId = iconResId;
         this.noteNumber = noteNumber;
         this.intro = intro;
     }
@@ -59,6 +61,14 @@ public class NoteBook {
 
     public void setIconPath(String iconPath) {
         this.iconPath = iconPath;
+    }
+
+    public Integer getIconResId() {
+        return iconResId;
+    }
+
+    public void setIconResId(Integer iconResId) {
+        this.iconResId = iconResId;
     }
 
     public Integer getNoteNumber() {

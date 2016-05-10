@@ -42,9 +42,20 @@
             android:label="@string/explorer_title" />
 
         <activity
-            android:name=".ui.main.ReaderActivity"
+            android:name=".ui.reader.ReaderActivity"
             android:label="@string/reader_title"
             android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen" />
+
+        <activity
+            android:name=".ui.note.NoteBookActivity"
+            android:label="@string/note_book_title" />
+
+        <activity android:name=".ui.note.NoteEditActivity" />
+
+        <activity
+            android:name=".ui.note.DemoActivity"
+            android:label="@string/note_create" />
+
     </application>
 
 </manifest>

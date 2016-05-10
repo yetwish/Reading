@@ -88,7 +88,7 @@ ${keepFields!}    // KEEP FIELDS END
 <#if entity.constructors>
     public ${entity.className}() {
     }
-<#if entity.propertiesPk?has_content && entity.propertiesPk?size != entity.properties?noteNumber>
+<#if entity.propertiesPk?has_content && entity.propertiesPk?size != entity.properties?size>
 
     public ${entity.className}(<#list entity.propertiesPk as
 property>${property.javaType} ${property.propertyName}<#if property_has_next>, </#if></#list>) {

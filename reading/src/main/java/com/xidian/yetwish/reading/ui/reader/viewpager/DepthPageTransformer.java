@@ -1,4 +1,4 @@
-package com.xidian.yetwish.reading.ui.main.adapter.viewpager;
+package com.xidian.yetwish.reading.ui.reader.viewpager;
 
 import android.support.v4.view.ViewPager;
 import android.view.View;

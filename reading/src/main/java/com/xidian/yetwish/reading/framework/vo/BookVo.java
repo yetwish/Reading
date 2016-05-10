@@ -32,6 +32,7 @@ public class BookVo implements Serializable {
         this.iconPath = book.getIconPath();
         this.filePath = book.getPath();
         this.charNumber = book.getCharNumber();
+        this.iconResId = book.getIconResId();
     }
 
     public Book convertToDb() {
@@ -44,6 +45,7 @@ public class BookVo implements Serializable {
         book.setIconPath(iconPath);
         book.setPath(filePath);
         book.setCharNumber(charNumber);
+        book.setIconResId(iconResId);
         return book;
     }
 

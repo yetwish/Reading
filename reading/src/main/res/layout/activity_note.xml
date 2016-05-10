@@ -7,16 +7,20 @@
     android:orientation="vertical"
     tools:context=".ui.main.ReadingActivity">
 
+    <com.xidian.yetwish.reading.ui.widget.EmptyRecyclerView
+        android:id="@+id/lvNoteBook"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
     <!--fab-->
     <ImageButton
-        android:id="@+id/fab_"
+        android:id="@+id/fab_note"
         style="@style/FAB"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:contentDescription="@string/des_add_fab"
-        android:src="@mipmap/ic_create_white_36dp" />
+        android:src="@mipmap/ic_add_white_36dp" />
 
 
 </RelativeLayout>

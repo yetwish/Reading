@@ -14,11 +14,11 @@
         android:padding="5dp">
 
         <ImageView
+            android:layout_marginLeft="5dp"
             android:id="@+id/ivBookIcon"
-            android:layout_width="80dp"
-            android:layout_height="100dp"
-            android:scaleType="fitCenter"
-            android:src="@mipmap/book_icon" />
+            android:layout_width="@dimen/item_icon_width"
+            android:layout_height="@dimen/item_icon_height"
+            android:scaleType="fitCenter"/>
 
         <TextView
             android:id="@+id/tvBookName"
@@ -26,6 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:layout_toRightOf="@+id/ivBookIcon"
+            android:singleLine="true"
             android:text="@string/book_name_exam"
             android:textColor="@color/colorPrimaryText"
             android:textSize="@dimen/item_primary_text_size" />

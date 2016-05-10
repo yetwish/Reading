@@ -1,4 +1,4 @@
-package com.xidian.yetwish.reading.ui.main;
+package com.xidian.yetwish.reading.ui.reader;
 
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.GravityCompat;
-import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -25,19 +24,18 @@ import com.xidian.yetwish.reading.framework.database.DatabaseManager;
 import com.xidian.yetwish.reading.framework.eventbus.EventBusWrapper;
 import com.xidian.yetwish.reading.framework.eventbus.event.EventGeneratedChapter;
 import com.xidian.yetwish.reading.framework.eventbus.event.EventGeneratedPage;
+import com.xidian.yetwish.reading.framework.exception.IllegalIntentDataException;
 import com.xidian.yetwish.reading.framework.reader.ChapterFactory;
 import com.xidian.yetwish.reading.framework.reader.PageFactory;
 import com.xidian.yetwish.reading.framework.service.ApiCallback;
-import com.xidian.yetwish.reading.framework.utils.Constant;
-import com.xidian.yetwish.reading.framework.utils.LogUtils;
+import com.xidian.yetwish.reading.framework.utils.SharedPreferencesUtils;
 import com.xidian.yetwish.reading.framework.utils.ScreenUtils;
 import com.xidian.yetwish.reading.framework.vo.BookVo;
 import com.xidian.yetwish.reading.framework.vo.reader.ChapterVo;
 import com.xidian.yetwish.reading.framework.vo.reader.PageVo;
-import com.xidian.yetwish.reading.ui.main.adapter.ChapterAdapter;
-import com.xidian.yetwish.reading.ui.main.adapter.IReaderProgressChangeListener;
-import com.xidian.yetwish.reading.ui.main.adapter.viewpager.DepthPageTransformer;
-import com.xidian.yetwish.reading.ui.main.adapter.viewpager.ReaderPageAdapter;
+import com.xidian.yetwish.reading.ui.reader.adapter.ChapterAdapter;
+import com.xidian.yetwish.reading.ui.reader.viewpager.DepthPageTransformer;
+import com.xidian.yetwish.reading.ui.reader.viewpager.ReaderPageAdapter;
 import com.xidian.yetwish.reading.ui.widget.EmptyRecyclerView;
 
 import java.io.IOException;
@@ -54,7 +52,7 @@ public class ReaderActivity extends Activity implements View.OnClickListener, IR
 
     public static void startActivity(Context context, BookVo book) {
         Intent intent = new Intent(context, ReaderActivity.class);
-        intent.putExtra(Constant.EXTRA_BOOK, book);
+        intent.putExtra(SharedPreferencesUtils.EXTRA_BOOK, book);
         context.startActivity(intent);
     }
 
@@ -117,10 +115,10 @@ public class ReaderActivity extends Activity implements View.OnClickListener, IR
     }
 
     private void initData() {
-        Serializable obj = getIntent().getSerializableExtra(Constant.EXTRA_BOOK);
-        if (!(obj instanceof BookVo))
-            return;
-        mBook = (BookVo) obj;
+        Serializable data = getIntent().getSerializableExtra(SharedPreferencesUtils.EXTRA_BOOK);
+        if (!(data instanceof BookVo))
+            throw new IllegalIntentDataException(BookVo.class,data.getClass());
+        mBook = (BookVo) data;
         tvName.setText(mBook.getName());
         //判断数据库中是否存储该book的章节信息，若无则重新扫描一遍书本
         DatabaseManager.getsInstance().getChapterManager().queryByBookId(mBook.getBookId(), new ApiCallback<ImmutableList<ChapterVo>>() {

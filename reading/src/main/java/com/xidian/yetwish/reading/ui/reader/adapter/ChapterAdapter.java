@@ -1,4 +1,4 @@
-package com.xidian.yetwish.reading.ui.main.adapter;
+package com.xidian.yetwish.reading.ui.reader.adapter;
 
 import android.content.Context;
 import android.view.View;
@@ -9,6 +9,7 @@ import com.xidian.yetwish.reading.framework.common_adapter.CommonAdapter;
 import com.xidian.yetwish.reading.framework.common_adapter.OnItemClickListener;
 import com.xidian.yetwish.reading.framework.common_adapter.ViewHolder;
 import com.xidian.yetwish.reading.framework.vo.reader.ChapterVo;
+import com.xidian.yetwish.reading.ui.reader.IReaderProgressChangeListener;
 
 import java.util.List;
 

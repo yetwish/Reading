@@ -6,6 +6,7 @@ import com.google.common.collect.ImmutableList;
 import com.xidian.yetwish.reading.framework.service.ApiCallback;
 import com.xidian.yetwish.reading.framework.thread.ThreadFactory;
 import com.xidian.yetwish.reading.framework.thread.ThreadRunner;
+import com.xidian.yetwish.reading.framework.utils.FileUtils;
 import com.xidian.yetwish.reading.ui.add_book.TXTFileFilter;
 
 import java.io.File;
@@ -18,9 +19,6 @@ import java.util.List;
  * Created by Yetwish on 2016/5/9 0009.
  */
 public class FileBrowser {
-
-    //    private static final String SCAN_ROOT_DIR = "/";
-    private static final String SCAN_ROOT_DIR = Environment.getExternalStorageDirectory().getPath();
 
     private TXTFileFilter mFileFilter;
 
@@ -45,7 +43,7 @@ public class FileBrowser {
      */
     public void startScanFiles(ApiCallback<ImmutableList<File>> callback) {
         mCallback = callback;
-        File rootFile = new File(SCAN_ROOT_DIR);
+        File rootFile = new File(FileUtils.SD_ROOT_DIR);
         File files[] = rootFile.listFiles(mFileFilter);
         if (files == null) return;
         _threadCount = files.length;

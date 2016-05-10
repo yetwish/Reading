@@ -1,6 +1,7 @@
 package com.xidian.yetwish.reading.ui;
 
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -30,11 +31,11 @@ public class ToolbarActivity extends BaseActivity {
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
-        mToolbar.setTitleTextColor(getResources().getColor(R.color.colorWhite));
+        mToolbar.setTitleTextColor(ContextCompat.getColor(ToolbarActivity.this, R.color.colorWhite));
         final ActionBar ab = getSupportActionBar();
         if (ab != null) {
             ab.setDisplayHomeAsUpEnabled(true);
-            ab.setHomeAsUpIndicator(R.mipmap.ic_chevron_left_white_48dp);
+            ab.setHomeAsUpIndicator(R.mipmap.ic_arrow_back_white_36dp);
         }
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,8 +46,8 @@ public class ToolbarActivity extends BaseActivity {
 
     }
 
-    protected void setMainLayout(int layoutResId){
-        View view = LayoutInflater.from(this).inflate(layoutResId,null);
+    protected void setMainLayout(int layoutResId) {
+        View view = LayoutInflater.from(this).inflate(layoutResId, null);
         mRootView.addView(view);
     }
 }

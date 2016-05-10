@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/text_view_shadow"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="3dp">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_margin="5dp"
+        android:padding="5dp">
+
+        <ImageView
+            android:id="@+id/ivNoteBookIcon"
+            android:layout_marginLeft="5dp"
+            android:layout_width="@dimen/item_icon_width"
+            android:layout_height="@dimen/item_icon_height"
+            android:scaleType="fitCenter" />
+
+        <TextView
+            android:id="@+id/tvNoteBookName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_toRightOf="@+id/ivNoteBookIcon"
+            android:layout_toLeftOf="@+id/tvNoteBookNum"
+            android:paddingRight="@dimen/menu_item_margin"
+            android:singleLine="true"
+            android:text="@string/book_name_exam"
+            android:textColor="@color/colorPrimaryText"
+            android:textSize="@dimen/item_primary_text_size" />
+
+        <TextView
+            android:layout_alignParentRight="true"
+            android:id="@+id/tvNoteBookNum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/tvNoteBookName"
+            android:text="3"
+            android:layout_marginRight="@dimen/menu_item_margin"
+            android:textColor="@color/colorAccent"
+            android:textSize="@dimen/item_secondary_text_size" />
+
+
+        <TextView
+            android:id="@+id/tvNoteBookIntro"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@id/tvNoteBookName"
+            android:layout_below="@id/tvNoteBookName"
+            android:maxLines="3"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="10dp"
+            android:text="@string/note_book_intro_default"
+            android:textColor="@color/colorSecondaryText"
+            android:textSize="@dimen/item_secondary_text_size" />
+
+    </RelativeLayout>
+
+    <!--delete-->
+    <ImageView
+        android:id="@+id/ivBookDelete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:background="@color/colorHighLight"
+        android:src="@mipmap/ic_clear_white_24dp"
+        android:visibility="gone" />
+
+
+</RelativeLayout>
