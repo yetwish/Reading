@@ -12,8 +12,10 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 
 import com.xidian.yetwish.reading.R;
+import com.xidian.yetwish.reading.framework.common_adapter.OnItemLongClickListener;
 import com.xidian.yetwish.reading.framework.utils.LogUtils;
 import com.xidian.yetwish.reading.framework.utils.ScreenUtils;
+import com.xidian.yetwish.reading.framework.vo.NoteVo;
 
 import java.util.List;
 
@@ -37,6 +39,12 @@ public class PopupListView extends RelativeLayout {
     private LayoutParams mListViewParams;
 
     private int popupItem = -1;
+
+    private OnItemLongClickListener<NoteVo> mLongClickListener;
+
+    public void setItemLongClickListener(OnItemLongClickListener<NoteVo> listener){
+        mLongClickListener = listener;
+    }
 
     public PopupListView(Context context, AttributeSet attributeSet) {
         super(context, attributeSet);
@@ -79,6 +87,7 @@ public class PopupListView extends RelativeLayout {
         listView.setLayoutParams(mListViewParams);
         listView.setAdapter(popupListAdapter);
         listView.setOnItemClickListener(extend);
+        listView.setOnItemLongClickListener(longClickListener);
         listView.setVerticalScrollBarEnabled(false);
         extendView.setLayoutParams(extendViewParams);
         extendView.setVisibility(GONE);
@@ -111,16 +120,21 @@ public class PopupListView extends RelativeLayout {
         listView.setLayoutParams(mListViewParams);
     }
 
+    private AdapterView.OnItemLongClickListener longClickListener = new AdapterView.OnItemLongClickListener() {
+        @Override
+        public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+            if(mLongClickListener!=null){
+                mLongClickListener.onItemLongClick(view,null,position);
+            }
+            return true;
+        }
+    };
+
     private AdapterView.OnItemClickListener extend = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
             if (mPopupListener != null)
                 mPopupListener.onPopup(i);
-            //TODO GET POSITION AND START ANIMATION
-//            int[] p = new int[2];
-//            view.getLocationOnScreen(p);
-//            startY = p[1];
-//            LogUtils.w("start " + startY + ", p"+ p[1] +", y "+ view.getY());
             moveY = startY = (int) view.getY();
             zoomIn(i, startY);
             popupItem = i;

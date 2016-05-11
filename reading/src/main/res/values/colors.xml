@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#21C0C0</color>
-    <color name="colorPrimaryDark">#C3ED</color>
-    <color name="colorAccent">#21c0c0</color>
+    <!--<color name="colorPrimaryDark">#C3ED</color>-->
+    <!--<color name="colorAccent">#21c0c0</color>-->
 
-    <color name="colorHighLight">#DF3E3E</color>
+    <color name="colorHighLight">#f95f5f</color>
     <color name="colorPrimaryLight">#C3ED</color>
     <color name="colorReading">#92E0E0</color>
     <color name="colorSlideMenu">#535358</color>
@@ -14,6 +14,7 @@
 
     <color name="colorReaderBarBg">#535358</color>
     <color name="colorLine">#cccccc</color>
+    <color name="colorListItemClick">#dddddd</color>
 
 
     <color name="colorSeekBarBg">#656565</color>

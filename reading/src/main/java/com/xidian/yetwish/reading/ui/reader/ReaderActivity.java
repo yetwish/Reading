@@ -5,12 +5,19 @@ import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -114,10 +121,11 @@ public class ReaderActivity extends Activity implements View.OnClickListener, IR
         initData();
     }
 
+
     private void initData() {
         Serializable data = getIntent().getSerializableExtra(SharedPreferencesUtils.EXTRA_BOOK);
         if (!(data instanceof BookVo))
-            throw new IllegalIntentDataException(BookVo.class,data.getClass());
+            throw new IllegalIntentDataException(BookVo.class, data.getClass());
         mBook = (BookVo) data;
         tvName.setText(mBook.getName());
         //判断数据库中是否存储该book的章节信息，若无则重新扫描一遍书本
@@ -149,7 +157,7 @@ public class ReaderActivity extends Activity implements View.OnClickListener, IR
                     loadChapter(chapterIndex, true);
                     mCurChapter = chapterIndex;
                     loadPreChapter();
-                }else {
+                } else {
                     try {
                         ChapterFactory.createDivider().scanBook(mBook);
                     } catch (IOException e) {

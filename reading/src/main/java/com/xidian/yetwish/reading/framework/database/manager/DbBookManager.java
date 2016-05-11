@@ -6,6 +6,7 @@ import com.google.common.collect.ImmutableList;
 import com.xidian.yetwish.reading.framework.database.DatabaseManager;
 import com.xidian.yetwish.reading.framework.database.generator.Book;
 import com.xidian.yetwish.reading.framework.database.generator.BookDao;
+import com.xidian.yetwish.reading.framework.eventbus.EventBusWrapper;
 import com.xidian.yetwish.reading.framework.service.ApiCallback;
 import com.xidian.yetwish.reading.framework.utils.LogUtils;
 import com.xidian.yetwish.reading.framework.vo.BookVo;

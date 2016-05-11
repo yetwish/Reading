@@ -1,18 +1,26 @@
 package com.xidian.yetwish.reading.ui;
 
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
+import com.xidian.yetwish.reading.BuildConfig;
 import com.xidian.yetwish.reading.R;
 import com.xidian.yetwish.reading.framework.utils.LogUtils;
+import com.xidian.yetwish.reading.framework.utils.ScreenUtils;
 import com.xidian.yetwish.reading.ui.main.NoteActivity;
 import com.xidian.yetwish.reading.ui.main.ReadActivity;
 import com.xidian.yetwish.reading.ui.main.ReadingActivity;
@@ -38,7 +46,10 @@ public class SlideMenuActivity extends BaseActivity {
         mContext = this;
         setContentView(R.layout.activity_slide_menu);
         initSlideMenu();
+        drawStatusBar();
     }
+
+
 
     private void initSlideMenu() {
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
@@ -77,7 +88,7 @@ public class SlideMenuActivity extends BaseActivity {
                         break;
                     case R.id.menuAbout:
                         LogUtils.w("click");
-                        SplashActivity.startActivity(mContext,false);
+                        SplashActivity.startActivity(mContext, false);
                         break;
                     case R.id.menuSetting:
                         break;
@@ -100,9 +111,9 @@ public class SlideMenuActivity extends BaseActivity {
     @Override
     public void onBackPressed() {
 //        LogUtils.w(mDrawerLayout.isDrawerOpen(mSlideMenu)+"");
-        if(mDrawerLayout.isDrawerOpen(mSlideMenu)){
+        if (mDrawerLayout.isDrawerOpen(mSlideMenu)) {
             mDrawerLayout.closeDrawers();
-        }else {
+        } else {
             super.onBackPressed();
         }
     }

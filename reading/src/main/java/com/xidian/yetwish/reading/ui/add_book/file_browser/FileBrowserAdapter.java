@@ -6,7 +6,9 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 
+import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Ordering;
 import com.xidian.yetwish.reading.R;
 import com.xidian.yetwish.reading.framework.database.DatabaseManager;
 import com.xidian.yetwish.reading.framework.utils.LogUtils;
@@ -20,6 +22,7 @@ import com.xidian.yetwish.reading.ui.add_book.TXTFileFilter;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,6 +46,19 @@ public class FileBrowserAdapter extends CommonAdapter<File> {
     private OnFilePathChangedListener mFilePathListener;
 
     private List<String> mAddedFiles;
+
+    private Comparator<File> mComparator = new Comparator<File>() {
+        @Override
+        public int compare(File lhs, File rhs) {
+            if(lhs.isDirectory() && rhs.isFile())
+                return  -1;
+            if(lhs.isFile() && rhs.isDirectory())
+                return 1;
+            return lhs.getName().compareToIgnoreCase(rhs.getName());
+        }
+    };
+
+    private Ordering<File> mOrdering = Ordering.from(mComparator);
 
     public void setFilePathChangedListener(OnFilePathChangedListener listener) {
         this.mFilePathListener = listener;
@@ -76,7 +92,6 @@ public class FileBrowserAdapter extends CommonAdapter<File> {
 
             @Override
             public void onItemLongClick(ViewGroup parent, View view, File data, int position) {
-                ToastUtils.showShort(mContext, "Long " + position);
             }
         });
     }
@@ -85,8 +100,10 @@ public class FileBrowserAdapter extends CommonAdapter<File> {
     private void updateFileList(File rootFile) {
         mData.clear();
         //get file list
-        if (rootFile.listFiles(mFileFilter) != null)
+        if (rootFile.listFiles(mFileFilter) != null) {
             Collections.addAll(mData, rootFile.listFiles(mFileFilter));
+            mData = mOrdering.sortedCopy(mData);
+        }
         //update mCurrentPath
         mCurrentPath = rootFile.getPath().equals(ROOT_DIR) ?
                 rootFile.getPath() : rootFile.getPath() + File.separator;

@@ -24,6 +24,7 @@ public class ToolbarActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_toolbar);
         initActionBar();
+        drawStatusBar();
     }
 
     private void initActionBar() {

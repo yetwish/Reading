@@ -3,11 +3,14 @@ package com.xidian.yetwish.reading.ui.main.adapter;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.xidian.yetwish.reading.R;
 import com.xidian.yetwish.reading.framework.common_adapter.CommonAdapter;
 import com.xidian.yetwish.reading.framework.common_adapter.OnItemClickListener;
+import com.xidian.yetwish.reading.framework.common_adapter.OnItemLongClickListener;
 import com.xidian.yetwish.reading.framework.common_adapter.ViewHolder;
+import com.xidian.yetwish.reading.framework.database.generator.NoteBook;
 import com.xidian.yetwish.reading.framework.utils.BitmapUtils;
 import com.xidian.yetwish.reading.framework.vo.NoteBookVo;
 import com.xidian.yetwish.reading.ui.note.NoteBookActivity;
@@ -22,17 +25,33 @@ public class NoteBookListAdapter extends CommonAdapter<NoteBookVo> {
     private int iconHeight;
     private int iconWidth;
 
+    private View deleteView;
+
+    private OnItemLongClickListener<NoteBookVo> mLongClickListener;
+
+    public void setItemLongClickListener(OnItemLongClickListener<NoteBookVo> listener) {
+        this.mLongClickListener = listener;
+    }
+
     public NoteBookListAdapter(final Context context, List<NoteBookVo> data) {
         super(context, R.layout.item_note_book_list, data);
         setItemClickListener(new OnItemClickListener<NoteBookVo>() {
             @Override
             public void onItemClick(ViewGroup parent, View view, NoteBookVo data, int position) {
+                if (deleteView != null && deleteView.isShown()) {
+                    deleteView.setVisibility(View.GONE);
+                }
                 NoteBookActivity.startActivity(mContext, data);
             }
 
             @Override
             public void onItemLongClick(ViewGroup parent, View view, NoteBookVo data, int position) {
-
+                if(position == 0) return;
+                View ivDelete = view.findViewById(R.id.ivBookDelete);
+                ivDelete.setVisibility(View.VISIBLE);
+                deleteView = ivDelete;
+                if (mLongClickListener != null)
+                    mLongClickListener.onItemLongClick(ivDelete, data, position);
             }
         });
         iconHeight = mContext.getResources().getDimensionPixelSize(R.dimen.item_icon_height);

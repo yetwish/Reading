@@ -43,7 +43,7 @@ public class SplashActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-
+        drawStatusBar();
         boolean splash = getIntent().getBooleanExtra(SharedPreferencesUtils.EXTRA_SPLASH,true);
         if(splash){
             new Thread(new Runnable() {

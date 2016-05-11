@@ -14,13 +14,17 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageButton;
 
+import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.common.collect.ImmutableList;
 import com.xidian.yetwish.reading.R;
+import com.xidian.yetwish.reading.framework.common_adapter.OnItemLongClickListener;
 import com.xidian.yetwish.reading.framework.database.DatabaseManager;
+import com.xidian.yetwish.reading.framework.utils.FileUtils;
 import com.xidian.yetwish.reading.framework.utils.LogUtils;
 import com.xidian.yetwish.reading.framework.utils.ScreenUtils;
 import com.xidian.yetwish.reading.framework.utils.ToastUtils;
+import com.xidian.yetwish.reading.framework.vo.BookVo;
 import com.xidian.yetwish.reading.framework.vo.NoteBookVo;
 import com.xidian.yetwish.reading.ui.main.adapter.NoteBookListAdapter;
 import com.xidian.yetwish.reading.ui.widget.EmptyRecyclerView;
@@ -45,6 +49,8 @@ public class NoteActivity extends SlideMenuActivity {
     private boolean isHidden;
     private boolean isFloating;
     private float fabY;
+
+    private View mDeleteView;
 
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, NoteActivity.class);
@@ -71,6 +77,7 @@ public class NoteActivity extends SlideMenuActivity {
         fabAddNoteBook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                hideDeleteView();
                 //创建新的日记本
                 showInputDialog(getString(R.string.create_new_note_book), getString(R.string.hint_note_book_name),
                         new MaterialDialog.InputCallback() {
@@ -94,6 +101,41 @@ public class NoteActivity extends SlideMenuActivity {
         lvNoteBook.setLayoutManager(layoutManager);
 
         mAdapter = new NoteBookListAdapter(NoteActivity.this, mNoteBookList);
+        mAdapter.setItemLongClickListener(new OnItemLongClickListener<NoteBookVo>() {
+            @Override
+            public void onItemLongClick(final View deleteView, final NoteBookVo data, final int position) {
+                if (mDeleteView != null && mDeleteView != deleteView)
+                    hideDeleteView();
+                mDeleteView = deleteView;
+                mDeleteView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        showBasicDialog(getString(R.string.delete_notebook_title) + "-" + data.getName(), getString(R.string.delete_notebook_content),
+                                new MaterialDialog.SingleButtonCallback() {
+                                    @Override
+                                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                        if (which == DialogAction.POSITIVE) {
+                                            //删除笔记本
+                                            DatabaseManager.getsInstance().getNoteBookManager().delete(data.getNoteBookId());
+                                            //删除笔记
+                                            DatabaseManager.getsInstance().getNoteManager().deleteByNoteBookId(data.getNoteBookId());
+                                            //删除本地数据
+                                            FileUtils.deleteNoteBooK(data.getNoteBookId());
+                                            //从内存中移除
+                                            mNoteBookList.remove(position);
+                                            mAdapter.notifyDataSetChanged();
+                                        } else if (which == DialogAction.NEGATIVE) {
+                                            //取消删除
+                                            hideDeleteView();
+                                            mDeleteView = null;
+                                        }
+                                    }
+                                });
+                    }
+                });
+            }
+        });
+
         lvNoteBook.setAdapter(mAdapter);
 
         lvNoteBook.addOnScrollListener(
@@ -162,6 +204,7 @@ public class NoteActivity extends SlideMenuActivity {
     };
 
     private void refreshNoteList() {
+        hideDeleteView();
         ImmutableList<NoteBookVo> dbList = DatabaseManager.getsInstance().getNoteBookManager().queryAll();
         mNoteBookList.clear();
         mNoteBookList.addAll(dbList);
@@ -169,6 +212,20 @@ public class NoteActivity extends SlideMenuActivity {
             mAdapter.notifyDataSetChanged();
     }
 
+    private boolean hideDeleteView() {
+        if (mDeleteView != null && mDeleteView.isShown()) {
+            mDeleteView.setVisibility(View.GONE);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (!hideDeleteView()) {
+            super.onBackPressed();
+        }
+    }
 
     @Override
     protected void onPause() {

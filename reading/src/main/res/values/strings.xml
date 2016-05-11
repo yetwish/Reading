@@ -29,6 +29,16 @@
     <string name="hint_note_book_name">名字</string>
     <string name="toast_empty_name">名字不能为空</string>
 
+    <string name="delete_book_title">确认移除</string>
+    <string name="delete_notebook_title">确认删除笔记本</string>
+    <string name="delete_note_title">确认删除笔记</string>
+
+    <string name="delete_book_content">将清除该书籍的读书进度和书签信息。将会保留该书相关笔记</string>
+    <string name="delete_notebook_content">将清除该笔记本中的所有笔记</string>
+
+    <string name="confirm">确定</string>
+    <string name="cancel">取消</string>
+
 
     <string name="hint_note_title">请在这里输入标题</string>
     <string name="hint_note_content">记...</string>

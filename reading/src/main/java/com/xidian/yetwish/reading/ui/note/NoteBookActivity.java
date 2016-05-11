@@ -2,28 +2,41 @@ package com.xidian.yetwish.reading.ui.note;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.common.collect.ImmutableList;
 import com.xidian.yetwish.reading.R;
+import com.xidian.yetwish.reading.framework.common_adapter.OnItemLongClickListener;
 import com.xidian.yetwish.reading.framework.database.DatabaseManager;
 import com.xidian.yetwish.reading.framework.exception.IllegalIntentDataException;
+import com.xidian.yetwish.reading.framework.service.ApiCallback;
 import com.xidian.yetwish.reading.framework.utils.BitmapUtils;
+import com.xidian.yetwish.reading.framework.utils.FileUtils;
+import com.xidian.yetwish.reading.framework.utils.LogUtils;
 import com.xidian.yetwish.reading.framework.utils.SharedPreferencesUtils;
 import com.xidian.yetwish.reading.framework.utils.ScreenUtils;
 import com.xidian.yetwish.reading.framework.vo.NoteBookVo;
@@ -91,6 +104,27 @@ public class NoteBookActivity extends BaseActivity implements PopupListView.Popu
         mNoteViews = new ArrayList<>();
         lvNote.setItemViews(mNoteViews);
         lvNote.setPopupItemClickListener(this);
+        lvNote.setItemLongClickListener(new OnItemLongClickListener<NoteVo>() {
+            @Override
+            public void onItemLongClick(View deleteView, NoteVo data, final int position) {
+                final NoteVo note = mNoteList.get(position);
+                showBasicDialog(getString(R.string.delete_note_title), note.getName(),
+                        new MaterialDialog.SingleButtonCallback() {
+                            @Override
+                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                if (which == DialogAction.POSITIVE) {
+                                    //删除
+                                    DatabaseManager.getsInstance().getNoteManager().delete(note.getNoteId());
+                                    FileUtils.deleteNote(note);
+                                    mNoteList.remove(position);
+                                    mNoteViews.remove(position);
+                                    lvNote.refresh();
+                                    refreshEmptyViewVisibility();
+                                }
+                            }
+                        });
+            }
+        });
 
         tvNoteBookIntro = (TextView) findViewById(R.id.tvNoteBookIntro);
         if (mNoteBook.getIntroduction() != null)
@@ -122,10 +156,12 @@ public class NoteBookActivity extends BaseActivity implements PopupListView.Popu
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                if (lvNote.isItemZoomIn()) {
+                    lvNote.zoomOut();
+                } else finish();
             }
         });
-        CollapsingToolbarLayout collapsingToolbar =
+        final CollapsingToolbarLayout collapsingToolbar =
                 (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         collapsingToolbar.setTitle(mNoteBook.getName());
 
@@ -133,9 +169,23 @@ public class NoteBookActivity extends BaseActivity implements PopupListView.Popu
         final ImageView imageView = (ImageView) findViewById(R.id.backdrop);
         final int width = ScreenUtils.getScreenWidth(NoteBookActivity.this);
         final int height = getResources().getDimensionPixelSize(R.dimen.app_bar_backdrop_height);
-        if (imageView != null)
-            imageView.setImageBitmap(BitmapUtils.decodeSampleBitmapFromResource(
-                    getResources(), mNoteBook.getIconResId(), width, height));
+        if (imageView != null) {
+            Bitmap bitmap = BitmapUtils.decodeSampleBitmapFromResource(
+                    getResources(), mNoteBook.getIconResId(), width, height);
+            imageView.setImageBitmap(bitmap);
+//            BitmapUtils.loadMutedColorForBitmap(bitmap, new ApiCallback<Integer>() {
+//                @Override
+//                public void onDataReceived(Integer data) {
+//                    //只在android 5.0以上才有效果 todo 没效果
+//                    collapsingToolbar.setStatusBarScrimColor(data);
+//                }
+//
+//                @Override
+//                public void onException(int code, String reason) {
+//                }
+//            });
+        }
+
         mAppBarLayout = (AppBarLayout) findViewById(R.id.appbar);
         mScrollView = (NestedScrollView) findViewById(R.id.noteScrollContainer);
         mFabAddNote = (FloatingActionButton) findViewById(R.id.fabAddNote);
@@ -148,14 +198,15 @@ public class NoteBookActivity extends BaseActivity implements PopupListView.Popu
             @Override
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
                 if (mEmptyView.isShown()) {
-                    mEmptyViewLayoutParams = (LinearLayout.LayoutParams) mEmptyView.getLayoutParams();
+                    if (mEmptyViewLayoutParams == null)
+                        mEmptyViewLayoutParams = (LinearLayout.LayoutParams) mEmptyView.getLayoutParams();
                     mEmptyViewLayoutParams.height = screenHeight - statusHeight - height - verticalOffset - margin;
                     mEmptyView.setLayoutParams(mEmptyViewLayoutParams);
                 }
                 if (mFabAddNote.isShown() && hasMenu) {
                     hasMenu = false;
                     invalidateOptionsMenu();
-                } else if (!mFabAddNote.isShown()) {
+                } else if (!mFabAddNote.isShown() && !hasMenu) {
                     hasMenu = true;
                     invalidateOptionsMenu();
                 }
@@ -166,7 +217,11 @@ public class NoteBookActivity extends BaseActivity implements PopupListView.Popu
         mFabAddNote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                NoteEditActivity.startActivity(NoteBookActivity.this, mNoteBook.getNoteBookId());
+                if (isPopup) {//编辑
+                    NoteEditActivity.startActivityForResult(NoteBookActivity.this, mNoteList.get(popupItemPosition));
+                } else {
+                    NoteEditActivity.startActivity(NoteBookActivity.this, mNoteBook.getNoteBookId());
+                }
             }
         });
 
@@ -215,45 +270,51 @@ public class NoteBookActivity extends BaseActivity implements PopupListView.Popu
         return true;
     }
 
-    private void refreshNoteList() {
-        ImmutableList<NoteVo> noteList = DatabaseManager.getsInstance()
-                .getNoteManager().queryByNoteBook(mNoteBook.getNoteBookId());
-        if (noteList.size() == 0) {
-            lvNote.setVisibility(View.GONE);
+    private void refreshEmptyViewVisibility() {
+        if (mNoteList.size() == 0) {
             mEmptyView.setVisibility(View.VISIBLE);
+            lvNote.setVisibility(View.GONE);
         } else {
             lvNote.setVisibility(View.VISIBLE);
             mEmptyView.setVisibility(View.GONE);
-            mNoteList.clear();
-            mNoteList.addAll(noteList);
-            mNoteViews.clear();
-            for (int i = 0; i < mNoteList.size(); i++) {
-                PopupView<NoteVo> popupView = new PopupView<NoteVo>(this, R.layout.item_note_list, mNoteList.get(i)) {
-                    @Override
-                    public void setItemView(View view, NoteVo data) {
-                        final TextView tv = (TextView) view.findViewById(R.id.tvNoteItemTitle);
-                        tv.setText(data.getName());
-                    }
-
-                    @Override
-                    public View setExtendView(View view, NoteVo data) {
-                        View extendView;
-                        if (view == null) {
-                            extendView = LayoutInflater.from(NoteBookActivity.this).inflate(
-                                    R.layout.note_detail, null);
-                            EditText et = (EditText) extendView.findViewById(R.id.etNoteContent);
-                            et.setText(data.getContent());
-                            et.setEnabled(false);
-                        } else {
-                            extendView = view;
-                        }
-                        return extendView;
-                    }
-                };
-                mNoteViews.add(popupView);
-            }
-            lvNote.refresh();
         }
+    }
+
+    private void refreshNoteList() {
+        ImmutableList<NoteVo> noteList = DatabaseManager.getsInstance()
+                .getNoteManager().queryByNoteBook(mNoteBook.getNoteBookId());
+        mNoteList.clear();
+        mNoteList.addAll(noteList);
+        mNoteViews.clear();
+        for (int i = 0; i < mNoteList.size(); i++) {
+            PopupView<NoteVo> popupView = new PopupView<NoteVo>(this, R.layout.item_note_list, mNoteList.get(i)) {
+                @Override
+                public void setItemView(View view, NoteVo data) {
+                    final TextView tv = (TextView) view.findViewById(R.id.tvNoteItemTitle);
+                    tv.setText(data.getName());
+                }
+
+                @Override
+                public View setExtendView(View view, NoteVo data) {
+                    View extendView;
+                    if (view == null) {
+                        extendView = LayoutInflater.from(NoteBookActivity.this).inflate(
+                                R.layout.note_detail, null);
+                        EditText et = (EditText) extendView.findViewById(R.id.etNoteContent);
+                        et.setText(data.getContent());
+                        et.setEnabled(false);
+                    } else {
+                        extendView = view;
+                    }
+                    return extendView;
+                }
+            };
+            mNoteViews.add(popupView);
+        }
+        lvNote.refresh();
+
+        refreshEmptyViewVisibility();
+
     }
 
 

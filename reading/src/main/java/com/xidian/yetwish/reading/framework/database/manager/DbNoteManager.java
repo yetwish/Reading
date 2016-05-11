@@ -111,6 +111,18 @@ public class DbNoteManager {
         });
     }
 
+    public void delete(final long noteId){
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                DatabaseManager manager = DatabaseManager.getsInstance();
+                if(manager != null ){
+                    manager.getDaoSession().getNoteDao().deleteByKey(noteId);
+                }
+            }
+        });
+    }
+
     public void deleteAll() {
         mHandler.post(new Runnable() {
             @Override

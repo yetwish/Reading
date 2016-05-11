@@ -3,8 +3,11 @@ package com.xidian.yetwish.reading.framework.utils;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.support.v7.graphics.Palette;
 
 import com.xidian.yetwish.reading.R;
+import com.xidian.yetwish.reading.framework.FWHelper;
+import com.xidian.yetwish.reading.framework.service.ApiCallback;
 
 import java.util.Map;
 import java.util.Random;
@@ -66,6 +69,26 @@ public class BitmapUtils {
     public static Bitmap loadImage(Resources res, int reqWidth, int reqHeight){
         final int resId = getRandomAppBarBgImageRes();
         return decodeSampleBitmapFromResource(res,resId,reqWidth,reqHeight);
+    }
+
+
+    public static void loadMutedColorForBitmap(Bitmap bitmap, final ApiCallback<Integer> callback){
+        Palette.from(bitmap).generate(new Palette.PaletteAsyncListener() {
+            @Override
+            public void onGenerated(Palette palette) {
+                Palette.Swatch mutedSwatch = palette.getMutedSwatch();
+                if(mutedSwatch!=null){
+                    final int color = mutedSwatch.getRgb();
+                    if(callback != null)
+                        FWHelper.getInstance().getMainHandler().post(new Runnable() {
+                            @Override
+                            public void run() {
+                                callback.onDataReceived(color);
+                            }
+                        });
+                }
+            }
+        });
     }
 
 }

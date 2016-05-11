@@ -2,18 +2,19 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/text_view_shadow"
+    android:background="@drawable/list_item_bg"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:padding="3dp">
+    android:padding="0dp">
 
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="@dimen/item_note_height"
         android:layout_margin="5dp"
         android:padding="5dp">
 
         <ImageView
+            android:src="@mipmap/bg1"
             android:layout_marginLeft="5dp"
             android:id="@+id/ivBookIcon"
             android:layout_width="@dimen/item_icon_width"
@@ -52,23 +53,17 @@
             android:layout_alignLeft="@+id/tvBookName"
             style="@style/NumberProgressBar_Default"/>
 
-        <!--<ImageButton-->
-            <!--android:layout_alignParentRight="true"-->
-            <!--android:src="@mipmap/ic_event_note_blue_24dp"-->
-            <!--android:layout_above="@id/pbBookProgress"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content" />-->
-
     </RelativeLayout>
 
     <ImageView
+        android:visibility="gone"
         android:id="@+id/ivBookDelete"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
         android:layout_alignParentRight="true"
-        android:background="@color/colorHighLight"
-        android:src="@mipmap/ic_clear_white_24dp"
-        android:visibility="gone" />
+        android:background="@drawable/delete_icon_bg"
+        android:src="@mipmap/ic_clear_white_18dp"
+        android:scaleType="centerInside"/>
 
 
 </RelativeLayout>

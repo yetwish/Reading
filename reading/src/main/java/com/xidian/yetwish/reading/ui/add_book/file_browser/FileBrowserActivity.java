@@ -13,6 +13,7 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Ordering;
 import com.xidian.yetwish.reading.R;
 import com.xidian.yetwish.reading.framework.eventbus.EventBusWrapper;
+import com.xidian.yetwish.reading.framework.utils.ToastUtils;
 import com.xidian.yetwish.reading.ui.ToolbarActivity;
 import com.xidian.yetwish.reading.ui.add_book.AddBookHelper;
 import com.xidian.yetwish.reading.ui.widget.EmptyRecyclerView;
@@ -39,26 +40,14 @@ public class FileBrowserActivity extends ToolbarActivity {
 
     private FileBrowserAdapter mFileAdapter;
 
-    Ordering<File> ordering;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setMainLayout(R.layout.activity_file_browser);
         EventBusWrapper.getDefault().register(this);
-        initData();
         initView();
     }
 
-    private void initData() {
-        //放在FileInfo中
-        ordering = Ordering.natural().onResultOf(new Function<File, Integer>() {
-            @Override
-            public Integer apply(File input) {
-                return input.isDirectory() ? 0 : 1;
-            }
-        });
-    }
 
     private void initView() {
         tvDir = (TextView) findViewById(R.id.tvDir);
@@ -73,6 +62,7 @@ public class FileBrowserActivity extends ToolbarActivity {
                 ImmutableList<File> fileList = mFileAdapter.getCheckFiles();
                 if (fileList.size() == 0) {
                     //没选中文件
+                    ToastUtils.showShort(FileBrowserActivity.this,"请选择要添加的文件");
                     return;
                 }
                 //TODO show dialog,confirm to add books. repeat code @AutoSearchActivity#tvAdd.

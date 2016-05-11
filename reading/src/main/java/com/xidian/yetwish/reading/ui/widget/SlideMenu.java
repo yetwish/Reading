@@ -49,6 +49,7 @@ public class SlideMenu extends RelativeLayout {
         super(context, attrs);
         this.mContext = context;
         LayoutInflater.from(mContext).inflate(R.layout.slide_menu, this, true);
+        findViewById(R.id.container).setOnClickListener(mClickListener);
         rgMenu = (RadioGroup) findViewById(R.id.rgMenu);
         menuReading = (RadioButton) rgMenu.findViewById(R.id.menuReading);
         menuNote = (RadioButton) rgMenu.findViewById(R.id.menuNote);
@@ -89,6 +90,8 @@ public class SlideMenu extends RelativeLayout {
                 case R.id.menuUpdate:
                     if (mMenuListener != null)
                         mMenuListener.onMenuItemChanged(v.getId());
+                    return;
+                case R.id.container:
                     return;
             }
             if (mMenuListener != null) {

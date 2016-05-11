@@ -24,8 +24,6 @@ public class FileBrowser {
 
     private List<File> mMatchFiles;
 
-    private List<File> mFileList;
-
     private int _threadCount;
     private volatile int _threadFinishCount;
 
@@ -33,7 +31,6 @@ public class FileBrowser {
 
     FileBrowser() {
         mMatchFiles = new ArrayList<>();
-        mFileList = new ArrayList<>();
         mFileFilter = new TXTFileFilter();
     }
 

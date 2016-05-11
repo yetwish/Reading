@@ -5,14 +5,18 @@ import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageButton;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.common.collect.ImmutableList;
 import com.google.common.eventbus.Subscribe;
 import com.xidian.yetwish.reading.R;
+import com.xidian.yetwish.reading.framework.common_adapter.OnItemLongClickListener;
 import com.xidian.yetwish.reading.framework.database.DatabaseManager;
 import com.xidian.yetwish.reading.framework.vo.BookVo;
 import com.xidian.yetwish.reading.framework.eventbus.EventBusWrapper;
@@ -49,6 +53,8 @@ public class ReadingActivity extends SlideMenuActivity {
     private boolean isFloating;
     private float fabY;
 
+    private View mDeleteView;
+
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, ReadingActivity.class);
         context.startActivity(intent);
@@ -75,6 +81,7 @@ public class ReadingActivity extends SlideMenuActivity {
                 } else {
                     mPopupMenu.hide();
                 }
+                hideDeleteView();
             }
         });
 
@@ -82,10 +89,54 @@ public class ReadingActivity extends SlideMenuActivity {
         initReadingList();
     }
 
+    private boolean hideDeleteView() {
+        if (mDeleteView != null && mDeleteView.isShown()) {
+            mDeleteView.setVisibility(View.GONE);
+            return true;
+        }
+        return false;
+    }
+
     private void initReadingList() {
         mBookList = new ArrayList<>();
 
         mAdapter = new BookListAdapter(ReadingActivity.this, mBookList);
+        mAdapter.setItemLongClickListener(new OnItemLongClickListener<BookVo>() {
+            @Override
+            public void onItemLongClick(final View deleteView, final BookVo data, final int position) {
+                if (mDeleteView != null && mDeleteView != deleteView)
+                    hideDeleteView();
+                mDeleteView = deleteView;
+                mDeleteView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        showBasicDialog(getString(R.string.delete_book_title) + "《" + data.getName() + "》", getString(R.string.delete_book_content),
+                                new MaterialDialog.SingleButtonCallback() {
+                                    @Override
+                                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                        if (which == DialogAction.POSITIVE) {
+                                            //删除书籍
+                                            DatabaseManager.getsInstance().getBookManager().delete(data.getBookId());
+                                            //删除章节
+                                            DatabaseManager.getsInstance().getChapterManager().delete(data.getBookId());
+                                            //删除分页
+                                            DatabaseManager.getsInstance().getPageManager().delete(data.getBookId());
+                                            //删除书签
+                                            //从内存中移除
+                                            mBookList.remove(position);
+                                            mAdapter.notifyDataSetChanged();
+                                        } else if (which == DialogAction.NEGATIVE) {
+                                            //取消删除
+                                            hideDeleteView();
+                                            mDeleteView = null;
+                                        }
+                                    }
+                                });
+                    }
+                });
+            }
+        });
+
         lvReading = (EmptyRecyclerView) findViewById(R.id.lvReading);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -158,8 +209,8 @@ public class ReadingActivity extends SlideMenuActivity {
     };
 
 
-    private void updateEmptyViewVisibility(){
-        if(mAdapter.getItemCount() > 0)
+    private void updateEmptyViewVisibility() {
+        if (mAdapter.getItemCount() > 0)
             mEmptyView.setVisibility(View.GONE);
         else
             mEmptyView.setVisibility(View.VISIBLE);
@@ -170,6 +221,7 @@ public class ReadingActivity extends SlideMenuActivity {
         super.onResume();
         mSlideMenu.setSelectedItemIndex(SlideMenu.MENU_READING);
         refreshBookList();
+        hideDeleteView();
     }
 
     private void refreshBookList() {
@@ -185,7 +237,7 @@ public class ReadingActivity extends SlideMenuActivity {
 
         @Override
         public void onFabItemClick(int position) {
-            switch (position){
+            switch (position) {
                 case PopupMenu.ITEM_TOP:
                     AutoSearchActivity.startActivity(ReadingActivity.this);
                     break;
@@ -196,6 +248,22 @@ public class ReadingActivity extends SlideMenuActivity {
         }
     };
 
+    @Override
+    public void onBackPressed() {
+        if(!hideDeleteView()){
+            if (mPopupMenu != null && mPopupMenu.isShowing()) {
+                mPopupMenu.hide();
+            } else {
+                super.onBackPressed();
+            }
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mPopupMenu = null;
+    }
 
     @Subscribe
     public void onAddBooksToReading(EventAddBooks event) {

@@ -43,6 +43,10 @@ public class FileUtils {
         return filePath;
     }
 
+    public static String getNoteBookPath(long noteBookId) {
+        return NOTEBOOK_ROOT + File.separator + noteBookId;
+    }
+
 
     public static void saveNoteToFile(NoteVo note) {
         String dir = NOTEBOOK_ROOT + File.separator + note.getNoteBookId();
@@ -100,5 +104,23 @@ public class FileUtils {
         }
     }
 
+    public static boolean deleteNoteBooK(long noteBookId){
+        String dir = getNoteBookPath(noteBookId);
+        File noteBookFile = new File(dir);
+        if(!noteBookFile.exists() || !noteBookFile.isDirectory()) return false;
+        File[] files = noteBookFile.listFiles();
+        for(File file : files){
+            file.delete();
+        }
+        noteBookFile.delete();
+        return true;
+    }
+
+    public static boolean deleteNote(NoteVo note){
+        String filePath = getNoteFilePath(note);
+        File file = new File(filePath);
+        if(!file.exists() || !file.isFile()) return false;
+        return file.delete();
+    }
 
 }

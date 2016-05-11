@@ -2,9 +2,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/text_view_shadow"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:padding="3dp">
+    android:background="@drawable/list_item_bg"
+    android:padding="0dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
     <RelativeLayout
@@ -41,7 +41,7 @@
             android:layout_alignBottom="@+id/tvNoteBookName"
             android:text="3"
             android:layout_marginRight="@dimen/menu_item_margin"
-            android:textColor="@color/colorAccent"
+            android:textColor="@color/colorPrimary"
             android:textSize="@dimen/item_secondary_text_size" />
 
 
@@ -62,13 +62,15 @@
 
     <!--delete-->
     <ImageView
+        android:visibility="gone"
         android:id="@+id/ivBookDelete"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
         android:layout_alignParentRight="true"
-        android:background="@color/colorHighLight"
-        android:src="@mipmap/ic_clear_white_24dp"
-        android:visibility="gone" />
+        android:background="@drawable/delete_icon_bg"
+        android:src="@mipmap/ic_clear_white_18dp"
+        android:scaleType="centerInside"/>
+
 
 
 </RelativeLayout>
