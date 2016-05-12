@@ -5,21 +5,14 @@ import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
-import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
@@ -31,15 +24,21 @@ import com.xidian.yetwish.reading.framework.database.DatabaseManager;
 import com.xidian.yetwish.reading.framework.eventbus.EventBusWrapper;
 import com.xidian.yetwish.reading.framework.eventbus.event.EventGeneratedChapter;
 import com.xidian.yetwish.reading.framework.eventbus.event.EventGeneratedPage;
+import com.xidian.yetwish.reading.framework.eventbus.event.EventGetBookmarkList;
 import com.xidian.yetwish.reading.framework.exception.IllegalIntentDataException;
 import com.xidian.yetwish.reading.framework.reader.ChapterFactory;
 import com.xidian.yetwish.reading.framework.reader.PageFactory;
 import com.xidian.yetwish.reading.framework.service.ApiCallback;
-import com.xidian.yetwish.reading.framework.utils.SharedPreferencesUtils;
 import com.xidian.yetwish.reading.framework.utils.ScreenUtils;
+import com.xidian.yetwish.reading.framework.utils.SharedPreferencesUtils;
+import com.xidian.yetwish.reading.framework.utils.ToastUtils;
 import com.xidian.yetwish.reading.framework.vo.BookVo;
+import com.xidian.yetwish.reading.framework.vo.NoteBookVo;
+import com.xidian.yetwish.reading.framework.vo.reader.BookmarkVo;
 import com.xidian.yetwish.reading.framework.vo.reader.ChapterVo;
 import com.xidian.yetwish.reading.framework.vo.reader.PageVo;
+import com.xidian.yetwish.reading.ui.note.NoteEditActivity;
+import com.xidian.yetwish.reading.ui.reader.adapter.BookmarkAdapter;
 import com.xidian.yetwish.reading.ui.reader.adapter.ChapterAdapter;
 import com.xidian.yetwish.reading.ui.reader.viewpager.DepthPageTransformer;
 import com.xidian.yetwish.reading.ui.reader.viewpager.ReaderPageAdapter;
@@ -64,64 +63,94 @@ public class ReaderActivity extends Activity implements View.OnClickListener, IR
     }
 
     /**
-     * viewpager and slide menu
+     * 当前展示出来的章节 下标
      */
-    private DrawerLayout mDrawerLayout;
-    private EmptyRecyclerView lvChapter;
-    private ViewPager mViewPager;
-    private RadioGroup rgTabs;
-    private RadioButton rbChapter;
-    private RadioButton rbBookMark;
-
-
-    private View mEmptyView;
-
-    private List<PageVo> mPageList = new ArrayList<>();
-    private List<ChapterVo> mChapterList = new ArrayList<>();
-    private CommonAdapter<ChapterVo> mChapterAdapter;
-    private ReaderPageAdapter mPageAdapter;
-    private ReaderPageAdapter mPageAdapter2;
-
     private int mCurChapter = 0;
+    /**
+     * 当前展示出来的页面的下标
+     */
     private int mCurPageIndex = -1;
 
-    private List<Integer> loadedIndexs;
+    /**
+     * 当前阅读的书本vo
+     */
+    private BookVo mBook;
 
-    private int loadingIndex;
+    /**
+     * 进入该页面应滚动到的初始位置，由book progress获得
+     * 保存已读当前页面的最后一个字符的位置
+     */
+    private long mPosition = 0;
+
+    /**
+     * 标记当前page有无bookmark 从而设置bookmark的图标
+     */
+    private boolean hasMark = false;
+    /**
+     * 保存当前已加载（到内存）的章节的下标集
+     */
+    private List<Integer> loadedChapters;
+
+    /**
+     * 当前正在加载的章节 下标
+     */
+    private int loadingChapterIndex;
 
     /**
      * menuBar view
      */
+    private boolean isHiding = false;
+
     private View mTopContainer;
     private View mBottomContainer;
     private View mMidContainer;
 
+    private ImageView ivBookMark;
+    private View bookmarkView;
 
-    //todo
-//    private SeekBar mSeekBar;
+    //    private SeekBar mSeekBar;
     private ProgressBar mProgressBar;
     private TextView tvName;
 
     private int topBarHeight;
     private int bottomBarHeight;
 
-    private boolean isHiding = false;
 
-    private BookVo mBook;
+    /**
+     * viewpager and slide menu
+     */
+    private DrawerLayout mDrawerLayout;
+    private EmptyRecyclerView lvChapter;
+    private ViewPager mViewPager;
+    private RadioGroup rgTabs;
 
-    private long mPosition = 0;
+
+    private View mEmptyView;
+
+    private List<PageVo> mPageList = new ArrayList<>();
+    private ReaderPageAdapter mPageAdapter;
+    private ReaderPageAdapter mPageAdapter2;
+
+    private List<ChapterVo> mChapterList;
+    private CommonAdapter<ChapterVo> mChapterAdapter;
+
+    private List<BookmarkVo> mBookmarkList;
+    private CommonAdapter<BookmarkVo> mBookMarkAdapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EventBusWrapper.getDefault().register(this);
         setContentView(R.layout.activity_reader);
-        loadedIndexs = new ArrayList<>();
+        loadedChapters = new ArrayList<>();
         initView();
         initData();
     }
 
-
+    /**
+     * 初始化数据，获取章节列表，再加载页面信息
+     */
     private void initData() {
         Serializable data = getIntent().getSerializableExtra(SharedPreferencesUtils.EXTRA_BOOK);
         if (!(data instanceof BookVo))
@@ -154,9 +183,11 @@ public class ReaderActivity extends Activity implements View.OnClickListener, IR
                     }
                     if (chapterIndex < 0)
                         chapterIndex = 0;
-                    loadChapter(chapterIndex, true);
+                    loadChapter(chapterIndex, true);//加载当前章节
                     mCurChapter = chapterIndex;
-                    loadPreChapter();
+                    loadPreChapter();//加载前一章
+                    //获取书签列表
+                    DatabaseManager.getsInstance().getBookmarkManager().AsyncQuery(mBook.getBookId());
                 } else {
                     try {
                         ChapterFactory.createDivider().scanBook(mBook);
@@ -173,6 +204,9 @@ public class ReaderActivity extends Activity implements View.OnClickListener, IR
         });
     }
 
+    /**
+     * 初始化视图
+     */
     private void initView() {
         initMenuBar();
         initSlideMenu();
@@ -212,29 +246,39 @@ public class ReaderActivity extends Activity implements View.OnClickListener, IR
         });
     }
 
+    /**
+     * 初始化滑动菜单
+     */
     private void initSlideMenu() {
 
         lvChapter = (EmptyRecyclerView) findViewById(R.id.lvChapter);
 
+        mChapterList = new ArrayList<>();
+        mBookmarkList = new ArrayList<>();
         LinearLayoutManager layoutManager = new LinearLayoutManager(ReaderActivity.this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         lvChapter.setLayoutManager(layoutManager);
         mChapterAdapter = new ChapterAdapter(ReaderActivity.this, mChapterList, this);
+        mBookMarkAdapter = new BookmarkAdapter(ReaderActivity.this, mBookmarkList, this);
+        //默认展示章节列表
         lvChapter.setAdapter(mChapterAdapter);
 
         rgTabs = (RadioGroup) findViewById(R.id.rgTabs);
-        rbChapter = (RadioButton) rgTabs.findViewById(R.id.rbChapter);
-        rbBookMark = (RadioButton) rgTabs.findViewById(R.id.rbBookMark);
-
         rgTabs.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                //todo
+                if (checkedId == R.id.rbChapter)
+                    lvChapter.setAdapter(mChapterAdapter);
+                else if (checkedId == R.id.rbBookmark) {
+                    lvChapter.setAdapter(mBookMarkAdapter);
+                }
             }
         });
-
     }
 
+    /**
+     * 初始化菜单栏视图
+     */
     private void initMenuBar() {
         mTopContainer = findViewById(R.id.rlReaderTopContainer);
         mBottomContainer = findViewById(R.id.llReaderBottomContainer);
@@ -251,8 +295,12 @@ public class ReaderActivity extends Activity implements View.OnClickListener, IR
         findViewById(R.id.tvPreChapter).setOnClickListener(this);
         findViewById(R.id.tvNextChapter).setOnClickListener(this);
         findViewById(R.id.ivReaderTextSize).setOnClickListener(this);
-        findViewById(R.id.ivReaderBookMark).setOnClickListener(this);
         findViewById(R.id.ivReaderNote).setOnClickListener(this);
+
+        ivBookMark = (ImageView) findViewById(R.id.ivReaderBookMark);
+        ivBookMark.setOnClickListener(this);
+
+        bookmarkView = findViewById(R.id.ivBookmarkIcon);
 
         tvName = (TextView) findViewById(R.id.tvReaderName);
 
@@ -260,7 +308,9 @@ public class ReaderActivity extends Activity implements View.OnClickListener, IR
         bottomBarHeight = getResources().getDimensionPixelOffset(R.dimen.reader_popup_bottom_height);
     }
 
-
+    /**
+     * 监听ReaderView的点击事件，控制弹出/关闭菜单。
+     */
     private ReaderPageAdapter.OnReaderViewClickListener mReaderClickListener = new ReaderPageAdapter.OnReaderViewClickListener() {
         @Override
         public void onClick() {
@@ -272,6 +322,9 @@ public class ReaderActivity extends Activity implements View.OnClickListener, IR
         }
     };
 
+    /**
+     * 监听viewPager的滑动，更新readerView的数据
+     */
     private ViewPager.OnPageChangeListener mPageChangeListener = new ViewPager.OnPageChangeListener() {
         @Override
         public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -281,10 +334,19 @@ public class ReaderActivity extends Activity implements View.OnClickListener, IR
         public void onPageSelected(int position) {
             //更新curIndex 判断是否加载了前/后chapter无，则加载
             mCurPageIndex = position;
-            mCurChapter = getChapterIndex(position);
+            mCurChapter = getChapterIndex();
             updateProgress();
             loadPreChapter();
             loadNextChapter();
+            if (mBookmarkList != null && mBookmarkList.size() > 0) {
+                int index = getBookmarkIndex();
+                if (index != -1)
+                    hasMark = true;
+                else
+                    hasMark = false;
+                updateBookmarkView();
+
+            }
         }
 
         @Override
@@ -293,23 +355,57 @@ public class ReaderActivity extends Activity implements View.OnClickListener, IR
     };
 
     /**
-     * 获取当前chapter index
+     * 判断当前页是否有书签
      *
-     * @param position
      * @return
      */
-    private synchronized int getChapterIndex(int position) {
+    private int getBookmarkIndex() {
+        long lastCharPosition = mPageList.get(mCurPageIndex).getLastCharPosition();
+        int index = -1;
+        for (int i = 0; i < mBookmarkList.size(); i++) {
+            if (mBookmarkList.get(i).getLastCharPosition() == lastCharPosition)
+                index = i;
+        }
+        return index;
+    }
+
+    /**
+     * 更新书签菜单的视图
+     */
+    private void updateBookmarkView() {
+        if (ivBookMark == null) return;
+        if (hasMark) {
+            ivBookMark.setImageResource(R.mipmap.ic_bookmark_select_36dp);
+            bookmarkView.setVisibility(View.VISIBLE);
+        } else {
+            ivBookMark.setImageResource(R.mipmap.ic_bookmark_white_36dp);
+            bookmarkView.setVisibility(View.GONE);
+        }
+    }
+
+    /**
+     * 获取当前chapter index
+     *
+     * @return
+     */
+    private synchronized int getChapterIndex() {
         int index = 0;
-        for (int i = 0; i < mChapterList.size() && position < mPageList.size(); i++) {
-            if (mChapterList.get(i).getFirstCharPosition() < mPageList.get(position).getFirstCharPosition() &&
-                    mChapterList.get(i).getLastCharPosition() > mPageList.get(position).getFirstCharPosition()) {
+        long position = mPageList.get(mCurPageIndex).getFirstCharPosition();
+        for (int i = 0; i < mChapterList.size(); i++) {
+            if (mChapterList.get(i).getFirstCharPosition() <= position &&
+                    mChapterList.get(i).getLastCharPosition() > position) {
                 index = i;
             }
         }
         return index;
     }
 
-
+    /**
+     * 根据第一个字符的position获取想应的页面
+     *
+     * @param firstCharIndex
+     * @return
+     */
     private synchronized int getPageIndex(long firstCharIndex) {
         if (mPageList.size() == 0) return 0;
         int index = mPageList.size();
@@ -322,20 +418,48 @@ public class ReaderActivity extends Activity implements View.OnClickListener, IR
         return index;
     }
 
+    /**
+     * 根据最后一个字符的position获取想应的页面
+     *
+     * @param lastCharIndex
+     * @return
+     */
+    private synchronized int getPageIndexByLastIndex(long lastCharIndex) {
+        if (mPageList.size() == 0) return 0;
+        int index = mPageList.size();
+        for (int i = 0; i < mPageList.size(); i++) {
+            if (lastCharIndex <= mPageList.get(i).getLastCharPosition()) {
+                index = i;
+                break;
+            }
+        }
+        return index;
+    }
+
+
     private void loadChapter(final int index, boolean progressChange) {
         if (mChapterList.size() == 0)
             return;
         //判断内存中是否已加载
-        if (progressChange && loadedIndexs.contains(index)) {
+        if (progressChange && loadedChapters.contains(index)) {
             //跳转到该index
-            int pageIndex = getPageIndex(mChapterList.get(index).getFirstCharPosition());
-            mViewPager.setCurrentItem(pageIndex, false);
+            int pageIndex;
+            if (mPosition != 0) {
+                pageIndex = getPageIndexByLastIndex(mPosition);
+                mPosition = 0;
+                mViewPager.setCurrentItem(pageIndex, true);
+            } else {
+                pageIndex = getPageIndex(mChapterList.get(index).getFirstCharPosition());
+                mViewPager.setCurrentItem(pageIndex, false);
+            }
             mCurPageIndex = pageIndex;
             updateProgress();
             return;
         }
+        if (loadedChapters.contains(index))
+            return;
         if (progressChange) {
-            loadingIndex = index;
+            loadingChapterIndex = index;
             mEmptyView.setVisibility(View.VISIBLE);
             mViewPager.setVisibility(View.GONE);
         }
@@ -359,22 +483,26 @@ public class ReaderActivity extends Activity implements View.OnClickListener, IR
     }
 
     private void loadNextChapter() {
-        if (mCurChapter == mChapterList.size() - 1)
+        if (mCurChapter == mChapterList.size() - 1) {
+//            if (progressChange)
+//                ToastUtils.showShort(ReaderActivity.this, getString(R.string.no_more_next_chapter));
             return;
-        if (!loadedIndexs.contains(mCurChapter + 1))
-            loadChapter(mCurChapter + 1, false);
+        }
+        loadChapter(mCurChapter + 1, false);
     }
 
     private void loadPreChapter() {
-        if (mCurChapter == 0)
+        if (mCurChapter == 0) {
+//                ToastUtils.showShort(ReaderActivity.this, getString(R.string.no_more_pre_chapter));
             return;
-        if (!loadedIndexs.contains(mCurChapter - 1))
-            loadChapter(mCurChapter - 1, false);
+        }
+        loadChapter(mCurChapter - 1, false);
     }
 
     @Override
-    public void onProgressChanged(int chapterIndex, long firstCharPosition) {
+    public void onProgressChanged(int chapterIndex, long charPosition, boolean withPosition) {
         if (chapterIndex >= mChapterList.size() || chapterIndex < 0) return;
+        if (withPosition) mPosition = charPosition;
         loadChapter(chapterIndex, true);
         mCurChapter = chapterIndex;
         loadPreChapter();
@@ -384,14 +512,14 @@ public class ReaderActivity extends Activity implements View.OnClickListener, IR
 
 
     private void updateProgress() {
-        float progress = mPageList.get(mCurPageIndex).getFirstCharPosition() * 100.0f / mBook.getCharNumber();
+        float progress = mPageList.get(mCurPageIndex).getLastCharPosition() * 100.0f / mBook.getCharNumber();
         mProgressBar.setProgress((int) Math.floor(progress * 100));
         mBook.setProgress(progress);
     }
 
     private synchronized void addLoadedPageList(int chapterIndex, ImmutableList<PageVo> list) {
         if (list == null || list.size() == 0) return;
-        loadedIndexs.add(chapterIndex);
+        loadedChapters.add(chapterIndex);
         int pageIndex = getPageIndex(list.get(0).getFirstCharPosition());
 
         if (pageIndex <= mCurPageIndex) {
@@ -410,17 +538,17 @@ public class ReaderActivity extends Activity implements View.OnClickListener, IR
             }
             mViewPager.setCurrentItem(mCurPageIndex, false);
         } else {
-            ((ReaderPageAdapter) mViewPager.getAdapter()).addPages(list);
+            ((ReaderPageAdapter) mViewPager.getAdapter()).addPages(pageIndex, list);
         }
-        if (chapterIndex == loadingIndex) {
+        if (chapterIndex == loadingChapterIndex) {
             mViewPager.setVisibility(View.VISIBLE);
             if (mPosition != 0) {
-                pageIndex = getPageIndex(mPosition);
+                pageIndex = getPageIndexByLastIndex(mPosition);
                 mViewPager.setCurrentItem(pageIndex, true);
                 mPosition = 0;
             } else {
                 pageIndex = getPageIndex(list.get(0).getFirstCharPosition());
-                mViewPager.setCurrentItem(pageIndex, false);
+                mViewPager.setCurrentItem(pageIndex, true);
             }
             mCurPageIndex = pageIndex;
             mCurChapter = chapterIndex;
@@ -445,6 +573,19 @@ public class ReaderActivity extends Activity implements View.OnClickListener, IR
     }
 
 
+    @Subscribe
+    public void onGetBookmarkList(EventGetBookmarkList event) {
+        if (event.getBookmarkList() == null) return;
+        //获取bookmarkList
+        mBookmarkList.clear();
+        mBookmarkList.addAll(event.getBookmarkList());
+        mBookMarkAdapter.notifyDataSetChanged();
+
+    }
+
+    /**
+     * 弹出菜单
+     */
     private void showMenu() {
         if (mTopContainer.isShown()) return;
         mTopContainer.setVisibility(View.VISIBLE);
@@ -462,6 +603,9 @@ public class ReaderActivity extends Activity implements View.OnClickListener, IR
         bottomEnterAni.start();
     }
 
+    /**
+     * 隐藏菜单
+     */
     private void hideMenu() {
         if (isHiding) return;
         ObjectAnimator topExitAni = new ObjectAnimator().ofFloat(mTopContainer, "y", 0, -topBarHeight);
@@ -478,6 +622,9 @@ public class ReaderActivity extends Activity implements View.OnClickListener, IR
         bottomExitAni.start();
     }
 
+    /**
+     * 监听菜单弹出/隐藏的动画
+     */
     private Animator.AnimatorListener mAnimationListener = new Animator.AnimatorListener() {
         @Override
         public void onAnimationStart(Animator animation) {
@@ -524,18 +671,46 @@ public class ReaderActivity extends Activity implements View.OnClickListener, IR
                 break;
             case R.id.tvPreChapter:
                 //上一章
+//                loadPreChapter(true);
                 break;
             case R.id.tvNextChapter:
                 //下一章
+//                loadNextChapter(true);
                 break;
             case R.id.ivReaderTextSize:
                 //字体大小
                 break;
             case R.id.ivReaderBookMark:
                 //书签
+                if (hasMark) { //取消
+                    hasMark = false;
+                    BookmarkVo bookmark = mBookmarkList.get(getBookmarkIndex());
+                    DatabaseManager.getsInstance().getBookmarkManager().delete(bookmark.getBookmarkId());
+                    mBookmarkList.remove(bookmark);
+                    mBookMarkAdapter.notifyDataSetChanged();
+                    ToastUtils.showShort(ReaderActivity.this, "已删除该书签");
+                } else {//添加
+                    hasMark = true;
+                    BookmarkVo bookmark = new BookmarkVo(mBook.getBookId(), mPageList.get(mCurPageIndex).getLastCharPosition(),
+                            mChapterList.get(mCurChapter).getName(), mCurChapter);
+                    DatabaseManager.getsInstance().getBookmarkManager().refresh(bookmark);
+                    mBookmarkList.add(bookmark);
+                    mBookMarkAdapter.notifyDataSetChanged();
+                    ToastUtils.showShort(ReaderActivity.this, "已添加书签！可在书签列表中查看");
+                }
+                updateBookmarkView();
                 break;
             case R.id.ivReaderNote:
                 //笔记
+                //判断是否有该笔记本
+                NoteBookVo noteBook = DatabaseManager.getsInstance().getNoteBookManager()
+                        .queryNoteBookByBook(mBook.getBookId());
+                if (noteBook == null) {
+                    noteBook = new NoteBookVo(mBook.getName());
+                    noteBook.setBookId(mBook.getBookId());
+                    DatabaseManager.getsInstance().getNoteBookManager().refresh(noteBook);
+                }
+                NoteEditActivity.startActivity(ReaderActivity.this, noteBook.getNoteBookId());
                 break;
             case R.id.midContainer:
                 hideMenu();
@@ -559,7 +734,8 @@ public class ReaderActivity extends Activity implements View.OnClickListener, IR
     protected void onDestroy() {
         super.onDestroy();
         mChapterList.clear();
-        loadedIndexs.clear();
+        loadedChapters.clear();
+
     }
 
     @Override

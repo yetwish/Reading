@@ -6,17 +6,17 @@
 
     <ImageView
         android:id="@+id/ivLogo"
-        android:layout_width="@dimen/logon_size"
-        android:layout_height="@dimen/logon_size"
+        android:layout_width="130dp"
+        android:layout_height="240dp"
         android:layout_centerInParent="true"
-        android:paddingBottom="20dp"
-        android:paddingRight="20dp"
-        android:src="@mipmap/logo_grey" />
+        android:paddingBottom="120dp"
+        android:src="@mipmap/logo_splash" />
 
     <TextView
+        android:paddingTop="40dp"
+        android:layout_centerVertical="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/ivLogo"
         android:gravity="right"
         android:paddingRight="20dp"
         android:text="@string/splash"

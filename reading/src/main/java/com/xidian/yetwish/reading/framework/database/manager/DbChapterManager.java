@@ -103,8 +103,8 @@ public class DbChapterManager {
         DatabaseManager manager = DatabaseManager.getsInstance();
         if (manager != null) {
             ChapterDao dao = manager.getDaoSession().getChapterDao();
-            WhereCondition condition = dao.queryBuilder().and(ChapterDao.Properties.FirstCharPosition.le(position),
-                    ChapterDao.Properties.LastCharPosition.gt(position));
+            WhereCondition condition = dao.queryBuilder().and(ChapterDao.Properties.FirstCharPosition.lt(position),
+                    ChapterDao.Properties.LastCharPosition.ge(position));
             Query<Chapter> query = dao.queryBuilder().where(condition).build();
             List<Chapter> dbList = query.list();
             if (dbList != null && dbList.size() != 0) {

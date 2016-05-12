@@ -54,7 +54,7 @@ public class FileBrowser {
                         e.printStackTrace();
                     }
                 }
-            },mThreadListener);
+            }, mThreadListener);
         }
     }
 
@@ -63,11 +63,11 @@ public class FileBrowser {
         public void run() {
             synchronized (FileBrowser.this) {
                 _threadFinishCount++;
-                if (_threadFinishCount == _threadCount){
+                if (_threadFinishCount == _threadCount) {
                     //扫描完成
 //                    mFileList.addAll(mMatchFiles);
-                    if(mCallback != null){
-                        mCallback.onDataReceived(ImmutableList.copyOf(mMatchFiles));
+                    if (mCallback != null) {
+                        mCallback.onDataReceived(FileUtils.ORDERING_FILE.immutableSortedCopy(mMatchFiles));
                     }
                 }
             }
@@ -85,7 +85,8 @@ public class FileBrowser {
 //                LogUtils.w(file.getAbsolutePath());
                 scanAllFiles(file);
             } else {
-                mMatchFiles.add(file);
+                if (file.length() > 1024) //过滤掉<1KB的文件
+                    mMatchFiles.add(file);
             }
         }
     }

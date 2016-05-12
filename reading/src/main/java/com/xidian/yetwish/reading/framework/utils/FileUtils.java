@@ -2,23 +2,19 @@ package com.xidian.yetwish.reading.framework.utils;
 
 import android.os.Environment;
 
-import com.xidian.yetwish.reading.framework.database.generator.Note;
+import com.google.common.collect.Ordering;
 import com.xidian.yetwish.reading.framework.reader.ChapterDivider;
-import com.xidian.yetwish.reading.framework.reader.ChapterFactory;
 import com.xidian.yetwish.reading.framework.vo.NoteVo;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.FileWriter;
-import java.io.FilterOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.io.UnsupportedEncodingException;
+import java.text.DecimalFormat;
+import java.util.Comparator;
 
 /**
  * Created by Yetwish on 2016/5/10 0010.
@@ -36,6 +32,20 @@ public class FileUtils {
     private static final String APP_ROOT = SD_ROOT_DIR + "/Reading";
 
     private static final String NOTEBOOK_ROOT = APP_ROOT + "/NoteBook";
+
+    private static final Comparator<File> COMPARATOR_FILE = new Comparator<File>() {
+        @Override
+        public int compare(File lhs, File rhs) {
+            if(lhs.isDirectory() && rhs.isFile())
+                return  -1;
+            if(lhs.isFile() && rhs.isDirectory())
+                return 1;
+            return lhs.getName().compareToIgnoreCase(rhs.getName());
+        }
+    };
+
+    public static final Ordering<File> ORDERING_FILE = Ordering.from(COMPARATOR_FILE);
+
 
     public static String getNoteFilePath(NoteVo note) {
         String dir = NOTEBOOK_ROOT + File.separator + note.getNoteBookId() + File.separator;
@@ -121,6 +131,22 @@ public class FileUtils {
         File file = new File(filePath);
         if(!file.exists() || !file.isFile()) return false;
         return file.delete();
+    }
+
+    public static String getFileSize(File file){
+        long length = file.length();
+        DecimalFormat df = new DecimalFormat("#.00");
+        String fileSizeString = "";
+        if (length < 1024) {
+            fileSizeString = df.format((double) length) + "B";
+        } else if (length < 1048576) {
+            fileSizeString = df.format((double) length / 1024) + "K";
+        } else if (length < 1073741824) {
+            fileSizeString = df.format((double) length / 1048576) + "M";
+        } else {
+            fileSizeString = df.format((double) length / 1073741824) +"G";
+        }
+        return fileSizeString;
     }
 
 }

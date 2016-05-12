@@ -16,7 +16,17 @@ public class DatabaseGenerator {
 		addNote(schema);
 		addChapter(schema);
 		addPage(schema);
+		addBookmark(schema);
 		new DaoGenerator().generateAll(schema, "../reading/src/main/java");
+	}
+	
+	private static void addBookmark(Schema schema){
+		Entity bookmark = schema.addEntity("Bookmark");
+		bookmark.addLongProperty("bookmarkId").primaryKey();
+		bookmark.addLongProperty("bookId");
+		bookmark.addLongProperty("lastCharPosition");
+		bookmark.addStringProperty("name");
+		bookmark.addIntProperty("chapterIndex");
 	}
 	
 	private static void addBook(Schema schema){

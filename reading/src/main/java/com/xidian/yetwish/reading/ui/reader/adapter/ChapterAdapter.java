@@ -26,7 +26,7 @@ public class ChapterAdapter extends CommonAdapter<ChapterVo> {
             @Override
             public void onItemClick(ViewGroup parent, View view, ChapterVo data, int position) {
                 if (listener != null)
-                    listener.onProgressChanged(position,data.getFirstCharPosition());
+                    listener.onProgressChanged(position,data.getFirstCharPosition(),false);
             }
 
             @Override

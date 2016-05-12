@@ -6,14 +6,12 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 
-import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Ordering;
 import com.xidian.yetwish.reading.R;
 import com.xidian.yetwish.reading.framework.database.DatabaseManager;
+import com.xidian.yetwish.reading.framework.utils.FileUtils;
 import com.xidian.yetwish.reading.framework.utils.LogUtils;
 import com.xidian.yetwish.reading.framework.vo.BookVo;
-import com.xidian.yetwish.reading.framework.utils.ToastUtils;
 import com.xidian.yetwish.reading.framework.common_adapter.CommonAdapter;
 import com.xidian.yetwish.reading.framework.common_adapter.OnItemClickListener;
 import com.xidian.yetwish.reading.framework.common_adapter.ViewHolder;
@@ -22,7 +20,6 @@ import com.xidian.yetwish.reading.ui.add_book.TXTFileFilter;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -46,19 +43,6 @@ public class FileBrowserAdapter extends CommonAdapter<File> {
     private OnFilePathChangedListener mFilePathListener;
 
     private List<String> mAddedFiles;
-
-    private Comparator<File> mComparator = new Comparator<File>() {
-        @Override
-        public int compare(File lhs, File rhs) {
-            if(lhs.isDirectory() && rhs.isFile())
-                return  -1;
-            if(lhs.isFile() && rhs.isDirectory())
-                return 1;
-            return lhs.getName().compareToIgnoreCase(rhs.getName());
-        }
-    };
-
-    private Ordering<File> mOrdering = Ordering.from(mComparator);
 
     public void setFilePathChangedListener(OnFilePathChangedListener listener) {
         this.mFilePathListener = listener;
@@ -102,7 +86,7 @@ public class FileBrowserAdapter extends CommonAdapter<File> {
         //get file list
         if (rootFile.listFiles(mFileFilter) != null) {
             Collections.addAll(mData, rootFile.listFiles(mFileFilter));
-            mData = mOrdering.sortedCopy(mData);
+            mData = FileUtils.ORDERING_FILE.sortedCopy(mData);
         }
         //update mCurrentPath
         mCurrentPath = rootFile.getPath().equals(ROOT_DIR) ?
@@ -135,11 +119,9 @@ public class FileBrowserAdapter extends CommonAdapter<File> {
                     .setVisible(R.id.cbItemFileChose, false);
         } else {
             holder.setImageResource(R.id.ivItemFileIcon, R.mipmap.ic_insert_drive_file_gray_48dp)
-                    .setText(R.id.tvItemFileSize, file.getAbsolutePath() + "");
+                    .setText(R.id.tvItemFileSize, FileUtils.getFileSize(file));
 
             CheckBox cb = holder.getView(R.id.cbItemFileChose);
-
-            LogUtils.w(mAddedFiles.size() + ", size");
 
             if (!mAddedFiles.contains(file.getAbsolutePath())) {
                 //未导入
@@ -172,7 +154,8 @@ public class FileBrowserAdapter extends CommonAdapter<File> {
     public ImmutableList<File> getCheckFiles() {
         List<File> files = new ArrayList<File>();
         for (String path : mCheckMap.keySet()) {
-            files.add(new File(path));
+            if (mCheckMap.get(path))
+                files.add(new File(path));
         }
         return ImmutableList.copyOf(files);
     }

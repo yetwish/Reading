@@ -61,7 +61,8 @@ public class NoteBookListAdapter extends CommonAdapter<NoteBookVo> {
     @Override
     public void convert(ViewHolder holder, NoteBookVo noteBook) {
         holder.setText(R.id.tvNoteBookName, noteBook.getName())
-                .setText(R.id.tvNoteBookNum, noteBook.getNoteNumber() + "");
+                .setText(R.id.tvNoteBookNum, noteBook.getNoteNumber() + "")
+                .setVisible(R.id.ivNoteBookDelete,false);
 
         if (noteBook.getIntroduction() != null) {
             holder.setText(R.id.tvNoteBookIntro, noteBook.getIntroduction());

@@ -152,7 +152,7 @@ public class ReaderView extends View {
             sBook = DatabaseManager.getsInstance().getBookManager().query(sBookId);
         }
         if (sBook != null)
-            mProgress = mPage.getFirstCharPosition() * 100.0f / sBook.getCharNumber();
+            mProgress = mPage.getLastCharPosition()* 100.0f / sBook.getCharNumber();
     }
 
 

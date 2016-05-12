@@ -9,6 +9,7 @@ import com.xidian.yetwish.reading.framework.database.DatabaseManager;
 import com.xidian.yetwish.reading.framework.eventbus.EventBusWrapper;
 import com.xidian.yetwish.reading.framework.eventbus.event.EventGeneratedPage;
 import com.xidian.yetwish.reading.framework.thread.ThreadFactory;
+import com.xidian.yetwish.reading.framework.utils.LogUtils;
 import com.xidian.yetwish.reading.framework.vo.reader.ChapterVo;
 import com.xidian.yetwish.reading.framework.vo.reader.PageVo;
 
@@ -81,7 +82,6 @@ public class PageDivider {
         int curRow = 0;
         int firstIndex = position;
         int divideIndex = 0;
-//        LogUtils.w(chapter.getFirstCharPosition() + "," + chapter.getLastCharPosition());
         PageVo page;
         while ((line = reader.readLine()) != null && position < chapter.getLastCharPosition()) {
             if (TextUtils.isEmpty(line.trim())) {

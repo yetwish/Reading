@@ -5,5 +5,5 @@ package com.xidian.yetwish.reading.ui.reader;
  */
 public interface IReaderProgressChangeListener {
 
-    void onProgressChanged(int chapterIndex, long position);
+    void onProgressChanged(int chapterIndex, long position,boolean withPosition);
 }

@@ -50,9 +50,6 @@ public class ChapterDivider {
     //全书总字符数
     private long mBookCharNum;
 
-    private int _threadCount;
-    private int _threadFinishCount;
-
     /**
      * int : the position(index of char) of String in the file.
      */

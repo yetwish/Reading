@@ -63,7 +63,8 @@ public class BookListAdapter extends CommonAdapter<BookVo> {
     public void convert(ViewHolder holder, BookVo book) {
         holder.setText(R.id.tvBookName, book.getName())
                 .setText(R.id.tvBookAuthor, book.getAuthor())
-                .setNumberProgress(R.id.pbBookProgress, book.getProgress());
+                .setNumberProgress(R.id.pbBookProgress, book.getProgress())
+                .setVisible(R.id.ivBookDelete,false);
         if (book.getIconResId() != 0) {
             holder.setImageResource(R.id.ivBookIcon, book.getIconResId());
         } else {

@@ -122,6 +122,7 @@ public class ReadingActivity extends SlideMenuActivity {
                                             //删除分页
                                             DatabaseManager.getsInstance().getPageManager().delete(data.getBookId());
                                             //删除书签
+                                            DatabaseManager.getsInstance().getBookmarkManager().deleteByBookId(data.getBookId());
                                             //从内存中移除
                                             mBookList.remove(position);
                                             mAdapter.notifyDataSetChanged();
@@ -214,6 +215,12 @@ public class ReadingActivity extends SlideMenuActivity {
             mEmptyView.setVisibility(View.GONE);
         else
             mEmptyView.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        DatabaseManager.getsInstance().getBookManager().refresh(ImmutableList.copyOf(mBookList));
     }
 
     @Override

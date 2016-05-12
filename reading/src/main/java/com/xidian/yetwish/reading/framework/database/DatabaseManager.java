@@ -9,6 +9,7 @@ import com.xidian.yetwish.reading.BaseApplication;
 import com.xidian.yetwish.reading.framework.database.generator.DaoMaster;
 import com.xidian.yetwish.reading.framework.database.generator.DaoSession;
 import com.xidian.yetwish.reading.framework.database.manager.DbBookManager;
+import com.xidian.yetwish.reading.framework.database.manager.DbBookmarkManager;
 import com.xidian.yetwish.reading.framework.database.manager.DbChapterManager;
 import com.xidian.yetwish.reading.framework.database.manager.DbNoteBookManager;
 import com.xidian.yetwish.reading.framework.database.manager.DbNoteManager;
@@ -29,6 +30,7 @@ public class DatabaseManager {
     private DbNoteBookManager mDbNoteBookManager;
     private DbChapterManager mDbChapterManager;
     private DbPageManager mDbPageManager;
+    private DbBookmarkManager mDbBookmarkManager;
 
     private Handler mDBHandler;
     private HandlerThread mDBThread;
@@ -62,6 +64,19 @@ public class DatabaseManager {
         }
         return mDbBookManager;
     }
+
+
+    public DbBookmarkManager getBookmarkManager() {
+        checkThread();
+        if (mDbBookmarkManager == null) {
+            synchronized (DbBookmarkManager.class) {
+                if (mDbBookmarkManager== null)
+                    mDbBookmarkManager= new DbBookmarkManager(mDBHandler);
+            }
+        }
+        return mDbBookmarkManager;
+    }
+
 
     public DbNoteManager getNoteManager() {
         checkThread();
@@ -163,6 +178,7 @@ public class DatabaseManager {
         mDbNoteBookManager = null;
         mDbChapterManager = null;
         mDbPageManager = null;
+        mDbBookmarkManager = null;
     }
 
 }

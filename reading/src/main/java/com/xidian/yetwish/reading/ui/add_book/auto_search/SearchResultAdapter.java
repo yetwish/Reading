@@ -8,6 +8,7 @@ import android.widget.CompoundButton;
 import com.google.common.collect.ImmutableList;
 import com.xidian.yetwish.reading.R;
 import com.xidian.yetwish.reading.framework.database.DatabaseManager;
+import com.xidian.yetwish.reading.framework.utils.FileUtils;
 import com.xidian.yetwish.reading.framework.vo.BookVo;
 import com.xidian.yetwish.reading.framework.common_adapter.SectionAdapter;
 import com.xidian.yetwish.reading.framework.common_adapter.ViewHolder;
@@ -46,11 +47,11 @@ public class SearchResultAdapter extends SectionAdapter<File> {
 
         holder.setImageResource(R.id.ivItemFileIcon, R.mipmap.ic_insert_drive_file_gray_48dp)
                 .setText(R.id.tvItemFileTitle, file.getName())
-                .setText(R.id.tvItemFileSize, file.getTotalSpace() + "")
+                .setText(R.id.tvItemFileSize, FileUtils.getFileSize(file))
                 .setChecked(R.id.cbItemFileChose, false);
 
         CheckBox cb = holder.getView(R.id.cbItemFileChose);
-        if (mAddedFiles!= null &&!mAddedFiles.contains(file.getAbsolutePath())) {
+        if (mAddedFiles != null && !mAddedFiles.contains(file.getAbsolutePath())) {
             //未导入
             cb.setVisibility(View.VISIBLE);
         } else {
@@ -76,7 +77,8 @@ public class SearchResultAdapter extends SectionAdapter<File> {
     public ImmutableList<File> getCheckFiles() {
         List<File> files = new ArrayList<File>();
         for (String path : mCheckMap.keySet()) {
-            files.add(new File(path));
+            if (mCheckMap.get(path))
+                files.add(new File(path));
         }
         return ImmutableList.copyOf(files);
     }

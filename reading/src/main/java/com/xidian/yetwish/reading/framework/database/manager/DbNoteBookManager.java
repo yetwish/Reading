@@ -60,25 +60,38 @@ public class DbNoteBookManager {
         });
     }
 
+    public NoteBookVo query(long noteBookId) {
+        NoteBookVo noteBook = null;
+        DatabaseManager manager = DatabaseManager.getsInstance();
+        if (manager != null) {
+            NoteBook dbEntity = manager.getDaoSession().getNoteBookDao().load(noteBookId);
+            if(dbEntity != null)
+                noteBook = new NoteBookVo(dbEntity);
+        }
+        return noteBook;
+    }
+
     /**
      * 获取某一个书是否有读书笔记
+     *
      * @param bookId
      * @return
      */
-    public long queryNoteBookByBook(long bookId) {
-        long noteBookId = -1;
+    public NoteBookVo queryNoteBookByBook(long bookId) {
+        NoteBookVo noteBook = null;
         DatabaseManager manager = DatabaseManager.getsInstance();
         if (manager != null) {
             NoteBookDao dao = manager.getDaoSession().getNoteBookDao();
             Query<NoteBook> query = dao.queryBuilder()
                     .where(NoteBookDao.Properties.BookId.eq(bookId)).build();
             List<NoteBook> dbList = query.list();
-            if(dbList != null && dbList.size() > 0){
-                noteBookId = dbList.get(0).getNoteBookId();
+            if (dbList != null && dbList.size() > 0) {
+                noteBook = new NoteBookVo(dbList.get(0));
             }
         }
-        return noteBookId;
+        return noteBook;
     }
+
 
     public ImmutableList<NoteBookVo> queryAll() {
         List<NoteBookVo> noteBookList = new ArrayList<>();

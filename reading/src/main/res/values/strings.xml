@@ -80,6 +80,9 @@
     <string name="splash">——在读，轻量级阅读App</string>
     <string name="author">Dev @Yetwish_野鬼</string>
 
+    <string name="no_more_pre_chapter">当前已经是第一章</string>
+    <string name="no_more_next_chapter">当前已经是最后一章</string>
+
 
     <!--the description of images-->
     <string name="des_avatar">avatar</string>

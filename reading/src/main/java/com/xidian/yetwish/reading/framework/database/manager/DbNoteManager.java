@@ -6,6 +6,7 @@ import com.google.common.collect.ImmutableList;
 import com.xidian.yetwish.reading.framework.database.DatabaseManager;
 import com.xidian.yetwish.reading.framework.database.generator.Note;
 import com.xidian.yetwish.reading.framework.database.generator.NoteDao;
+import com.xidian.yetwish.reading.framework.vo.NoteBookVo;
 import com.xidian.yetwish.reading.framework.vo.NoteVo;
 
 import java.util.ArrayList;
@@ -62,9 +63,9 @@ public class DbNoteManager {
      * @return null or ImmutableList<NoteVo>
      */
     public ImmutableList<NoteVo> queryByBook(long bookId) {
-        final long noteBookId = DatabaseManager.getsInstance().getNoteBookManager().queryNoteBookByBook(bookId);
-        if (noteBookId != -1) {
-            return queryByNoteBook(noteBookId);
+        final NoteBookVo noteBook = DatabaseManager.getsInstance().getNoteBookManager().queryNoteBookByBook(bookId);
+        if (noteBook != null) {
+            return queryByNoteBook(noteBook.getNoteBookId());
         }
         return null;
     }
@@ -91,9 +92,9 @@ public class DbNoteManager {
      * @param bookId
      */
     public void deleteByBookId(final long bookId) {
-        final long noteBookId = DatabaseManager.getsInstance().getNoteBookManager().queryNoteBookByBook(bookId);
-        if (noteBookId != -1) {
-            deleteByNoteBookId(noteBookId);
+        final NoteBookVo noteBook = DatabaseManager.getsInstance().getNoteBookManager().queryNoteBookByBook(bookId);
+        if (noteBook != null) {
+            deleteByNoteBookId(noteBook.getNoteBookId());
         }
     }
 

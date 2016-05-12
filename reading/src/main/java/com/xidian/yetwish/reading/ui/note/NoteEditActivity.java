@@ -17,6 +17,7 @@ import com.xidian.yetwish.reading.framework.database.DatabaseManager;
 import com.xidian.yetwish.reading.framework.exception.IllegalIntentDataException;
 import com.xidian.yetwish.reading.framework.utils.FileUtils;
 import com.xidian.yetwish.reading.framework.utils.SharedPreferencesUtils;
+import com.xidian.yetwish.reading.framework.vo.NoteBookVo;
 import com.xidian.yetwish.reading.framework.vo.NoteVo;
 import com.xidian.yetwish.reading.ui.ToolbarActivity;
 
@@ -27,7 +28,6 @@ import java.io.Serializable;
  * Created by Yetwish on 2016/5/10 0010.
  */
 public class NoteEditActivity extends ToolbarActivity {
-
 
     public static final void startActivity(Context context, long noteBookId) {
         Intent intent = new Intent(context, NoteEditActivity.class);
@@ -48,6 +48,8 @@ public class NoteEditActivity extends ToolbarActivity {
 
     private EditText etTitle;
     private EditText etContent;
+
+    private long mNoteBookId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,12 +89,14 @@ public class NoteEditActivity extends ToolbarActivity {
             final long noteBookId = getIntent().getLongExtra(SharedPreferencesUtils.EXTRA_NOTEBOOK_ID, 0);
             if (noteBookId == 0)
                 throw new IllegalIntentDataException(this.getClass());
-            mNote = new NoteVo(noteBookId);
+            mNoteBookId = noteBookId;
+            mNote = new NoteVo(mNoteBookId);
             getSupportActionBar().setTitle(getString(R.string.note_create));
 
         } else {//编辑笔记
             if (!(data instanceof NoteVo))
                 throw new IllegalIntentDataException(NoteVo.class, data.getClass());
+            mNoteBookId = mNote.getNoteBookId();
             mNote = (NoteVo) data;
             getSupportActionBar().setTitle(getString(R.string.note_edit));
             etTitle.setText(mNote.getName());
@@ -120,16 +124,21 @@ public class NoteEditActivity extends ToolbarActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_note_finish:
+                showProgressDialog();
                 mNote.setName(etTitle.getText().toString().trim());
                 mNote.setContent(etContent.getText().toString());
                 //保存noteVo
                 FileUtils.saveNoteToFile(mNote);
                 DatabaseManager.getsInstance().getNoteManager().refresh(mNote);
+                NoteBookVo noteBook = DatabaseManager.getsInstance().getNoteBookManager().query(mNoteBookId);
+                noteBook.setNoteNumber(noteBook.getNoteNumber()+1);
+                DatabaseManager.getsInstance().getNoteBookManager().refresh(noteBook);
                 if(etTitle.getText().equals(getString(R.string.note_edit))){
                     Intent intent = getIntent();
                     intent.putExtra(SharedPreferencesUtils.EXTRA_NOTE,mNote);
                     setResult(RESULT_OK,intent);
                 }
+                hideBasicDialog();
                 finish();
                 break;
         }
