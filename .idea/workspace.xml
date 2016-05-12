@@ -65,33 +65,9 @@
   <component name="ChangeListManager">
     <list default="true" id="04c57bde-2867-40be-9673-4117808c87d2" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DatabaseGenerator/src/com/aidingmao/database/DatabaseGenerator.java" afterPath="$PROJECT_DIR$/DatabaseGenerator/src/com/aidingmao/database/DatabaseGenerator.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/framework/database/DatabaseManager.java" afterPath="$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/framework/database/DatabaseManager.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/framework/database/generator/DaoMaster.java" afterPath="$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/framework/database/generator/DaoMaster.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/framework/database/generator/DaoSession.java" afterPath="$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/framework/database/generator/DaoSession.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/framework/database/manager/DbChapterManager.java" afterPath="$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/framework/database/manager/DbChapterManager.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/framework/database/manager/DbNoteBookManager.java" afterPath="$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/framework/database/manager/DbNoteBookManager.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/framework/database/manager/DbNoteManager.java" afterPath="$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/framework/database/manager/DbNoteManager.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/framework/reader/ChapterDivider.java" afterPath="$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/framework/reader/ChapterDivider.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/framework/reader/PageDivider.java" afterPath="$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/framework/reader/PageDivider.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/framework/utils/FileUtils.java" afterPath="$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/framework/utils/FileUtils.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/ui/add_book/auto_search/FileBrowser.java" afterPath="$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/ui/add_book/auto_search/FileBrowser.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/ui/add_book/auto_search/SearchResultAdapter.java" afterPath="$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/ui/add_book/auto_search/SearchResultAdapter.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/ui/add_book/file_browser/FileBrowserAdapter.java" afterPath="$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/ui/add_book/file_browser/FileBrowserAdapter.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/ui/main/ReadingActivity.java" afterPath="$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/ui/main/ReadingActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/ui/main/adapter/BookListAdapter.java" afterPath="$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/ui/main/adapter/BookListAdapter.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/ui/main/adapter/NoteBookListAdapter.java" afterPath="$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/ui/main/adapter/NoteBookListAdapter.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/ui/note/NoteEditActivity.java" afterPath="$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/ui/note/NoteEditActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/ui/reader/IReaderProgressChangeListener.java" afterPath="$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/ui/reader/IReaderProgressChangeListener.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/ui/reader/ReaderActivity.java" afterPath="$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/ui/reader/ReaderActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/ui/reader/adapter/ChapterAdapter.java" afterPath="$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/ui/reader/adapter/ChapterAdapter.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/ui/widget/ReaderView.java" afterPath="$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/ui/widget/ReaderView.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/reading/src/main/res/layout/activity_reader.xml" afterPath="$PROJECT_DIR$/reading/src/main/res/layout/activity_reader.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/reading/src/main/res/layout/activity_splash.xml" afterPath="$PROJECT_DIR$/reading/src/main/res/layout/activity_splash.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/reading/src/main/res/layout/chapter_bookmark_menu.xml" afterPath="$PROJECT_DIR$/reading/src/main/res/layout/chapter_bookmark_menu.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/reading/src/main/res/layout/item_note_book_list.xml" afterPath="$PROJECT_DIR$/reading/src/main/res/layout/item_note_book_list.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/reading/src/main/res/values/colors.xml" afterPath="$PROJECT_DIR$/reading/src/main/res/values/colors.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/reading/src/main/res/values/strings.xml" afterPath="$PROJECT_DIR$/reading/src/main/res/values/strings.xml" />
     </list>
     <ignored path="Reading.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -122,10 +98,91 @@
       <file leaf-file-name="ReaderActivity.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/ui/reader/ReaderActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.33215547">
-              <caret line="687" column="105" selection-start-line="687" selection-start-column="105" selection-end-line="687" selection-end-column="105" />
+            <state vertical-scroll-proportion="0.37804878">
+              <caret line="439" column="35" selection-start-line="439" selection-start-column="35" selection-end-line="439" selection-end-column="35" />
               <folding>
                 <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="PageDivider.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/framework/reader/PageDivider.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="53" column="0" selection-start-line="53" selection-start-column="0" selection-end-line="53" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TrustedListenableFutureTask.java" pinned="false" current-in-tab="false">
+        <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.guava/guava/19.0/91a4d115400e904f22b03a78deb355e9ea803cd4/guava-19.0-sources.jar!/com/google/common/util/concurrent/TrustedListenableFutureTask.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="107" column="0" selection-start-line="107" selection-start-column="0" selection-end-line="107" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DbPageManager.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/framework/database/manager/DbPageManager.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="57" column="0" selection-start-line="57" selection-start-column="0" selection-end-line="57" selection-end-column="0" />
+              <folding>
+                <element signature="e#1637#2819#0" expanded="true" />
+                <element signature="e#2508#2793#0" expanded="true" />
+                <element signature="e#2792#2793#0" expanded="true" />
+                <element signature="e#2818#2819#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Handler.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../android-sdk/sources/android-23/android/os/Handler.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="733" column="0" selection-start-line="733" selection-start-column="0" selection-end-line="733" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ReadingActivity.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/ui/main/ReadingActivity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="187" column="38" selection-start-line="187" selection-start-column="38" selection-end-line="187" selection-end-column="38" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DbChapterManager.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/framework/database/manager/DbChapterManager.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="129" column="0" selection-start-line="129" selection-start-column="0" selection-end-line="129" selection-end-column="0" />
+              <folding>
+                <element signature="e#4722#5182#0" expanded="true" />
+                <element signature="e#5181#5182#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DbBookManager.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/framework/database/manager/DbBookManager.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="128" column="41" selection-start-line="128" selection-start-column="41" selection-end-line="128" selection-end-column="41" />
+              <folding>
+                <element signature="e#4147#4450#0" expanded="true" />
+                <element signature="e#4449#4450#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -1869,8 +1926,6 @@
         <option value="$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/ui/reader/adapter/ChapterAdapter.java" />
         <option value="$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/framework/database/manager/DbBookmarkManager.java" />
         <option value="$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/framework/reader/ChapterDivider.java" />
-        <option value="$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/ui/main/ReadingActivity.java" />
-        <option value="$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/framework/reader/PageDivider.java" />
         <option value="$PROJECT_DIR$/reading/src/main/res/layout/item_file_list.xml" />
         <option value="$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/framework/utils/FileUtils.java" />
         <option value="$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/ui/add_book/file_browser/FileBrowserAdapter.java" />
@@ -1878,6 +1933,8 @@
         <option value="$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/ui/add_book/auto_search/SearchResultAdapter.java" />
         <option value="$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/framework/vo/reader/BookmarkVo.java" />
         <option value="$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/ui/reader/adapter/BookmarkAdapter.java" />
+        <option value="$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/framework/reader/PageDivider.java" />
+        <option value="$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/ui/main/ReadingActivity.java" />
         <option value="$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/ui/reader/ReaderActivity.java" />
       </list>
     </option>
@@ -2859,7 +2916,7 @@
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.5098361" sideWeight="0.5095238" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.6432" sideWeight="0.4904762" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.6432" sideWeight="0.4904762" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2626984" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.328" sideWeight="0.4968254" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.68" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -2898,13 +2955,49 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/ui/reader/ReaderActivity.java</url>
+          <line>472</line>
+          <properties />
+          <option name="timeStamp" value="39" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/ui/reader/ReaderActivity.java</url>
+          <line>470</line>
+          <properties />
+          <option name="timeStamp" value="41" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/framework/reader/PageDivider.java</url>
           <line>53</line>
           <properties />
-          <option name="timeStamp" value="37" />
+          <option name="timeStamp" value="42" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/framework/database/manager/DbChapterManager.java</url>
+          <line>123</line>
+          <properties />
+          <option name="timeStamp" value="45" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/framework/reader/PageDivider.java</url>
+          <line>143</line>
+          <properties />
+          <option name="timeStamp" value="47" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/framework/database/manager/DbPageManager.java</url>
+          <line>50</line>
+          <properties />
+          <option name="timeStamp" value="49" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/ui/reader/ReaderActivity.java</url>
+          <line>335</line>
+          <properties />
+          <option name="timeStamp" value="51" />
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="38" />
+      <option name="time" value="52" />
     </breakpoint-manager>
     <watches-manager>
       <configuration name="reading">
@@ -2916,24 +3009,6 @@
     </watches-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/reading/src/main/res/layout/item_note_list.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.46753246">
-          <caret line="12" column="37" selection-start-line="12" selection-start-column="37" selection-end-line="12" selection-end-column="37" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/ui/com/baobomb/popuplistview/PopupListAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.15436241">
-          <caret line="24" column="18" selection-start-line="24" selection-start-column="18" selection-end-line="24" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/ui/com/baobomb/popuplistview/PopupListView.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -3050,14 +3125,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/framework/database/manager/DbBookManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="22" column="0" selection-start-line="22" selection-start-column="0" selection-end-line="146" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/framework/database/DatabaseManager.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="1.4228188">
@@ -3081,14 +3148,6 @@
           <folding>
             <element signature="imports" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/framework/database/manager/DbChapterManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="106" column="61" selection-start-line="106" selection-start-column="61" selection-end-line="106" selection-end-column="61" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3235,14 +3294,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/ui/main/ReadingActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="221" column="24" selection-start-line="221" selection-start-column="24" selection-end-line="221" selection-end-column="24" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/framework/reader/PageFactory.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -3256,25 +3307,9 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="196" column="0" selection-start-line="196" selection-start-column="0" selection-end-line="196" selection-end-column="0" />
           <folding>
-            <element signature="e#5862#6185#0" expanded="true" />
-            <element signature="e#6184#6185#0" expanded="true" />
+            <element signature="e#5862#6185#0" expanded="false" />
+            <element signature="e#6184#6185#0" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../android-sdk/sources/android-23/android/os/Handler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.19295302">
-          <caret line="733" column="0" selection-start-line="733" selection-start-column="0" selection-end-line="733" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/framework/reader/PageDivider.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.4043624">
-          <caret line="53" column="55" selection-start-line="53" selection-start-column="55" selection-end-line="53" selection-end-column="55" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3393,10 +3428,77 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/framework/database/manager/DbBookManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="128" column="41" selection-start-line="128" selection-start-column="41" selection-end-line="128" selection-end-column="41" />
+          <folding>
+            <element signature="e#4147#4450#0" expanded="true" />
+            <element signature="e#4449#4450#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/framework/database/manager/DbChapterManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="129" column="0" selection-start-line="129" selection-start-column="0" selection-end-line="129" selection-end-column="0" />
+          <folding>
+            <element signature="e#4722#5182#0" expanded="true" />
+            <element signature="e#5181#5182#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/ui/main/ReadingActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="187" column="38" selection-start-line="187" selection-start-column="38" selection-end-line="187" selection-end-column="38" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../android-sdk/sources/android-23/android/os/Handler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="733" column="0" selection-start-line="733" selection-start-column="0" selection-end-line="733" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.guava/guava/19.0/91a4d115400e904f22b03a78deb355e9ea803cd4/guava-19.0-sources.jar!/com/google/common/util/concurrent/TrustedListenableFutureTask.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="107" column="0" selection-start-line="107" selection-start-column="0" selection-end-line="107" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/framework/reader/PageDivider.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="53" column="0" selection-start-line="53" selection-start-column="0" selection-end-line="53" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/framework/database/manager/DbPageManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="57" column="0" selection-start-line="57" selection-start-column="0" selection-end-line="57" selection-end-column="0" />
+          <folding>
+            <element signature="e#1637#2819#0" expanded="true" />
+            <element signature="e#2508#2793#0" expanded="true" />
+            <element signature="e#2792#2793#0" expanded="true" />
+            <element signature="e#2818#2819#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/reading/src/main/java/com/xidian/yetwish/reading/ui/reader/ReaderActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33215547">
-          <caret line="687" column="105" selection-start-line="687" selection-start-column="105" selection-end-line="687" selection-end-column="105" />
+        <state vertical-scroll-proportion="0.37804878">
+          <caret line="439" column="35" selection-start-line="439" selection-start-column="35" selection-end-line="439" selection-end-column="35" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

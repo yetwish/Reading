@@ -69,7 +69,7 @@ public class PageDivider {
      *
      * @param chapter
      */
-    private ImmutableList<PageVo> doPaging(ChapterVo chapter) throws IOException {
+    private synchronized ImmutableList<PageVo> doPaging(ChapterVo chapter) throws IOException {
 
         List<PageVo> pageList = new ArrayList<>();
         BufferedReader reader = new BufferedReader(new InputStreamReader(

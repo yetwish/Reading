@@ -126,6 +126,7 @@ public class ReadingActivity extends SlideMenuActivity {
                                             //从内存中移除
                                             mBookList.remove(position);
                                             mAdapter.notifyDataSetChanged();
+                                            updateEmptyViewVisibility();
                                         } else if (which == DialogAction.NEGATIVE) {
                                             //取消删除
                                             hideDeleteView();

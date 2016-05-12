@@ -458,6 +458,7 @@ public class ReaderActivity extends Activity implements View.OnClickListener, IR
         }
         if (loadedChapters.contains(index))
             return;
+        loadedChapters.add(index);
         if (progressChange) {
             loadingChapterIndex = index;
             mEmptyView.setVisibility(View.VISIBLE);
@@ -519,7 +520,6 @@ public class ReaderActivity extends Activity implements View.OnClickListener, IR
 
     private synchronized void addLoadedPageList(int chapterIndex, ImmutableList<PageVo> list) {
         if (list == null || list.size() == 0) return;
-        loadedChapters.add(chapterIndex);
         int pageIndex = getPageIndex(list.get(0).getFirstCharPosition());
 
         if (pageIndex <= mCurPageIndex) {
