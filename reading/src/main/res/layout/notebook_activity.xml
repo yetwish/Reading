@@ -77,7 +77,7 @@
             android:layout_marginTop="24dp"
             android:orientation="vertical">
             <!--list view-->
-            <com.xidian.yetwish.reading.ui.com.baobomb.popuplistview.PopupListView
+            <com.xidian.yetwish.reading.ui.widget.popuplistview.PopupListView
                 android:id="@+id/lvNote"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />

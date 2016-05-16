@@ -1,9 +1,8 @@
-package com.xidian.yetwish.reading.ui.com.baobomb.popuplistview;
+package com.xidian.yetwish.reading.ui.widget.popuplistview;
 
 import android.content.Context;
 import android.os.Handler;
 import android.util.AttributeSet;
-import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -13,7 +12,6 @@ import android.widget.RelativeLayout;
 
 import com.xidian.yetwish.reading.R;
 import com.xidian.yetwish.reading.framework.common_adapter.OnItemLongClickListener;
-import com.xidian.yetwish.reading.framework.utils.LogUtils;
 import com.xidian.yetwish.reading.framework.utils.ScreenUtils;
 import com.xidian.yetwish.reading.framework.vo.NoteVo;
 

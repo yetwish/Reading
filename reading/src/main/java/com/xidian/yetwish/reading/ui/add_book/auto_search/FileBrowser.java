@@ -1,7 +1,5 @@
 package com.xidian.yetwish.reading.ui.add_book.auto_search;
 
-import android.os.Environment;
-
 import com.google.common.collect.ImmutableList;
 import com.xidian.yetwish.reading.framework.service.ApiCallback;
 import com.xidian.yetwish.reading.framework.thread.ThreadFactory;
@@ -40,9 +38,12 @@ public class FileBrowser {
      */
     public void startScanFiles(ApiCallback<ImmutableList<File>> callback) {
         mCallback = callback;
-        File rootFile = new File(FileUtils.SD_ROOT_DIR);
+        File rootFile = new File(FileUtils.getStorageDir());
         File files[] = rootFile.listFiles(mFileFilter);
-        if (files == null) return;
+        if (files == null) {
+            mCallback.onDataReceived(null);
+            return;
+        }
         _threadCount = files.length;
         for (final File file : files) {
             ThreadFactory.createThread().start(new Runnable() {

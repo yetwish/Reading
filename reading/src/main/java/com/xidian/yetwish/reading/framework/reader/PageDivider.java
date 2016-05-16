@@ -96,7 +96,7 @@ public class PageDivider {
                 sbContent.append(line).append("\n");
 //                LogUtils.w("page " + sbContent.toString());
                 //生成pageVo
-                page = new PageVo(chapter.getBookId(), chapter.getChapterId(), chapter.getFilePath(),
+                page = new PageVo(chapter.getBookId(), chapter.getChapterId(),
                         firstIndex, position + line.length(), sbContent.toString());
                 pageList.add(page);
                 clearStringBuilder(sbContent);
@@ -114,7 +114,7 @@ public class PageDivider {
                         divideIndex = (mRow - curRow) * mCol + 1;
                     sbContent.append(line, 0, divideIndex);
                     //生成pageVo
-                    page = new PageVo(chapter.getBookId(), chapter.getChapterId(), chapter.getFilePath(),
+                    page = new PageVo(chapter.getBookId(), chapter.getChapterId(),
                             firstIndex, position + divideIndex, sbContent.toString());
                     pageList.add(page);
 //                    LogUtils.w("page " + sbContent.toString());
@@ -132,13 +132,12 @@ public class PageDivider {
         }
         //最后一页
         if (sbContent.length() != 0) {
-            page = new PageVo(chapter.getBookId(), chapter.getChapterId(), chapter.getFilePath(),
+            page = new PageVo(chapter.getBookId(), chapter.getChapterId(),
                     firstIndex, position, sbContent.toString());
             pageList.add(page);
 //            LogUtils.w(sbContent.toString());
             clearStringBuilder(sbContent);
         }
-        chapter.setPageNumber(pageList.size());
         reader.close();
 
         return ImmutableList.copyOf(pageList);

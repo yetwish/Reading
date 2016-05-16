@@ -75,8 +75,12 @@ public class AutoSearchActivity extends ToolbarActivity {
         mFileBrowser.startScanFiles(new ApiCallback<ImmutableList<File>>() {
             @Override
             public void onDataReceived(ImmutableList<File> data) {
-                mFileList.addAll(data);
-                mAdapter.notifyDataSetChanged();
+                if (data != null) {
+                    mFileList.addAll(data);
+                    mAdapter.notifyDataSetChanged();
+                }
+                if(mAdapter.getItemCount() == 0)
+                    tvAdd.setVisibility(View.GONE);
                 hideProgressDialog();
             }
 
@@ -106,6 +110,7 @@ public class AutoSearchActivity extends ToolbarActivity {
                 });
             }
         });
+
     }
 
 
@@ -116,7 +121,7 @@ public class AutoSearchActivity extends ToolbarActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if(mFileBrowser != null)
+        if (mFileBrowser != null)
             mFileBrowser.cancelScanFiles();
     }
 

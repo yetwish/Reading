@@ -26,12 +26,10 @@ public class BookDao extends AbstractDao<Book, Long> {
         public final static Property BookId = new Property(0, Long.class, "bookId", true, "BOOK_ID");
         public final static Property Name = new Property(1, String.class, "name", false, "NAME");
         public final static Property Author = new Property(2, String.class, "author", false, "AUTHOR");
-        public final static Property Language = new Property(3, String.class, "language", false, "LANGUAGE");
-        public final static Property Progress = new Property(4, Float.class, "progress", false, "PROGRESS");
-        public final static Property IconPath = new Property(5, String.class, "iconPath", false, "ICON_PATH");
-        public final static Property IconResId = new Property(6, Integer.class, "iconResId", false, "ICON_RES_ID");
-        public final static Property Path = new Property(7, String.class, "path", false, "PATH");
-        public final static Property CharNumber = new Property(8, Long.class, "charNumber", false, "CHAR_NUMBER");
+        public final static Property Progress = new Property(3, Float.class, "progress", false, "PROGRESS");
+        public final static Property IconResId = new Property(4, Integer.class, "iconResId", false, "ICON_RES_ID");
+        public final static Property Path = new Property(5, String.class, "path", false, "PATH");
+        public final static Property CharNumber = new Property(6, Long.class, "charNumber", false, "CHAR_NUMBER");
     };
 
 
@@ -50,12 +48,10 @@ public class BookDao extends AbstractDao<Book, Long> {
                 "'BOOK_ID' INTEGER PRIMARY KEY ," + // 0: bookId
                 "'NAME' TEXT," + // 1: name
                 "'AUTHOR' TEXT," + // 2: author
-                "'LANGUAGE' TEXT," + // 3: language
-                "'PROGRESS' REAL," + // 4: progress
-                "'ICON_PATH' TEXT," + // 5: iconPath
-                "'ICON_RES_ID' INTEGER," + // 6: iconResId
-                "'PATH' TEXT," + // 7: path
-                "'CHAR_NUMBER' INTEGER);"); // 8: charNumber
+                "'PROGRESS' REAL," + // 3: progress
+                "'ICON_RES_ID' INTEGER," + // 4: iconResId
+                "'PATH' TEXT," + // 5: path
+                "'CHAR_NUMBER' INTEGER);"); // 6: charNumber
     }
 
     /** Drops the underlying database table. */
@@ -84,34 +80,24 @@ public class BookDao extends AbstractDao<Book, Long> {
             stmt.bindString(3, author);
         }
  
-        String language = entity.getLanguage();
-        if (language != null) {
-            stmt.bindString(4, language);
-        }
- 
         Float progress = entity.getProgress();
         if (progress != null) {
-            stmt.bindDouble(5, progress);
-        }
- 
-        String iconPath = entity.getIconPath();
-        if (iconPath != null) {
-            stmt.bindString(6, iconPath);
+            stmt.bindDouble(4, progress);
         }
  
         Integer iconResId = entity.getIconResId();
         if (iconResId != null) {
-            stmt.bindLong(7, iconResId);
+            stmt.bindLong(5, iconResId);
         }
  
         String path = entity.getPath();
         if (path != null) {
-            stmt.bindString(8, path);
+            stmt.bindString(6, path);
         }
  
         Long charNumber = entity.getCharNumber();
         if (charNumber != null) {
-            stmt.bindLong(9, charNumber);
+            stmt.bindLong(7, charNumber);
         }
     }
 
@@ -128,12 +114,10 @@ public class BookDao extends AbstractDao<Book, Long> {
             cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // bookId
             cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // name
             cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // author
-            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // language
-            cursor.isNull(offset + 4) ? null : cursor.getFloat(offset + 4), // progress
-            cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5), // iconPath
-            cursor.isNull(offset + 6) ? null : cursor.getInt(offset + 6), // iconResId
-            cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7), // path
-            cursor.isNull(offset + 8) ? null : cursor.getLong(offset + 8) // charNumber
+            cursor.isNull(offset + 3) ? null : cursor.getFloat(offset + 3), // progress
+            cursor.isNull(offset + 4) ? null : cursor.getInt(offset + 4), // iconResId
+            cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5), // path
+            cursor.isNull(offset + 6) ? null : cursor.getLong(offset + 6) // charNumber
         );
         return entity;
     }
@@ -144,12 +128,10 @@ public class BookDao extends AbstractDao<Book, Long> {
         entity.setBookId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
         entity.setName(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
         entity.setAuthor(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
-        entity.setLanguage(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
-        entity.setProgress(cursor.isNull(offset + 4) ? null : cursor.getFloat(offset + 4));
-        entity.setIconPath(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
-        entity.setIconResId(cursor.isNull(offset + 6) ? null : cursor.getInt(offset + 6));
-        entity.setPath(cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7));
-        entity.setCharNumber(cursor.isNull(offset + 8) ? null : cursor.getLong(offset + 8));
+        entity.setProgress(cursor.isNull(offset + 3) ? null : cursor.getFloat(offset + 3));
+        entity.setIconResId(cursor.isNull(offset + 4) ? null : cursor.getInt(offset + 4));
+        entity.setPath(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
+        entity.setCharNumber(cursor.isNull(offset + 6) ? null : cursor.getLong(offset + 6));
      }
     
     /** @inheritdoc */

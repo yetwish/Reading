@@ -1,4 +1,4 @@
-package com.xidian.yetwish.reading.ui.com.baobomb.popuplistview;
+package com.xidian.yetwish.reading.ui.widget.popuplistview;
 
 import android.content.Context;
 import android.view.LayoutInflater;

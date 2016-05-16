@@ -34,9 +34,7 @@ public class DatabaseGenerator {
 		book.addLongProperty("bookId").primaryKey();
 		book.addStringProperty("name");
 		book.addStringProperty("author");
-		book.addStringProperty("language");
 		book.addFloatProperty("progress");
-		book.addStringProperty("iconPath");
 		book.addIntProperty("iconResId");
 		book.addStringProperty("path");
 		book.addLongProperty("charNumber");
@@ -47,7 +45,6 @@ public class DatabaseGenerator {
 		noteBook.addLongProperty("NoteBookId").primaryKey();
 		noteBook.addLongProperty("bookId");
 		noteBook.addStringProperty("name");
-		noteBook.addStringProperty("iconPath");
 		noteBook.addIntProperty("iconResId");
 		noteBook.addIntProperty("noteNumber");
 		noteBook.addStringProperty("intro");
@@ -70,7 +67,6 @@ public class DatabaseGenerator {
 		chapter.addStringProperty("name");
 		chapter.addLongProperty("firstCharPosition");
 		chapter.addLongProperty("lastCharPosition");
-		chapter.addIntProperty("pageNumber");
 
 	}
 
@@ -81,7 +77,6 @@ public class DatabaseGenerator {
 		page.addLongProperty("bookId");
 		page.addLongProperty("firstCharPosition");
 		page.addLongProperty("lastCharPosition");
-		page.addStringProperty("path");
 		page.addStringProperty("content");
 
 	}

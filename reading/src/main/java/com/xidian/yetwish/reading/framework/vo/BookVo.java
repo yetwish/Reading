@@ -16,9 +16,7 @@ public class BookVo implements Serializable {
     private long bookId;
     private String name;
     private String author;
-    private String language;
     private float progress;
-    private String iconPath;
     private int iconResId;
     private String filePath;
     private long charNumber;
@@ -27,9 +25,7 @@ public class BookVo implements Serializable {
         this.bookId = book.getBookId();
         this.name = book.getName();
         this.author = book.getAuthor();
-        this.language = book.getLanguage();
         this.progress = book.getProgress();
-        this.iconPath = book.getIconPath();
         this.filePath = book.getPath();
         this.charNumber = book.getCharNumber();
         this.iconResId = book.getIconResId();
@@ -40,9 +36,7 @@ public class BookVo implements Serializable {
         book.setBookId(bookId);
         book.setName(name);
         book.setAuthor(author);
-        book.setLanguage(language);
         book.setProgress(progress);
-        book.setIconPath(iconPath);
         book.setPath(filePath);
         book.setCharNumber(charNumber);
         book.setIconResId(iconResId);
@@ -80,28 +74,12 @@ public class BookVo implements Serializable {
         this.author = author;
     }
 
-    public String getLanguage() {
-        return language;
-    }
-
-    public void setLanguage(String language) {
-        this.language = language;
-    }
-
     public float getProgress() {
         return progress;
     }
 
     public void setProgress(float progress) {
         this.progress = progress;
-    }
-
-    public String getIconPath() {
-        return iconPath;
-    }
-
-    public void setIconPath(String iconPath) {
-        this.iconPath = iconPath;
     }
 
     public int getIconResId() {

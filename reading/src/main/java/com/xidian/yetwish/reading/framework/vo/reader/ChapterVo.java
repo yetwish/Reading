@@ -21,7 +21,6 @@ public class ChapterVo {
     private String name;
     private long firstCharPosition;
     private long lastCharPosition;
-    private int pageNumber;
 
     public ChapterVo(String filePath, long bookId, String name, long firstCharPosition, long lastCharPosition) {
         this.chapterId = BookUtils.generateSequenceId();
@@ -39,7 +38,6 @@ public class ChapterVo {
         this.name = chapter.getName();
         this.firstCharPosition = chapter.getFirstCharPosition();
         this.lastCharPosition = chapter.getLastCharPosition();
-        this.pageNumber = chapter.getPageNumber();
     }
 
     public Chapter convertToDb() {
@@ -50,7 +48,6 @@ public class ChapterVo {
         chapter.setName(name);
         chapter.setFirstCharPosition(firstCharPosition);
         chapter.setLastCharPosition(lastCharPosition);
-        chapter.setPageNumber(pageNumber);
         return chapter;
     }
 
@@ -100,14 +97,6 @@ public class ChapterVo {
 
     public void setLastCharPosition(long lastCharPosition) {
         this.lastCharPosition = lastCharPosition;
-    }
-
-    public int getPageNumber() {
-        return pageNumber;
-    }
-
-    public void setPageNumber(int pageNumber) {
-        this.pageNumber = pageNumber;
     }
 
     @Override

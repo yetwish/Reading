@@ -13,6 +13,7 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Ordering;
 import com.xidian.yetwish.reading.R;
 import com.xidian.yetwish.reading.framework.eventbus.EventBusWrapper;
+import com.xidian.yetwish.reading.framework.utils.FileUtils;
 import com.xidian.yetwish.reading.framework.utils.ToastUtils;
 import com.xidian.yetwish.reading.ui.ToolbarActivity;
 import com.xidian.yetwish.reading.ui.add_book.AddBookHelper;
@@ -81,7 +82,7 @@ public class FileBrowserActivity extends ToolbarActivity {
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         lvFileList.setLayoutManager(layoutManager);
 
-        mFileAdapter = new FileBrowserAdapter(this, Environment.getExternalStorageDirectory());
+        mFileAdapter = new FileBrowserAdapter(this, FileUtils.getStorageRootFile());
 
         mFileAdapter.setFilePathChangedListener(new FileBrowserAdapter.OnFilePathChangedListener() {
             @Override

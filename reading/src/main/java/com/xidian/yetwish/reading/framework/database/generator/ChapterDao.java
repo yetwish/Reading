@@ -29,7 +29,6 @@ public class ChapterDao extends AbstractDao<Chapter, Long> {
         public final static Property Name = new Property(3, String.class, "name", false, "NAME");
         public final static Property FirstCharPosition = new Property(4, Long.class, "firstCharPosition", false, "FIRST_CHAR_POSITION");
         public final static Property LastCharPosition = new Property(5, Long.class, "lastCharPosition", false, "LAST_CHAR_POSITION");
-        public final static Property PageNumber = new Property(6, Integer.class, "pageNumber", false, "PAGE_NUMBER");
     };
 
 
@@ -50,8 +49,7 @@ public class ChapterDao extends AbstractDao<Chapter, Long> {
                 "'PATH' TEXT," + // 2: path
                 "'NAME' TEXT," + // 3: name
                 "'FIRST_CHAR_POSITION' INTEGER," + // 4: firstCharPosition
-                "'LAST_CHAR_POSITION' INTEGER," + // 5: lastCharPosition
-                "'PAGE_NUMBER' INTEGER);"); // 6: pageNumber
+                "'LAST_CHAR_POSITION' INTEGER);"); // 5: lastCharPosition
     }
 
     /** Drops the underlying database table. */
@@ -94,11 +92,6 @@ public class ChapterDao extends AbstractDao<Chapter, Long> {
         if (lastCharPosition != null) {
             stmt.bindLong(6, lastCharPosition);
         }
- 
-        Integer pageNumber = entity.getPageNumber();
-        if (pageNumber != null) {
-            stmt.bindLong(7, pageNumber);
-        }
     }
 
     /** @inheritdoc */
@@ -116,8 +109,7 @@ public class ChapterDao extends AbstractDao<Chapter, Long> {
             cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // path
             cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // name
             cursor.isNull(offset + 4) ? null : cursor.getLong(offset + 4), // firstCharPosition
-            cursor.isNull(offset + 5) ? null : cursor.getLong(offset + 5), // lastCharPosition
-            cursor.isNull(offset + 6) ? null : cursor.getInt(offset + 6) // pageNumber
+            cursor.isNull(offset + 5) ? null : cursor.getLong(offset + 5) // lastCharPosition
         );
         return entity;
     }
@@ -131,7 +123,6 @@ public class ChapterDao extends AbstractDao<Chapter, Long> {
         entity.setName(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
         entity.setFirstCharPosition(cursor.isNull(offset + 4) ? null : cursor.getLong(offset + 4));
         entity.setLastCharPosition(cursor.isNull(offset + 5) ? null : cursor.getLong(offset + 5));
-        entity.setPageNumber(cursor.isNull(offset + 6) ? null : cursor.getInt(offset + 6));
      }
     
     /** @inheritdoc */

@@ -27,18 +27,19 @@ public class FileUtils {
     }
 
     //    private static final String ROOT_DIR = "/";
-    public static final String SD_ROOT_DIR = Environment.getExternalStorageDirectory().getPath();
+    public static final String SD_DIR = "/sdcard";
 
-    private static final String APP_ROOT = SD_ROOT_DIR + "/Reading";
+    private static final String APP_ROOT = "/Reading";
 
-    private static final String NOTEBOOK_ROOT = APP_ROOT + "/NoteBook";
+    private static final String NOTEBOOK_ROOT = "/NoteBook";
+
 
     private static final Comparator<File> COMPARATOR_FILE = new Comparator<File>() {
         @Override
         public int compare(File lhs, File rhs) {
-            if(lhs.isDirectory() && rhs.isFile())
-                return  -1;
-            if(lhs.isFile() && rhs.isDirectory())
+            if (lhs.isDirectory() && rhs.isFile())
+                return -1;
+            if (lhs.isFile() && rhs.isDirectory())
                 return 1;
             return lhs.getName().compareToIgnoreCase(rhs.getName());
         }
@@ -47,21 +48,43 @@ public class FileUtils {
     public static final Ordering<File> ORDERING_FILE = Ordering.from(COMPARATOR_FILE);
 
 
+    private static String getNotebookDir() {
+        return getStorageDir() + APP_ROOT + NOTEBOOK_ROOT;
+    }
+
+    public static String getStorageDir() {
+        String dir;
+        if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED))
+            dir = Environment.getExternalStorageDirectory().getPath();
+        else
+            dir = SD_DIR;
+        LogUtils.w(dir + " +  dir");
+        return dir;
+    }
+
+    public static File getStorageRootFile() {
+        String dir = getStorageDir();
+        File file = null;
+        try {
+            file = new File(dir);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return file;
+    }
+
+    private static String getNoteBookPath(long noteBookId) {
+        return getNotebookDir() + File.separator + noteBookId;
+    }
+
     public static String getNoteFilePath(NoteVo note) {
-        String dir = NOTEBOOK_ROOT + File.separator + note.getNoteBookId() + File.separator;
-        String filePath = dir + note.getNoteId();
-        return filePath;
+        return getNoteBookPath(note.getNoteBookId()) + File.separator + note.getNoteId();
     }
-
-    public static String getNoteBookPath(long noteBookId) {
-        return NOTEBOOK_ROOT + File.separator + noteBookId;
-    }
-
 
     public static void saveNoteToFile(NoteVo note) {
-        String dir = NOTEBOOK_ROOT + File.separator + note.getNoteBookId();
+        String dir = getNoteBookPath(note.getNoteBookId());
         File dirFile = new File(dir);
-        String filePath = dir + File.separator + note.getNoteId();
+        String filePath = getNoteFilePath(note);
         File file = new File(filePath);
         BufferedWriter writer = null;
         try {
@@ -114,26 +137,26 @@ public class FileUtils {
         }
     }
 
-    public static boolean deleteNoteBooK(long noteBookId){
+    public static boolean deleteNoteBooK(long noteBookId) {
         String dir = getNoteBookPath(noteBookId);
         File noteBookFile = new File(dir);
-        if(!noteBookFile.exists() || !noteBookFile.isDirectory()) return false;
+        if (!noteBookFile.exists() || !noteBookFile.isDirectory()) return false;
         File[] files = noteBookFile.listFiles();
-        for(File file : files){
+        for (File file : files) {
             file.delete();
         }
         noteBookFile.delete();
         return true;
     }
 
-    public static boolean deleteNote(NoteVo note){
+    public static boolean deleteNote(NoteVo note) {
         String filePath = getNoteFilePath(note);
         File file = new File(filePath);
-        if(!file.exists() || !file.isFile()) return false;
+        if (!file.exists() || !file.isFile()) return false;
         return file.delete();
     }
 
-    public static String getFileSize(File file){
+    public static String getFileSize(File file) {
         long length = file.length();
         DecimalFormat df = new DecimalFormat("#.00");
         String fileSizeString = "";
@@ -144,7 +167,7 @@ public class FileUtils {
         } else if (length < 1073741824) {
             fileSizeString = df.format((double) length / 1048576) + "M";
         } else {
-            fileSizeString = df.format((double) length / 1073741824) +"G";
+            fileSizeString = df.format((double) length / 1073741824) + "G";
         }
         return fileSizeString;
     }

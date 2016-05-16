@@ -12,7 +12,6 @@ public class Chapter {
     private String name;
     private Long firstCharPosition;
     private Long lastCharPosition;
-    private Integer pageNumber;
 
     public Chapter() {
     }
@@ -21,14 +20,13 @@ public class Chapter {
         this.chapterId = chapterId;
     }
 
-    public Chapter(Long chapterId, Long bookId, String path, String name, Long firstCharPosition, Long lastCharPosition, Integer pageNumber) {
+    public Chapter(Long chapterId, Long bookId, String path, String name, Long firstCharPosition, Long lastCharPosition) {
         this.chapterId = chapterId;
         this.bookId = bookId;
         this.path = path;
         this.name = name;
         this.firstCharPosition = firstCharPosition;
         this.lastCharPosition = lastCharPosition;
-        this.pageNumber = pageNumber;
     }
 
     public Long getChapterId() {
@@ -77,14 +75,6 @@ public class Chapter {
 
     public void setLastCharPosition(Long lastCharPosition) {
         this.lastCharPosition = lastCharPosition;
-    }
-
-    public Integer getPageNumber() {
-        return pageNumber;
-    }
-
-    public void setPageNumber(Integer pageNumber) {
-        this.pageNumber = pageNumber;
     }
 
 }

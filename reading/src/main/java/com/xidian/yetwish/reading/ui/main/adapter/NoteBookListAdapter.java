@@ -47,7 +47,7 @@ public class NoteBookListAdapter extends CommonAdapter<NoteBookVo> {
             @Override
             public void onItemLongClick(ViewGroup parent, View view, NoteBookVo data, int position) {
                 if(position == 0) return;
-                View ivDelete = view.findViewById(R.id.ivBookDelete);
+                View ivDelete = view.findViewById(R.id.ivNoteBookDelete);
                 ivDelete.setVisibility(View.VISIBLE);
                 deleteView = ivDelete;
                 if (mLongClickListener != null)

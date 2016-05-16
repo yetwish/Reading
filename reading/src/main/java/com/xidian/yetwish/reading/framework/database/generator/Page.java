@@ -11,7 +11,6 @@ public class Page {
     private Long bookId;
     private Long firstCharPosition;
     private Long lastCharPosition;
-    private String path;
     private String content;
 
     public Page() {
@@ -21,13 +20,12 @@ public class Page {
         this.pageId = pageId;
     }
 
-    public Page(Long pageId, Long chapterId, Long bookId, Long firstCharPosition, Long lastCharPosition, String path, String content) {
+    public Page(Long pageId, Long chapterId, Long bookId, Long firstCharPosition, Long lastCharPosition, String content) {
         this.pageId = pageId;
         this.chapterId = chapterId;
         this.bookId = bookId;
         this.firstCharPosition = firstCharPosition;
         this.lastCharPosition = lastCharPosition;
-        this.path = path;
         this.content = content;
     }
 
@@ -69,14 +67,6 @@ public class Page {
 
     public void setLastCharPosition(Long lastCharPosition) {
         this.lastCharPosition = lastCharPosition;
-    }
-
-    public String getPath() {
-        return path;
-    }
-
-    public void setPath(String path) {
-        this.path = path;
     }
 
     public String getContent() {

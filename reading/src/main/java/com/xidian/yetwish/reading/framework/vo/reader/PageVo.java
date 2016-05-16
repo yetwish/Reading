@@ -9,7 +9,6 @@ import com.xidian.yetwish.reading.framework.utils.BookUtils;
  */
 public class PageVo {
 
-    private String filePath;
     private long pageId;
     private long chapterId;
     private long bookId;
@@ -17,9 +16,8 @@ public class PageVo {
     private long lastCharPosition;
     private String content;
 
-    public PageVo(long bookId, long chapterId, String filePath, long firstCharPosition, long lastCharPosition, String content) {
+    public PageVo(long bookId, long chapterId, long firstCharPosition, long lastCharPosition, String content) {
         this.pageId = BookUtils.generateSequenceId();
-        this.filePath = filePath;
         this.bookId = bookId;
         this.chapterId = chapterId;
         this.firstCharPosition = firstCharPosition;
@@ -29,7 +27,6 @@ public class PageVo {
 
     public PageVo(Page page) {
         this.pageId = page.getPageId();
-        this.filePath = page.getPath();
         this.bookId = page.getBookId();
         this.chapterId = page.getChapterId();
         this.firstCharPosition = page.getFirstCharPosition();
@@ -40,21 +37,12 @@ public class PageVo {
     public Page convertToDb() {
         Page page = new Page();
         page.setPageId(pageId);
-        page.setPath(filePath);
         page.setBookId(bookId);
         page.setChapterId(chapterId);
         page.setFirstCharPosition(firstCharPosition);
         page.setLastCharPosition(lastCharPosition);
         page.setContent(content);
         return page;
-    }
-
-    public String getFilePath() {
-        return filePath;
-    }
-
-    public void setFilePath(String filePath) {
-        this.filePath = filePath;
     }
 
     public long getPageId() {

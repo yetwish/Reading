@@ -9,9 +9,7 @@ public class Book {
     private Long bookId;
     private String name;
     private String author;
-    private String language;
     private Float progress;
-    private String iconPath;
     private Integer iconResId;
     private String path;
     private Long charNumber;
@@ -23,13 +21,11 @@ public class Book {
         this.bookId = bookId;
     }
 
-    public Book(Long bookId, String name, String author, String language, Float progress, String iconPath, Integer iconResId, String path, Long charNumber) {
+    public Book(Long bookId, String name, String author, Float progress, Integer iconResId, String path, Long charNumber) {
         this.bookId = bookId;
         this.name = name;
         this.author = author;
-        this.language = language;
         this.progress = progress;
-        this.iconPath = iconPath;
         this.iconResId = iconResId;
         this.path = path;
         this.charNumber = charNumber;
@@ -59,28 +55,12 @@ public class Book {
         this.author = author;
     }
 
-    public String getLanguage() {
-        return language;
-    }
-
-    public void setLanguage(String language) {
-        this.language = language;
-    }
-
     public Float getProgress() {
         return progress;
     }
 
     public void setProgress(Float progress) {
         this.progress = progress;
-    }
-
-    public String getIconPath() {
-        return iconPath;
-    }
-
-    public void setIconPath(String iconPath) {
-        this.iconPath = iconPath;
     }
 
     public Integer getIconResId() {

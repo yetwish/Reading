@@ -26,10 +26,9 @@ public class NoteBookDao extends AbstractDao<NoteBook, Long> {
         public final static Property NoteBookId = new Property(0, Long.class, "NoteBookId", true, "NOTE_BOOK_ID");
         public final static Property BookId = new Property(1, Long.class, "bookId", false, "BOOK_ID");
         public final static Property Name = new Property(2, String.class, "name", false, "NAME");
-        public final static Property IconPath = new Property(3, String.class, "iconPath", false, "ICON_PATH");
-        public final static Property IconResId = new Property(4, Integer.class, "iconResId", false, "ICON_RES_ID");
-        public final static Property NoteNumber = new Property(5, Integer.class, "noteNumber", false, "NOTE_NUMBER");
-        public final static Property Intro = new Property(6, String.class, "intro", false, "INTRO");
+        public final static Property IconResId = new Property(3, Integer.class, "iconResId", false, "ICON_RES_ID");
+        public final static Property NoteNumber = new Property(4, Integer.class, "noteNumber", false, "NOTE_NUMBER");
+        public final static Property Intro = new Property(5, String.class, "intro", false, "INTRO");
     };
 
 
@@ -48,10 +47,9 @@ public class NoteBookDao extends AbstractDao<NoteBook, Long> {
                 "'NOTE_BOOK_ID' INTEGER PRIMARY KEY ," + // 0: NoteBookId
                 "'BOOK_ID' INTEGER," + // 1: bookId
                 "'NAME' TEXT," + // 2: name
-                "'ICON_PATH' TEXT," + // 3: iconPath
-                "'ICON_RES_ID' INTEGER," + // 4: iconResId
-                "'NOTE_NUMBER' INTEGER," + // 5: noteNumber
-                "'INTRO' TEXT);"); // 6: intro
+                "'ICON_RES_ID' INTEGER," + // 3: iconResId
+                "'NOTE_NUMBER' INTEGER," + // 4: noteNumber
+                "'INTRO' TEXT);"); // 5: intro
     }
 
     /** Drops the underlying database table. */
@@ -80,24 +78,19 @@ public class NoteBookDao extends AbstractDao<NoteBook, Long> {
             stmt.bindString(3, name);
         }
  
-        String iconPath = entity.getIconPath();
-        if (iconPath != null) {
-            stmt.bindString(4, iconPath);
-        }
- 
         Integer iconResId = entity.getIconResId();
         if (iconResId != null) {
-            stmt.bindLong(5, iconResId);
+            stmt.bindLong(4, iconResId);
         }
  
         Integer noteNumber = entity.getNoteNumber();
         if (noteNumber != null) {
-            stmt.bindLong(6, noteNumber);
+            stmt.bindLong(5, noteNumber);
         }
  
         String intro = entity.getIntro();
         if (intro != null) {
-            stmt.bindString(7, intro);
+            stmt.bindString(6, intro);
         }
     }
 
@@ -114,10 +107,9 @@ public class NoteBookDao extends AbstractDao<NoteBook, Long> {
             cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // NoteBookId
             cursor.isNull(offset + 1) ? null : cursor.getLong(offset + 1), // bookId
             cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // name
-            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // iconPath
-            cursor.isNull(offset + 4) ? null : cursor.getInt(offset + 4), // iconResId
-            cursor.isNull(offset + 5) ? null : cursor.getInt(offset + 5), // noteNumber
-            cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6) // intro
+            cursor.isNull(offset + 3) ? null : cursor.getInt(offset + 3), // iconResId
+            cursor.isNull(offset + 4) ? null : cursor.getInt(offset + 4), // noteNumber
+            cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5) // intro
         );
         return entity;
     }
@@ -128,10 +120,9 @@ public class NoteBookDao extends AbstractDao<NoteBook, Long> {
         entity.setNoteBookId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
         entity.setBookId(cursor.isNull(offset + 1) ? null : cursor.getLong(offset + 1));
         entity.setName(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
-        entity.setIconPath(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
-        entity.setIconResId(cursor.isNull(offset + 4) ? null : cursor.getInt(offset + 4));
-        entity.setNoteNumber(cursor.isNull(offset + 5) ? null : cursor.getInt(offset + 5));
-        entity.setIntro(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
+        entity.setIconResId(cursor.isNull(offset + 3) ? null : cursor.getInt(offset + 3));
+        entity.setNoteNumber(cursor.isNull(offset + 4) ? null : cursor.getInt(offset + 4));
+        entity.setIntro(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
      }
     
     /** @inheritdoc */

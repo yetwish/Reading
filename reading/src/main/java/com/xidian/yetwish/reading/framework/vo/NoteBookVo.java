@@ -14,7 +14,6 @@ public class NoteBookVo implements Serializable {
     private long noteBookId;
     private long bookId;
     private String name;
-    private String iconPath;
     private int iconResId;
     private int noteNumber;
     private String introduction;
@@ -28,7 +27,6 @@ public class NoteBookVo implements Serializable {
         this.noteBookId = noteBook.getNoteBookId();
         this.bookId = noteBook.getBookId();
         this.name = noteBook.getName();
-        this.iconPath = noteBook.getIconPath();
         this.noteNumber = noteBook.getNoteNumber();
         this.introduction = noteBook.getIntro();
         this.iconResId = noteBook.getIconResId();
@@ -39,7 +37,6 @@ public class NoteBookVo implements Serializable {
         noteBook.setBookId(bookId);
         noteBook.setNoteBookId(noteBookId);
         noteBook.setName(name);
-        noteBook.setIconPath(iconPath);
         noteBook.setNoteNumber(noteNumber);
         noteBook.setIntro(introduction);
         noteBook.setIconResId(iconResId);
@@ -69,14 +66,6 @@ public class NoteBookVo implements Serializable {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getIconPath() {
-        return iconPath;
-    }
-
-    public void setIconPath(String iconPath) {
-        this.iconPath = iconPath;
     }
 
     public int getIconResId() {

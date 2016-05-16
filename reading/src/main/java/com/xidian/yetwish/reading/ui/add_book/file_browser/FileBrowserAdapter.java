@@ -126,7 +126,6 @@ public class FileBrowserAdapter extends CommonAdapter<File> {
             if (!mAddedFiles.contains(file.getAbsolutePath())) {
                 //未导入
                 cb.setVisibility(View.VISIBLE);
-                LogUtils.w("visible ");
             } else {
                 holder.setVisible(R.id.tvItemHasAdded, true);
             }
@@ -148,6 +147,9 @@ public class FileBrowserAdapter extends CommonAdapter<File> {
                 }
             });
 
+        }
+        if(file.getName().equals(UPPER_DIR_NAME)){
+            holder.setText(R.id.tvItemFileSize,"上层文件夹");
         }
     }
 

@@ -28,8 +28,7 @@ public class PageDao extends AbstractDao<Page, Long> {
         public final static Property BookId = new Property(2, Long.class, "bookId", false, "BOOK_ID");
         public final static Property FirstCharPosition = new Property(3, Long.class, "firstCharPosition", false, "FIRST_CHAR_POSITION");
         public final static Property LastCharPosition = new Property(4, Long.class, "lastCharPosition", false, "LAST_CHAR_POSITION");
-        public final static Property Path = new Property(5, String.class, "path", false, "PATH");
-        public final static Property Content = new Property(6, String.class, "content", false, "CONTENT");
+        public final static Property Content = new Property(5, String.class, "content", false, "CONTENT");
     };
 
 
@@ -50,8 +49,7 @@ public class PageDao extends AbstractDao<Page, Long> {
                 "'BOOK_ID' INTEGER," + // 2: bookId
                 "'FIRST_CHAR_POSITION' INTEGER," + // 3: firstCharPosition
                 "'LAST_CHAR_POSITION' INTEGER," + // 4: lastCharPosition
-                "'PATH' TEXT," + // 5: path
-                "'CONTENT' TEXT);"); // 6: content
+                "'CONTENT' TEXT);"); // 5: content
     }
 
     /** Drops the underlying database table. */
@@ -90,14 +88,9 @@ public class PageDao extends AbstractDao<Page, Long> {
             stmt.bindLong(5, lastCharPosition);
         }
  
-        String path = entity.getPath();
-        if (path != null) {
-            stmt.bindString(6, path);
-        }
- 
         String content = entity.getContent();
         if (content != null) {
-            stmt.bindString(7, content);
+            stmt.bindString(6, content);
         }
     }
 
@@ -116,8 +109,7 @@ public class PageDao extends AbstractDao<Page, Long> {
             cursor.isNull(offset + 2) ? null : cursor.getLong(offset + 2), // bookId
             cursor.isNull(offset + 3) ? null : cursor.getLong(offset + 3), // firstCharPosition
             cursor.isNull(offset + 4) ? null : cursor.getLong(offset + 4), // lastCharPosition
-            cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5), // path
-            cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6) // content
+            cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5) // content
         );
         return entity;
     }
@@ -130,8 +122,7 @@ public class PageDao extends AbstractDao<Page, Long> {
         entity.setBookId(cursor.isNull(offset + 2) ? null : cursor.getLong(offset + 2));
         entity.setFirstCharPosition(cursor.isNull(offset + 3) ? null : cursor.getLong(offset + 3));
         entity.setLastCharPosition(cursor.isNull(offset + 4) ? null : cursor.getLong(offset + 4));
-        entity.setPath(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
-        entity.setContent(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
+        entity.setContent(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
      }
     
     /** @inheritdoc */

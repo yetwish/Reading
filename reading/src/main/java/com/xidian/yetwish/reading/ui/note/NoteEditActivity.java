@@ -96,8 +96,8 @@ public class NoteEditActivity extends ToolbarActivity {
         } else {//编辑笔记
             if (!(data instanceof NoteVo))
                 throw new IllegalIntentDataException(NoteVo.class, data.getClass());
-            mNoteBookId = mNote.getNoteBookId();
             mNote = (NoteVo) data;
+            mNoteBookId = mNote.getNoteBookId();
             getSupportActionBar().setTitle(getString(R.string.note_edit));
             etTitle.setText(mNote.getName());
             etContent.setText(mNote.getContent());
